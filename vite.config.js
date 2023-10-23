@@ -10,5 +10,5 @@ export default defineConfig({
         { find: '~', replacement: '/src' }
       ]
     },
-    base: '/trello-react-app/'
+    base: '/store-game/'
 })
