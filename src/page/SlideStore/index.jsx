@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 // import { Item } from "../../components/Items";
 import Grid from "@mui/material/Unstable_Grid2";
 import ImageSteper from "../ImageSteper";
-import CardMedia from "~/components/Card/CardMedia";
+import CardMedia from '~/components/Card/CardMedia';
 const STYLEBOX = {
   width: "100%",
   height: "100%",
@@ -21,10 +21,8 @@ function SildeStore() {
     { key: "type-06", value: "Sports & Racing", icon: "" },
     { key: "type-07", value: "Horror", icon: "" },
     { key: "type-08", value: "Casual", icon: "" },
-    { key: "type-09", value: "All Sports", icon: "" },
-    { key: "type-10", value: "Role-Playing", icon: "" },
-    { key: "type-11", value: "Survival", icon: "" },
-    { key: "type-12", value: "Racing", icon: "" },
+    { key: "type-09", value: "Role-Playing", icon: "" },
+    { key: "type-10", value: "Survival", icon: "" },
   ];
 
   const POSTERS = [
@@ -69,7 +67,7 @@ function SildeStore() {
               {TYPEGAME.map((inf, index) => {
                 return (
                   <>
-                    <Box>
+                    <Box key={index}>
                       <Typography
                         variant="h6"
                         sx={{
@@ -118,7 +116,7 @@ function SildeStore() {
                   return (
                     index < 2 && (
                       <>
-                        <Grid xs={6} sm={6} md={12} lg={12}>
+                        <Grid key={image.split('/')[-1]} xs={6} sm={6} md={12} lg={12}>
                           <CardMedia image={image} />
                         </Grid>
                       </>
@@ -135,7 +133,7 @@ function SildeStore() {
             return (
               index > 1 && (
                 <>
-                  <Grid xs={6} sm={6} md={3} lg={3}>
+                  <Grid key={image.split('/')[-1]} xs={6} sm={6} md={3} lg={3}>
                     <CardMedia image={image} />
                   </Grid>
                 </>

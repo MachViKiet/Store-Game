@@ -4,8 +4,8 @@ import Box from '@mui/material/Box';
 // import Grid from '@mui/material/Unstable_Grid2';
 // import Container from '@mui/material/Container';
 import SlideStore from './page/SlideStore'
-
-
+import ProductStore from './page/ProductStore';
+import Header from './components/Header'
 function App() {
   return (
     <Box
@@ -14,25 +14,8 @@ function App() {
         bgcolor: "cover.bg1",
       }}
     >
-      {/* --- Header 1 --- */}
-      <Box
-        sx={{
-          width: "100%",
-          height: "35px",
-          bgcolor: "cover.bg2",
-        }}
-      ></Box>
-
-      {/* --- Header 2 --- */}
-      <Box
-        sx={{
-          width: "100%",
-          height: "125px",
-          bgcolor: "cover.bg3",
-        }}
-      >
-
-      </Box>
+      {/*  --- Header ---  */}
+      <Header/>
 
       {/*  ---- Body ---- */}
       <Box
@@ -41,7 +24,25 @@ function App() {
         }}
         >
           <SlideStore/>
+          <ProductStore/>
+          <ProductStore/>
+          <ProductStore/>
+          <ProductStore/>
+      </Box>
+
+      {/*  ---- Footer ---- */}
+      <Box sx = {{ padding: '50px 0' }}>
+        <Box sx = {{
+          bgcolor: 'cover.bg4',
+          height: '300px',
+          width: '100%',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center'
+        }}>
+          Đây là phần footer chưa kịp viết !! thông cảm !!
         </Box>
+      </Box>
     </Box>
 
   );
