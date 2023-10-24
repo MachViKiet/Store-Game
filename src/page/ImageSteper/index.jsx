@@ -19,7 +19,7 @@ const ImageSteper = (progs) => {
       {images.map((image) => {
         return (
           <>
-            <div className="each-slide-effect">
+            <div key={image.split('/')[-1]} className="each-slide-effect">
               <div style={STYLE_IMAGE(image)}></div>
             </div>
           </>

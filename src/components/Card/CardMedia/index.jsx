@@ -8,7 +8,7 @@ function CardMedia(progs) {
     <Box sx = {{
         bgcolor: "cover.bg4",
         width: '100%',
-        paddingTop: '60%',
+        paddingTop: '50%',
         background: `url(${URL_IMAGE})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center'
