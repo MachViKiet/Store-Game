@@ -7,7 +7,7 @@ const theme = extendTheme({
     light: {
       palette: {
         primary: {
-          main: '#1976d2',
+          main: '#fff',
           light: '#42a5f5',
           dark: '#1565c0',
           contrastText: '#fff'
@@ -18,9 +18,14 @@ const theme = extendTheme({
           bg2: "#042b73",
           bg3: "#031b4b",
           bg4: "#000717",
-          light: '#1a2a3c'
+          light: '#1a2a3c',
+          overplay1:'#333',
+        },
+        text:{
+          primary: '#fff'
         }
-      }
+      },
+      
     },
     dark: {
       palette: {
