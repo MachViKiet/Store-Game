@@ -11,7 +11,7 @@ root.render(
     <CssVarsProvider theme={theme}>
       <CssBaseline />
       <App />
-    </CssVarsProvider >
+    </CssVarsProvider>
   </React.StrictMode>,
   document.getElementById('root'));
 

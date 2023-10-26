@@ -2,7 +2,8 @@ import Box from "@mui/material/Box";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import { Button } from "@mui/material";
 
-function SignInButton() {
+
+function  SignInButton() {
   return (
     <>
       <AccountCircleOutlinedIcon fontSize="medium" />
