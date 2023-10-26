@@ -12,20 +12,29 @@ const theme = extendTheme({
           dark: '#1565c0',
           contrastText: '#fff'
         },
+        background:{
+          paper: '#3f3e45'
+        },
         cover:{
-          main: '#fff',
-          bg1: "#030e23",
-          bg2: "#042b73",
-          bg3: "#031b4b",
-          bg4: "#000717",
-          light: '#1a2a3c',
-          overplay1:'#333',
+          main: '#000',
+          bg1: "#030e23", // bgcolor: content
+          bg2: "#042b73", // bgcolor: head1
+          bg3: "#031b4b", // bgcolor: head2
+          bg4: "#1d2433", // bgcolor: block
+          light: '#1a2a3c', // 
+          overlay1:'#red', // bgcolor : overlay
         },
         text:{
-          primary: '#fff'
+          primary: '#fff',
+          secondary: '#fff'
+        },
+        common: {
+          background: '#red'
+        },
+        action: {
+          active: '#fff'
         }
       },
-      
     },
     dark: {
       palette: {
@@ -57,6 +66,20 @@ const theme = extendTheme({
         },
       },
     },
+    MuiTextField: {
+      styleOverrides: {
+        root: {
+          color: 'red',
+        },
+      },
+    },
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          lineHeight: '1.3'
+        },
+      },
+    }
   },
   // ...other properties
 })

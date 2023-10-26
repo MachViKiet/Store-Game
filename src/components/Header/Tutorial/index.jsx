@@ -48,7 +48,7 @@ function Tutorial() {
       <Box
         sx={{
           width: "100%",
-          height: "35px",
+          height: "45px",
           bgcolor: "cover.bg2",
         }}
       >
@@ -90,7 +90,7 @@ function Tutorial() {
                         width: '1.2rem',
                         background: `url(${inf.icon})`,
                         filter: 'invert(100%)',
-                        mr: 2
+                        mr: 2,
                       }}/>
                       {inf.title}
                     </Button>
