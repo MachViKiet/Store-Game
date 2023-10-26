@@ -4,6 +4,7 @@ import "./style.css";
 
 const STYLE_IMAGE = (url) => {
   return {
+    background: 'cover.bg4',
     backgroundImage: `url(${url})`,
     backgroundPosition: "center",
     backgroundSize: "cover",
