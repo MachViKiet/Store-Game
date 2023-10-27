@@ -49,7 +49,6 @@ function Tutorial() {
         sx={{
           width: "100%",
           height: "45px",
-          bgcolor: "cover.bg2",
         }}
       >
         <Container
@@ -74,7 +73,7 @@ function Tutorial() {
               <NavigateNextIcon />
             </Button>
 
-            <Typography sx={{ pl: 1 }} variant="body2">
+            <Typography sx={{ pl: 1, color: 'text.secondary' }} variant="body2">
               {TIPS[Inf].title}
             </Typography>
           </Box>

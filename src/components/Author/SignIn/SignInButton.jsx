@@ -3,29 +3,35 @@ import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-function  SignInButton() {
+
+function SignInButton(progs) {
+  const style = progs.sx ? progs.sx : 'text.primary'
+
   const navigate = useNavigate();
   const handleSingInButton = () => {
     navigate("/store-game/login");
   }
+
   return (
     <>
       <AccountCircleOutlinedIcon fontSize="medium" />
       <Button
         sx={{
           fontSize: "16px",
+          color: style.color
         }}
         onClick={() => handleSingInButton()}
       >
-        <Box sx={{ fontSize: "16px" }}>Sign In</Box>
+        <Box sx={{ fontSize: "16px", color: style.color }}>Sign In</Box>
       </Button>
       \
       <Button
         sx={{
           fontSize: "16px",
+          color: style.color
         }}
       >
-        <Box sx={{ fontSize: "16px" }}>Register</Box>
+        <Box sx={{ fontSize: "16px",  color: style.color }}>Register</Box>
       </Button>
     </>
   );

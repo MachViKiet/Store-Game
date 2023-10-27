@@ -14,7 +14,7 @@ function SearchField() {
         renderOption={(props, option) => (
           <Box
             component="li"
-            sx={{ "& > img": { mr: 2, flexShrink: 0 }, color: "#000" }}
+            sx={{ "& > img": { mr: 2, flexShrink: 0 }, color: "#000", background: 'cover.main' }}
             {...props}
           >
             {option.label} ({option.year}) 
@@ -24,8 +24,14 @@ function SearchField() {
           <TextField
             sx={{
               "& Fieldset": {
-                borderColor: "#fff",
+                borderColor: "text.secondary",
               },
+              "& .MuiInputBase-root:hover Fieldset": {
+                borderColor: "text.secondary",
+              },
+              "& .MuiInputBase-root":{
+                color: 'text.primary'
+              }
             }}
             {...params}
             label="Search Game"
