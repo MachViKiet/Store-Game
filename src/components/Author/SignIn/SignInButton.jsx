@@ -11,7 +11,9 @@ function SignInButton(progs) {
   const handleSingInButton = () => {
     navigate("/store-game/login");
   }
-
+  const handleSingUpButton = () => {
+    navigate("/store-game/register");
+  }
   return (
     <>
       <AccountCircleOutlinedIcon fontSize="medium" />
@@ -30,6 +32,7 @@ function SignInButton(progs) {
           fontSize: "16px",
           color: style.color
         }}
+        onClick={() => handleSingUpButton()}
       >
         <Box sx={{ fontSize: "16px",  color: style.color }}>Register</Box>
       </Button>
