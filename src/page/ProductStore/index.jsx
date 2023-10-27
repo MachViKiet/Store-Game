@@ -5,7 +5,8 @@ import Container from "@mui/material/Container";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useState } from "react";
-
+import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
+import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 function ProductStore() {
   const CARDMEDIA = [
     "https://cdn.akamai.steamstatic.com/steam/apps/667970/header_292x136.jpg?t=1680272279",
@@ -73,7 +74,7 @@ function ProductStore() {
               padding: "10px 0",
             }}
           >
-            <Button onClick={SeeMoreProductHandle}>See more</Button>
+            <Button sx = {{color: 'text.primary'}} onClick={SeeMoreProductHandle}  endIcon= {<KeyboardArrowDownIcon/>}>See more</Button>
           </Box>
         )}
         {CARDMEDIA.length == ProductCount && ProductCount > SHOW_PRODUCT_COUNT && (
@@ -85,7 +86,7 @@ function ProductStore() {
               paddingTop: "10px",
             }}
           >
-            <Button onClick={HiddenProductHandle}>Hidden</Button>
+            <Button sx = {{color: 'text.primary'}} onClick={HiddenProductHandle} endIcon= {<KeyboardArrowUpIcon/>}>Hidden</Button>
           </Box>
         )}
       </Grid>

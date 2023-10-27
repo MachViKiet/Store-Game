@@ -16,6 +16,7 @@ import NotificationsNoneOutlinedIcon from "@mui/icons-material/NotificationsNone
 import PaymentIcon from "@mui/icons-material/Payment";
 import LocalGroceryStoreOutlinedIcon from "@mui/icons-material/LocalGroceryStoreOutlined";
 import Divider from "@mui/material/Divider";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
 
 export default function StoreDialog() {
   const [open, setOpen] = React.useState(false);
@@ -71,7 +72,8 @@ export default function StoreDialog() {
           },
         }}
       >
-        learn more
+        {/* learn more */}
+        <RemoveRedEyeIcon sx = {{color:"#fff"}}/>
       </Typography>
 
       <Dialog
@@ -80,6 +82,11 @@ export default function StoreDialog() {
         open={open}
         onClose={handleClose}
         maxHeight={"60vh"}
+        sx = {{
+          '& .MuiPaper-root':{
+            bgcolor: 'cover.bg4'
+          }
+        }}
       >
         {/* <DialogTitle>Information product</DialogTitle> */}
         <DialogContent
@@ -183,13 +190,18 @@ export default function StoreDialog() {
                     alignItems: "center",
                     flexWrap: "wrap",
                     mt: 2,
+
                     "& button": {
                       marginRight: "10px",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
+                      color:'text.primary',
                       "&.MuiButton-containedPrimary": {
-                        backgroundColor: "cover.bg4",
+                        backgroundColor: "cover.bg1",
+                      },
+                      "&.MuiButton-outlinedPrimary": {
+                        borderColor: "text.primary",
                       },
                       "& .MuiSvgIcon-root": {
                         mr: 1,

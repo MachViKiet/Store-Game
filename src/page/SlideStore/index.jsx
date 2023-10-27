@@ -4,7 +4,7 @@ import Container from "@mui/material/Container";
 // import { Item } from "../../components/Items";
 import Grid from "@mui/material/Unstable_Grid2";
 import ImageSteper from "../ImageSteper";
-import CardMedia from '~/components/Card/CardMedia';
+import CardMedia from "~/components/Card/CardMedia";
 const STYLEBOX = {
   width: "100%",
   height: "100%",
@@ -36,12 +36,12 @@ function SildeStore() {
     "https://cdn.akamai.steamstatic.com/steam/apps/1133320/header_292x136.jpg?t=1683161706",
     "https://cdn.akamai.steamstatic.com/steam/apps/587430/header_292x136.jpg?t=1677003160",
     "https://cdn.akamai.steamstatic.com/steam/apps/2456960/header_292x136.jpg?t=1698066784",
-    'https://cdn.akamai.steamstatic.com/steam/apps/611670/header_292x136.jpg?t=1564002443',
-    'https://cdn.akamai.steamstatic.com/steam/apps/555160/header_292x136.jpg?t=1694029712'
+    "https://cdn.akamai.steamstatic.com/steam/apps/611670/header_292x136.jpg?t=1564002443",
+    "https://cdn.akamai.steamstatic.com/steam/apps/555160/header_292x136.jpg?t=1694029712",
   ];
 
   return (
-    <Box sx={{ padding: "50px 0", flexGrow: 1 }}>
+    <Box sx={{ padding: "20px 0", flexGrow: 1, bgcolor: 'cover.bg1' }}>
       <Container maxWidth="lg">
         <Grid container spacing={2}>
           {/* grid-1 */}
@@ -78,6 +78,7 @@ function SildeStore() {
                             cursor: "pointer",
                           },
                           fontSize: "14px",
+                          fontWeight: '600'
                         }}
                       >
                         {index + 1}.{" "}
@@ -92,6 +93,7 @@ function SildeStore() {
                             cursor: "pointer",
                           },
                           fontSize: "14px",
+                          fontWeight: '600'
                         }}
                       >
                         {inf.value}
@@ -111,12 +113,18 @@ function SildeStore() {
           {/* grid-3 */}
           <Grid xs={12} sm={12} md={3} lg={3}>
             <Box sx={STYLEBOX}>
-              <Grid container spacing={[0,2]}>
+              <Grid container spacing={[0, 2]}>
                 {CARDMEDIA.map((image, index) => {
                   return (
                     index < 2 && (
                       <>
-                        <Grid key={image.split('/')[-1]} xs={6} sm={6} md={12} lg={12}>
+                        <Grid
+                          key={image.split("/")[-1]}
+                          xs={6}
+                          sm={6}
+                          md={12}
+                          lg={12}
+                        >
                           <CardMedia image={image} />
                         </Grid>
                       </>
@@ -133,7 +141,7 @@ function SildeStore() {
             return (
               index > 1 && (
                 <>
-                  <Grid key={image.split('/')[-1]} xs={6} sm={6} md={3} lg={3}>
+                  <Grid key={image.split("/")[-1]} xs={6} sm={6} md={3} lg={3}>
                     <CardMedia image={image} />
                   </Grid>
                 </>

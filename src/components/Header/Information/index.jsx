@@ -8,6 +8,7 @@ import MenuDrawer from "../../Drawer/Drawer";
 import CustomLogo from "../../Logo/Logo";
 import SignInButton from "../../Author/SignIn/SignInButton";
 import Cart from "../../Cart/Cart";
+import ModeButton from "~/components/Mode/Button";
 
 function Information() {
   return (
@@ -15,8 +16,7 @@ function Information() {
       <Box
         sx={{
           width: "100%",
-          height: "100px",
-          bgcolor: "cover.bg3",
+          height: "80px",
         }}
       >
         <Container
@@ -51,7 +51,7 @@ function Information() {
               />
             </Box>
 
-            {/* Memu */}
+            {/* Menu */}
             <MenuDrawer
               sx={{
                 display: { sm: "block", md: "none" },
@@ -69,9 +69,25 @@ function Information() {
                 },
                 ml: "10px",
                 mr: "10px",
+                color: 'text.secondary'
               }}
             >
               <SearchField />
+            </Box>
+
+            {/* Mode button */}
+            <Box
+              sx={{
+                alignItems: "center",
+                justifyContent: "center",
+                minWidth: "fit-content",
+                display: {
+                  xs: "block",
+                  md: "none",
+                },
+              }}
+            >
+              <ModeButton />
             </Box>
 
             {/* Sign In Button */}
@@ -84,6 +100,7 @@ function Information() {
                   xs: "none",
                   md: "flex",
                 },
+                color: 'text.secondary'
               }}
             >
               <SignInButton />

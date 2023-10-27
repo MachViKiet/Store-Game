@@ -51,7 +51,7 @@ export default function MenuDrawer(progs) {
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
-          background: "#252525",
+          bgcolor: "cover.bg2",
         }}
       >
         <CustomLogo
@@ -70,7 +70,13 @@ export default function MenuDrawer(progs) {
         ].map((text) => (
           <ListItem key={text.key} disablePadding>
             <ListItemButton>
-              <ListItemIcon>{text.icon}</ListItemIcon>
+              <ListItemIcon
+                sx={{
+                  color: "text.primary",
+                }}
+              >
+                {text.icon}
+              </ListItemIcon>
               <ListItemText primary={text.key} />
             </ListItemButton>
           </ListItem>
@@ -86,7 +92,11 @@ export default function MenuDrawer(progs) {
         {TYPEGAME.map((text) => (
           <ListItem key={text} disablePadding>
             <ListItemButton>
-              <ListItemIcon>
+              <ListItemIcon
+                sx={{
+                  color: "text.primary",
+                }}
+              >
                 <GradeOutlinedIcon />
               </ListItemIcon>
               <ListItemText primary={text.value} />
@@ -100,14 +110,18 @@ export default function MenuDrawer(progs) {
           bgcolor: "#ccccccb5",
         }}
       />
-      <Box sx = {{
-        width: '100%',
-        height: '60px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}>
-        <SignInButton />
+      <Box
+        sx={{
+          width: "100%",
+          height: "60px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <SignInButton sx = {{
+          color: 'text.primary'
+        }}  />
       </Box>
     </Box>
   );
@@ -123,7 +137,7 @@ export default function MenuDrawer(progs) {
             onClose={toggleDrawer(anchor, false)}
             sx={{
               "& .MuiPaper-root": {
-                bgcolor: "#000017",
+                bgcolor: "cover.drawer",
                 "::-webkit-scrollbar": {
                   width: "5px",
                 },
@@ -137,7 +151,7 @@ export default function MenuDrawer(progs) {
 
                 /* Handle */
                 "::-webkit-scrollbar-thumb": {
-                  background: "#888",
+                  background: "#ccc",
                 },
 
                 /* Handle on hover */
