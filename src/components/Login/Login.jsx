@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -38,11 +39,7 @@ const boxstyle = {
   boxShadow: 24,
 };
 
-const center = {
-  position: "relative",
-  top: "50%",
-  left: "37%",
-};
+
 function Login() {
   const [open, setOpen] = useState(false);
   const [remember, setRemember] = useState(false);
