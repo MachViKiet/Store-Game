@@ -17,15 +17,11 @@ import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
 import bg from "../Login/bg/Login.svg";
 import Logo from "../../assets/Logo.png";
+import ModeButton from "~/components/Mode/Button";
+import theme from "../../theme";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
-});
-
-const darkTheme = createTheme({
-  palette: {
-    mode: "dark",
-  },
 });
 
 const boxstyle = {
@@ -35,10 +31,9 @@ const boxstyle = {
   transform: "translate(-50%, -50%)",
   width: "75%",
   height: "70%",
-  bgcolor: "background.paper",
+  bgcolor: "transparent",
   boxShadow: 24,
 };
-
 
 function Login() {
   const [open, setOpen] = useState(false);
@@ -64,7 +59,7 @@ function Login() {
   }
 
   return (
-    <>
+    <ThemeProvider theme={theme}>
       <Snackbar
         open={open}
         autoHideDuration={3000}
@@ -76,34 +71,51 @@ function Login() {
           Failed! Enter correct username and password.
         </Alert>
       </Snackbar>
-      <div
-        style={{
-          backgroundColor: `#f0f2f5`,
+      <Box
+        sx={{
+          backgroundColor: (theme) => {
+            return theme.palette.mode === "dark" ? "#1A2027" : "#f0f2f5";
+          },
           backgroundSize: "cover",
           height: "100vh",
           color: "#f5f5f5",
         }}
       >
         <Box
+          sx={{
+            backgroundColor: "black",
+            alignItems: "center",
+            justifyContent: "center",
+            background:
+              "url(https://divineshop.vn/static/0de2668c294edf9d5fd8a8647b2c65b6.png)",
+          }}
+        >
+          <ModeButton />
+        </Box>
+        <Box
           sx={boxstyle}
           alignItems="center"
           style={{
-            backgroundColor: `#f0f2f5`,
+            backgroundColor: `transparent`,
             borderRadius: "20px",
           }}
         >
           <Grid container>
             <Grid item xs={12} sm={12} lg={6}>
               <Box
-                style={{
+                sx={{
                   backgroundSize: "cover",
                   height: "70vh",
                   minHeight: "500px",
-                  backgroundColor: "rgb(27 93 207)",
+                  backgroundColor: (theme) => {
+                    return theme.palette.mode === "dark"
+                      ? "#3f51b5"
+                      : "#2579f2";
+                  },
                   borderRadius: "20px",
                 }}
               >
-                <ThemeProvider theme={darkTheme}>
+                <ThemeProvider theme={theme}>
                   <Container>
                     <Box height={35} />
                     <Box
@@ -183,11 +195,7 @@ function Login() {
                             </Typography>
                           </Stack>
                         </Grid>
-                        <Grid
-                          item
-                          xs={12}
-                          sx={{ textAlign: "center" }}
-                        >
+                        <Grid item xs={12} sx={{ textAlign: "center" }}>
                           <Button
                             type="submit"
                             variant="contained"
@@ -242,7 +250,7 @@ function Login() {
                   backgroundSize: "contain",
                   backgroundRepeat: "no-repeat",
                   backgroundPosition: "center",
-                  height: "80%",
+                  height: "70%",
                   color: "#f5f5f5",
                 }}
               ></Box>
@@ -252,14 +260,14 @@ function Login() {
                   backgroundSize: "contain",
                   backgroundPosition: "center",
                   backgroundRepeat: "no-repeat",
-                  height: "20%",
+                  height: "30%",
                 }}
               ></Box>
             </Grid>
           </Grid>
         </Box>
-      </div>
-    </>
+      </Box>
+    </ThemeProvider>
   );
 }
 
