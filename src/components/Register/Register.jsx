@@ -6,11 +6,8 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import Avatar from "@mui/material/Avatar";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
-import Checkbox from "@mui/material/Checkbox";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import { useState, forwardRef } from "react";
+import { useState, forwardRef, useEffect } from "react";
 import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
@@ -18,7 +15,9 @@ import Slide from "@mui/material/Slide";
 import bg from "../Login/bg/Login.svg";
 import Logo from "../../assets/Logo.png";
 import ModeButton from "~/components/Mode/Button";
+import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import theme from "../../theme";
+import { useNavigate } from "react-router-dom";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -34,17 +33,78 @@ const boxstyle = {
   bgcolor: "transparent",
   boxShadow: 24,
 };
-
-function Login() {
+const center = {
+  position: "relative",
+  top: "50%",
+  left: "30%",
+};
+function Register() {
   const [open, setOpen] = useState(false);
   const [remember, setRemember] = useState(false);
   const vertical = "top";
   const horizontal = "right";
-
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [phone, setPhone] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [errorAlert, setErrorAlert] = useState("");
+  const [emailError, setEmailError] = useState(false);
+  const [phoneError, setPhoneError] = useState(false);
+  const [usernameError, setUsernameError] = useState(false);
+  const [passwordError, setPasswordError] = useState(false);
+  const [confirmPasswordError, setConfirmPasswordError] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const isValidPhone = (phone) => {
+    // Thực hiện kiểm tra số điện thoại hợp lệ
+    return true; // Thay true bằng kết quả kiểm tra số điện thoại của bạn
+  };
   const handleSubmit = async (event) => {
-    setOpen(true);
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
+    const isValidEmail = email && /\S+@\S+\.\S+/.test(email);
+    const isValidPhoneValue = phone && isValidPhone(phone);
+    const isValidUsername = username && username.trim() !== "";
+    const isValidPassword = password && password.trim() !== "";
+    const isValidConfirmPassword = confirmPassword === password;
+
+    // Set lỗi cho từng khung
+    setEmailError(!isValidEmail);
+    setPhoneError(!isValidPhoneValue);
+    setUsernameError(!isValidUsername);
+    setPasswordError(!isValidPassword);
+    setConfirmPasswordError(!isValidConfirmPassword);
+    // Nếu có lỗi, hiển thị thông báo lỗi
+    if (!email) {
+      setErrorAlert("Email is required");
+    } else if (!isValidEmail) {
+      setErrorAlert("Email is invalid");
+    } else if (!phone) {
+      setErrorAlert("Phone is required");
+    } else if (!isValidPhoneValue) {
+      setErrorAlert("Phone number is invalid");
+    } else if (!username) {
+      setErrorAlert("Username is required");
+    } else if (!isValidUsername) {
+      setErrorAlert("Username is invalid");
+    } else if (!password) {
+      setErrorAlert("Password is required");
+    } else if (!isValidPassword) {
+      setErrorAlert("Password is invalid");
+    } else if (!confirmPassword) {
+      setErrorAlert("Confirm password is required");
+    } else if (!isValidConfirmPassword) {
+      setErrorAlert("Passwords do not match");
+    } else {
+      setSuccess(true);
+      setOpen(true);
+      setTimeout(() => {
+        setRedirect(true);
+      }, 3000);
+    }
+
+    setOpen(true);
   };
 
   const handleClose = (event, reason) => {
@@ -53,7 +113,11 @@ function Login() {
     }
     setOpen(false);
   };
-
+  useEffect(() => {
+    if (redirect) {
+      navigate("/store-game"); 
+    }
+  }, [redirect, navigate]);
   function TransitionLeft(props) {
     return <Slide {...props} direction="left" />;
   }
@@ -67,9 +131,15 @@ function Login() {
         TransitionComponent={TransitionLeft}
         anchorOrigin={{ vertical, horizontal }}
       >
-        <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          Failed! Enter correct username and password.
-        </Alert>
+        {success ? (
+          <Alert severity="success" sx={{ width: "100%" }}>
+            Registration successful! Redirecting...
+          </Alert>
+        ) : (
+          <Alert severity="error" sx={{ width: "100%" }}>
+            {errorAlert}
+          </Alert>
+        )}
       </Snackbar>
       <Box
         sx={{
@@ -117,7 +187,7 @@ function Login() {
               >
                 <ThemeProvider theme={theme}>
                   <Container>
-                    <Box height={35} />
+                    <Box height={10} />
                     <Box
                       sx={{
                         display: "flex",
@@ -127,10 +197,10 @@ function Login() {
                       }}
                     >
                       <Avatar>
-                        <LockOutlinedIcon />
+                        <AccountCircleOutlinedIcon />
                       </Avatar>
-                      <Typography component="h1" variant="h4">
-                        Sign In
+                      <Typography component="h1" variant="h6">
+                        Sign Up
                       </Typography>
                     </Box>
                     <Box
@@ -149,9 +219,49 @@ function Login() {
                             required
                             fullWidth
                             id="email"
-                            label="Email or number phone"
+                            label="Email"
+                            type="email"
                             name="email"
                             autoComplete="email"
+                            error={emailError}
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
+                        >
+                          <TextField
+                            required
+                            fullWidth
+                            name="phone"
+                            label="Number phone"
+                            type="phone"
+                            id="phone"
+                            autoComplete="phone"
+                            error={phoneError}
+                            value={phone}
+                            onChange={(e) => setPhone(e.target.value)}
+                          />
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
+                        >
+                          <TextField
+                            required
+                            fullWidth
+                            name="username"
+                            label="Username"
+                            type="username"
+                            id="username"
+                            autoComplete="new-username"
+                            error={usernameError}
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
                           />
                         </Grid>
                         <Grid
@@ -167,33 +277,28 @@ function Login() {
                             type="password"
                             id="password"
                             autoComplete="new-password"
+                            error={passwordError}
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                         </Grid>
                         <Grid
                           item
                           xs={12}
-                          sx={{ ml: "3em", mr: "3em", textAlign: "center" }}
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
                         >
-                          <Stack direction="row" spacing={2}>
-                            <FormControlLabel
-                              sx={{
-                                width: "60%",
-                                display: { xs: "none", sm: "block" },
-                              }}
-                              onClick={() => setRemember(!remember)}
-                              control={<Checkbox checked={remember} />}
-                              label="Remember me"
-                            />
-                            <Typography
-                              xs={12}
-                              variant="body1"
-                              component="span"
-                              onClick={() => {}}
-                              style={{ marginTop: "10px", cursor: "pointer" }}
-                            >
-                              Forgot password?
-                            </Typography>
-                          </Stack>
+                          <TextField
+                            required
+                            fullWidth
+                            name="confirm-password"
+                            label="Confirm Password"
+                            type="password"
+                            id="confirm-password"
+                            autoComplete="confirm-password"
+                            error={confirmPasswordError}
+                            value={confirmPassword}
+                            onChange={(e) => setConfirmPassword(e.target.value)}
+                          />
                         </Grid>
                         <Grid item xs={12} sx={{ textAlign: "center" }}>
                           <Button
@@ -213,7 +318,7 @@ function Login() {
                               margin: "0 auto",
                             }}
                           >
-                            Sign in
+                            Register
                           </Button>
                         </Grid>
                         <Grid
@@ -221,19 +326,32 @@ function Login() {
                           xs={12}
                           sx={{ ml: "3em", mr: "3em", textAlign: "center" }}
                         >
-                          <Stack direction="row" spacing={2}>
+                          <Stack
+                            direction="row"
+                            alignItems="center"
+                            spacing={2}
+                          >
                             <Typography
                               variant="body1"
                               component="span"
-                              style={{ marginTop: "10px" }}
+                              sx={{
+                                marginTop: "10px",
+                                display: { xs: "none", sm: "block" },
+                              }}
                             >
-                              Not registered yet?{" "}
-                              <span
-                                style={{ color: "#beb4fb", cursor: "pointer" }}
-                                onClick={() => {}}
-                              >
-                                Create an Account
-                              </span>
+                              Already have an Account?
+                            </Typography>
+                            <Typography
+                              sx={{
+                                color: "#beb4fb",
+                                cursor: "pointer",
+                                flex: 1,
+                              }}
+                              onClick={() => {
+                                navigate("/store-game/login");
+                              }}
+                            >
+                              Sign In
                             </Typography>
                           </Stack>
                         </Grid>
@@ -271,4 +389,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default Register;

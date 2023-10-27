@@ -8,6 +8,9 @@ import Header from './components/Header'
 
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 import Login from './components/Login/Login.jsx';
+import Register from './components/Register/Register';
+import { ToastContainer } from 'react-toastify';
+
 
 function App() {
   return (
@@ -15,8 +18,21 @@ function App() {
       <Routes>
         <Route path="/store-game" exact element={<Layout />}></Route>
         <Route path="/store-game/login" element={<Login />}></Route>
-
+        <Route path="/store-game/register" element={<Register />}></Route>
+       
       </Routes>
+      <ToastContainer
+        position="bottom-center"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
     </BrowserRouter>
   );
 }
