@@ -19,6 +19,7 @@ import bg from "../Login/bg/Login.svg";
 import Logo from "../../assets/Logo.png";
 import ModeButton from "~/components/Mode/Button";
 import theme from "../../theme";
+import { useNavigate } from "react-router-dom";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -39,7 +40,8 @@ function Login() {
   const [open, setOpen] = useState(false);
   const [remember, setRemember] = useState(false);
   const vertical = "top";
-  const horizontal = "right";
+  const horizontal = "right"; 
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     setOpen(true);
@@ -230,7 +232,9 @@ function Login() {
                               Not registered yet?{" "}
                               <span
                                 style={{ color: "#beb4fb", cursor: "pointer" }}
-                                onClick={() => {}}
+                                onClick={() => {
+                                navigate("/store-game/register");
+                              }}
                               >
                                 Create an Account
                               </span>
