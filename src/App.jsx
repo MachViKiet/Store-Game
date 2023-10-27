@@ -6,21 +6,20 @@ import SlideStore from './page/SlideStore'
 import ProductStore from './page/ProductStore';
 import Header from './components/Header'
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import {Routes, Route, BrowserRouter} from "react-router-dom";
+import Login from './components/Login/Login.jsx';
 
 function App() {
   return (
-    <Router>
-        <Switch>
-          <Route path="/store-game">
-            <Layout />
-          </Route>
-        </Switch>
-    </Router>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/store-game" exact element={<Layout />}></Route>
+        <Route path="/store-game/login" element={<Login />}></Route>
+
+      </Routes>
+    </BrowserRouter>
   );
 }
-
-
 
 const Layout = () => {
     return (
