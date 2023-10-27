@@ -109,13 +109,18 @@ function Login() {
                 <ThemeProvider theme={darkTheme}>
                   <Container>
                     <Box height={35} />
-                    <Box sx={center}>
-                      <Avatar
-                        sx={{ ml: "35px", mb: "5px" }}
-                      >
+                    <Box
+                      sx={{
+                        display: "flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        flexDirection: "column",
+                      }}
+                    >
+                      <Avatar>
                         <LockOutlinedIcon />
                       </Avatar>
-                      <Typography component="h1" variant="h4" alignItems="center">
+                      <Typography component="h1" variant="h4">
                         Sign In
                       </Typography>
                     </Box>
@@ -126,7 +131,11 @@ function Login() {
                       sx={{ mt: 2 }}
                     >
                       <Grid container spacing={1}>
-                        <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
+                        >
                           <TextField
                             required
                             fullWidth
@@ -136,7 +145,11 @@ function Login() {
                             autoComplete="email"
                           />
                         </Grid>
-                        <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
+                        >
                           <TextField
                             required
                             fullWidth
@@ -147,15 +160,23 @@ function Login() {
                             autoComplete="new-password"
                           />
                         </Grid>
-                        <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{ ml: "3em", mr: "3em", textAlign: "center" }}
+                        >
                           <Stack direction="row" spacing={2}>
                             <FormControlLabel
-                              sx={{ width: "60%" }}
+                              sx={{
+                                width: "60%",
+                                display: { xs: "none", sm: "block" },
+                              }}
                               onClick={() => setRemember(!remember)}
                               control={<Checkbox checked={remember} />}
                               label="Remember me"
                             />
                             <Typography
+                              xs={12}
                               variant="body1"
                               component="span"
                               onClick={() => {}}
@@ -165,12 +186,16 @@ function Login() {
                             </Typography>
                           </Stack>
                         </Grid>
-                        <Grid item xs={12} sx={{ ml: "5em", mr: "5em" }}>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{ textAlign: "center" }}
+                        >
                           <Button
                             type="submit"
                             variant="contained"
                             fullWidth="true"
-                            size="large"
+                            size="medium"
                             sx={{
                               mt: "10px",
                               mr: "20px",
@@ -178,12 +203,19 @@ function Login() {
                               color: "#ffffff",
                               minWidth: "170px",
                               backgroundColor: "#FF9A01",
+                              textAlign: "center",
+                              display: "block",
+                              margin: "0 auto",
                             }}
                           >
                             Sign in
                           </Button>
                         </Grid>
-                        <Grid item xs={12} sx={{ ml: "3em", mr: "3em" }}>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{ ml: "3em", mr: "3em", textAlign: "center" }}
+                        >
                           <Stack direction="row" spacing={2}>
                             <Typography
                               variant="body1"
@@ -211,19 +243,19 @@ function Login() {
                 style={{
                   backgroundImage: `url(${bg})`,
                   backgroundSize: "contain",
-                  backgroundRepeat: "no-repeat", 
-                  backgroundPosition: "center", 
+                  backgroundRepeat: "no-repeat",
+                  backgroundPosition: "center",
                   height: "80%",
                   color: "#f5f5f5",
                 }}
               ></Box>
-                <Box
+              <Box
                 style={{
                   backgroundImage: `url(${Logo})`,
                   backgroundSize: "contain",
                   backgroundPosition: "center",
-                  backgroundRepeat: "no-repeat", 
-                  height: "20%"
+                  backgroundRepeat: "no-repeat",
+                  height: "20%",
                 }}
               ></Box>
             </Grid>
