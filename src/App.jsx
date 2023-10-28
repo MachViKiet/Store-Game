@@ -7,7 +7,7 @@ import ProductStore from './page/ProductStore';
 import Header from './components/Header'
 
 import {Routes, Route, BrowserRouter} from "react-router-dom";
-import Login from './components/Login/Login.jsx';
+import Login from './page/Auth/Login/Login';
 
 function App() {
   return (

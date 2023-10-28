@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
@@ -14,8 +15,8 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
-import bg from "../Login/bg/Login.svg";
-import Logo from "../../assets/Logo.png";
+import bg from "./bg/Login.svg";
+import Logo from "~/assets/Logo.png";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -52,6 +53,7 @@ function Login() {
   const handleSubmit = async (event) => {
     setOpen(true);
     event.preventDefault();
+    // eslint-disable-next-line no-unused-vars
     const data = new FormData(event.currentTarget);
   };
 
