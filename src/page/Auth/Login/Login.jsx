@@ -39,11 +39,7 @@ const boxstyle = {
   boxShadow: 24,
 };
 
-const center = {
-  position: "relative",
-  top: "50%",
-  left: "37%",
-};
+
 function Login() {
   const [open, setOpen] = useState(false);
   const [remember, setRemember] = useState(false);
