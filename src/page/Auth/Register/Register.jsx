@@ -13,10 +13,10 @@ import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
 import bg from "../Login/bg/Login.svg";
-import Logo from "../../assets/Logo.png";
+import Logo from "~/assets/Logo.png";
 import ModeButton from "~/components/Mode/Button";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
-import theme from "../../theme";
+import theme from "~/theme";
 import { useNavigate } from "react-router-dom";
 
 const Alert = forwardRef(function Alert(props, ref) {

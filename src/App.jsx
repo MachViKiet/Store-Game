@@ -10,7 +10,7 @@ import {Routes, Route, BrowserRouter} from "react-router-dom";
 
 import Login from './page/Auth/Login/Login';
 
-import Register from './components/Register/Register';
+import Register from './page/Auth/Register/Register';
 import { ToastContainer } from 'react-toastify';
 
 

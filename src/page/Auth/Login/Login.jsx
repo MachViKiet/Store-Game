@@ -20,7 +20,7 @@ import bg from "./bg/Login.svg";
 import Logo from "~/assets/Logo.png";
 
 import ModeButton from "~/components/Mode/Button";
-import theme from "../../theme";
+import theme from "~/theme";
 import { useNavigate } from "react-router-dom";
 
 
