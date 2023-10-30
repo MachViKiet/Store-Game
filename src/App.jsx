@@ -4,7 +4,8 @@ import Box from '@mui/material/Box';
 // import Container from '@mui/material/Container';
 import SlideStore from './page/SlideStore'
 import ProductStore from './page/ProductStore';
-import Header from './components/Header'
+import Header from './components/Header';
+import Footer from './components/Footer'
 
 import {Routes, Route, BrowserRouter} from "react-router-dom";
 import Login from './components/Login/Login.jsx';
@@ -61,7 +62,7 @@ const Layout = () => {
         </Box>
   
         {/*  ---- Footer ---- */}
-        <Box sx={{ padding: "50px 0" }}>
+        {/* <Box sx={{ padding: "50px 0" }}>
           <Box
             sx={{
               bgcolor: "cover.bg4",
@@ -72,9 +73,9 @@ const Layout = () => {
               justifyContent: "center",
             }}
           >
-            Đây là phần footer chưa kịp viết !! thông cảm !!
           </Box>
-        </Box>
+        </Box> */}
+        <Footer />
       </Box>
     );
   }
