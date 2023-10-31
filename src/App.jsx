@@ -1,28 +1,45 @@
-// import React from 'react'
-import Box from '@mui/material/Box';
-// import Grid from '@mui/material/Unstable_Grid2';
-// import Container from '@mui/material/Container';
-import SlideStore from './page/SlideStore'
-import ProductStore from './page/ProductStore';
-import Header from './components/Header'
+import { Routes, Route } from "react-router-dom";
 
-import {Routes, Route, BrowserRouter} from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import { route } from "~/route/route";
 
-import Login from './page/Auth/Login/Login';
-
-import Register from './page/Auth/Register/Register';
-import { ToastContainer } from 'react-toastify';
-
+import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 
 function App() {
+  const publicPath = route.publicPath;
   return (
-    <BrowserRouter>
+    <>
       <Routes>
-        <Route path="/store-game" exact element={<Layout />}></Route>
+        {/* <Route path="/store-game/" exact element={<Layout />}></Route>
         <Route path="/store-game/login" element={<Login />}></Route>
-        <Route path="/store-game/register" element={<Register />}></Route>
-       
+        <Route path="/store-game/register" element={<Register />}></Route> */}
+        {publicPath.map((route, index) => {
+          console.log(route)
+          let contents = route.content;
+          let path = route.path;
+          let Layout = route?.layout ? route.layout : DefaultLayout;
+          return (
+            <>
+              <Route
+                key={index}
+                path={path}
+                element={
+                  <Layout>
+                    {
+                    contents.map((content, index) => {
+                      let progs = content?.progs ? content.progs : "empty"
+                      let Component = content?.component ? content.component : content;
+                      return <Component key={index} progs = {progs} />;
+                    })
+                    }
+                  </Layout>
+                }
+              />
+            </>
+          );
+        })}
       </Routes>
+
       <ToastContainer
         position="bottom-center"
         autoClose={5000}
@@ -35,49 +52,8 @@ function App() {
         pauseOnHover
         theme="light"
       />
-    </BrowserRouter>
+    </>
   );
 }
 
-const Layout = () => {
-    return (
-      <Box
-        sx={{
-          minHeight: "100vh",
-          bgcolor: "cover.bg1",
-        }}
-      >
-        {/*  --- Header ---  */}
-        <Header />
-        {/*  ---- Body ---- */}
-        <Box
-          sx={{
-            width: "100%",
-          }}
-        >
-          <SlideStore />
-          <ProductStore />
-          <ProductStore />
-          <ProductStore />
-          <ProductStore />
-        </Box>
-  
-        {/*  ---- Footer ---- */}
-        <Box sx={{ padding: "50px 0" }}>
-          <Box
-            sx={{
-              bgcolor: "cover.bg4",
-              height: "300px",
-              width: "100%",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            Đây là phần footer chưa kịp viết !! thông cảm !!
-          </Box>
-        </Box>
-      </Box>
-    );
-  }
 export default App;

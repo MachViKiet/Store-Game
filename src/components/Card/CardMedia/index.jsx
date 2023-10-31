@@ -1,10 +1,12 @@
 import { Box } from "@mui/material";
 // import { Typography } from "@mui/material";
 import StoreDialog from "../../Modal/Store/StoreDialog";
+import { Link } from "react-router-dom";
 
 
 function CardMedia(progs) {
   const URL_IMAGE = progs.image;
+  const KEY_PRODUCT = progs.id ? progs.id : 'empty'
 
   const disableMore = progs.disableMore ? {} : {
     "&:hover .MuiBox-root": {
@@ -16,6 +18,7 @@ function CardMedia(progs) {
 
   return (
     <>
+    {/* {console.log(progs)} */}
       <Box
         sx={{...{
           background: "cover.bg4",
@@ -37,8 +40,7 @@ function CardMedia(progs) {
             top: 0
           }}
         >
-
-          <StoreDialog/>
+          <Link to = {'/store-game/product/' +  KEY_PRODUCT}><StoreDialog/></Link>
         </Box>
       </Box>
     </>

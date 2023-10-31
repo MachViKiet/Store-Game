@@ -1,4 +1,5 @@
-import { Container, Box, Typography } from "@mui/material";
+import { Container, Box } from "@mui/material";
+import { Link } from "react-router-dom";
 // import FeedIcon from "@mui/icons-material/Feed";
 // import HomeIcon from "@mui/icons-material/Home";
 // import LocalOfferIcon from "@mui/icons-material/LocalOffer";
@@ -48,16 +49,29 @@ function NavBar() {
                 // icon: <HomeIcon fontSize="large" sx={{ ...STYLEICON, ...{color: '#f2eefe'} }} />,
               },
               {
-                key: "WishList",
+                key: "Contact",
                 value: "",
                 // icon: <LocalOfferIcon fontSize="large" sx={{ ...STYLEICON, ...{color: '#f2eefe'} }} />,
               },
             ].map((inf) => {
               return (
                 <>
-                  <Typography
+                  <Link
+                    to = {'/store-game/' + inf.key}
+                    style = {{
+                      color: '#fff',
+                      fontSize: "16px",
+                      display: "flex",
+                      alignItems: "center",
+                      textDecoration: 'none',
+                      ':hover': {
+                        textDecoration: 'underline',
+                        cursor: "pointer",
+                      },
+                    }}
                     sx={{
                       fontSize: "16px",
+                      color: 'text.primary',
                       display: "flex",
                       alignItems: "center",
                       "&:hover": {
@@ -68,7 +82,7 @@ function NavBar() {
                   >
                     {inf?.icon}
                     {inf.key}
-                  </Typography>
+                  </Link>
                 </>
               );
             })}
