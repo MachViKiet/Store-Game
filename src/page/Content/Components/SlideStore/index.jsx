@@ -4,6 +4,8 @@ import Container from "@mui/material/Container";
 import Grid from "@mui/material/Unstable_Grid2";
 import ImageSteper from "../ImageSteper";
 import CardMedia from "~/components/Card/CardMedia";
+import { useNavigate } from "react-router-dom";
+
 const STYLEBOX = {
   width: "100%",
   height: "100%",
@@ -11,19 +13,21 @@ const STYLEBOX = {
 };
 
 function SildeStore(progs) {
-
-  const TYPEGAME = progs.progs.type
+  const TYPEGAME = progs.progs.type;
 
   const POSTERS = progs.progs.poster;
 
   const CARDMEDIA = progs.progs.cardMedia;
 
+  const navigate = useNavigate();
+  const NAVHANDLE = (id) => {
+    navigate('/store-game/product/' + id)
+  };
+
   return (
     <Box sx={{ padding: "20px 0", flexGrow: 1, bgcolor: "cover.bg1" }}>
       <Container maxWidth="lg">
-
         <Grid container pb={2} spacing={2}>
-
           {/* grid-1 */}
           <Grid
             xs={0}
@@ -64,6 +68,9 @@ function SildeStore(progs) {
                         {index + 1}.{" "}
                       </Typography>
                       <Typography
+                        onClick={() => {
+                          NAVHANDLE(inf.id);
+                        }}
                         variant="h6"
                         sx={{
                           minWidth: "35px",
@@ -71,6 +78,7 @@ function SildeStore(progs) {
                           textAlign: "center",
                           "&:hover": {
                             cursor: "pointer",
+                            textDecoration: "underline",
                           },
                           fontSize: "14px",
                           fontWeight: "500",
@@ -129,7 +137,6 @@ function SildeStore(progs) {
             );
           })}
         </Grid>
-
       </Container>
     </Box>
   );

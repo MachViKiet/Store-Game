@@ -1,5 +1,5 @@
 export const Simulating = {
-    title: "Simulating",
+    title: "Simulation",
     cardMedia: [
       {
         image:

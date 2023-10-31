@@ -60,6 +60,86 @@ const publicPath = [
     layout: DefaultLayout,
   },
 
+  {
+    // Trang chủ
+    path: "/store-game/product/Action",
+    content: [
+      { component: ProductStore, progs: ActionProduct },
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/product/Adventure",
+    content: [
+      { component: ProductStore },
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/product/RolePlaying",
+    content: [
+      { component: ProductStore },
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/product/Strategy",
+    content: [
+      { component: ProductStore},
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/product/Sport&Racing",
+    content: [
+      { component: ProductStore},
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/product/Horror",
+    content: [
+      { component: ProductStore},
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/product/Casual",
+    content: [
+      { component: ProductStore},
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/product/Survival",
+    content: [
+      { component: ProductStore},
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/product/Simulation",
+    content: [
+      { component: ProductStore, progs: Simulating },
+    ],
+    layout: DefaultLayout,
+  },
 
   {
     // Trang News

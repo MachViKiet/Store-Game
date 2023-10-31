@@ -96,7 +96,8 @@ const theme = extendTheme({
           contrastText: '#fff'
         },
         background:{
-          paper: '#dbdbdb'
+          paper: '#dbdbdb',
+          default: '#f3f4f6'
         },
         cover:{  // Custom 
           main: '#000',
@@ -130,7 +131,8 @@ const theme = extendTheme({
           contrastText: '#fff'
         },
         background:{
-          paper: '#dbdbdb'
+          paper: '#dbdbdb',
+          default: '#000d21'
         },
         cover:{  // Custom 
           main: '#000',
