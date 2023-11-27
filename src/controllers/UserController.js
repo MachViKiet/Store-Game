@@ -3,11 +3,12 @@ const JwtService = require('../services/JwtService')
 
 const createUser= async(req,res)=>{
     try{
-        const {name,email, password, confirmPassword, phone} = req.body
+        const {name,email, password, confirmPassword, phone, role} = req.body
         const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
         const isCheckEmail = reg.test(email)
+        const allowedRoles =['Customer', 'Seller'];
 
-        if(!name || !email || !password || !confirmPassword || !phone){
+        if(!name || !email || !password || !confirmPassword || !phone || !role){
             return res.status(200).json({
                 status: 'ERR',
                 messgae: 'The input is required'
@@ -22,6 +23,11 @@ const createUser= async(req,res)=>{
                 status: 'ERR',
                 messgae: 'The input is equal confirm password'
             })
+        }else if (!allowedRoles.includes(role)) {
+            return res.status(200).json({
+                status: 'ERR',
+                message: 'Invalid user role',
+            })
         }
         const response = await UserService.createUser(req.body)
         return res.status(200).json(response)
@@ -34,7 +40,6 @@ const createUser= async(req,res)=>{
 
 const loginUser= async(req,res)=>{
     try{
-        console.log(req.body);
         const {email, password, confirmPassword} = req.body
         const reg = /^\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
         const isCheckEmail = reg.test(email)
