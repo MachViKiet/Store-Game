@@ -12,26 +12,28 @@ const createUser = (newUser)=>{
 
             if(checkUser!==null){
                 resolve({
-                    status: 'OK',
+                    status: 'ERR',
                     message: 'The email is already'
                 })
             }
 
             const hash = bcrypt.hashSync(password, 10)
 
-            const createUser = await User.create({
-                name,
-                email, 
-                password: hash, 
-                phone,
-                role
-            })
-            if(createUser){
-                resolve({
-                    status: 'OK',
-                    message: 'SUCCESS',
-                    data: createUser
+            if(checkUser===null){
+                const createUser = await User.create({
+                    name,
+                    email, 
+                    password: hash, 
+                    phone,
+                    role
                 })
+                if(createUser){
+                    resolve({
+                        status: 'OK',
+                        message: 'SUCCESS',
+                        data: createUser
+                    })
+                }
             }
         }catch(e){
             reject(e)

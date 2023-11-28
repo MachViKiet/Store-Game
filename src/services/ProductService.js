@@ -4,34 +4,36 @@ const { generalAccessToken, generalRefreshToken } = require("./JwtService")
 
 const createProduct = (newProduct)=>{
     return new Promise(async(resolve, reject)=>{
-        const { name, image, type, price, countInStock, rating, description } = newProduct
+        const { title, release_date, categories, sub_categories, price, img_url, description, rating, reviews_count } = newProduct
         try{
             const checkProduct = await Product.findOne({
-                name: name
+                title: title
             })
-
             if(checkProduct!==null){
                 resolve({
-                    status: 'OK',
+                    status: 'ERR',
                     message: 'The name of product is already'
                 })
             }
-
-            const newProduct = await Product.create({
-                name, 
-                image, 
-                type, 
-                price, 
-                countInStock, 
-                rating, 
-                description
-            })
-            if(newProduct){
-                resolve({
-                    status: 'OK',
-                    message: 'SUCCESS',
-                    data: newProduct
+            if(checkProduct===null){
+                const createProduct = await Product.create({
+                    title, 
+                    release_date, 
+                    categories, 
+                    sub_categories, 
+                    price, 
+                    img_url, 
+                    description, 
+                    rating, 
+                    reviews_count
                 })
+                if(createProduct){
+                    resolve({
+                        status: 'OK',
+                        message: 'SUCCESS',
+                        data: createProduct
+                    })
+                }
             }
         }catch(e){
             reject(e)
