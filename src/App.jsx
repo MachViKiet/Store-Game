@@ -1,3 +1,5 @@
+import './App.css'
+
 import { Routes, Route } from "react-router-dom";
 
 import { ToastContainer } from "react-toastify";
@@ -14,7 +16,6 @@ function App() {
         <Route path="/store-game/login" element={<Login />}></Route>
         <Route path="/store-game/register" element={<Register />}></Route> */}
         {publicPath.map((route, index) => {
-          console.log(route)
           let contents = route.content;
           let path = route.path;
           let Layout = route?.layout ? route.layout : DefaultLayout;

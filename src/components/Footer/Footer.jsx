@@ -1,21 +1,23 @@
 
-import { Box } from '@mui/material'
+import { Box, Container } from '@mui/material'
 
 function Footer() {
   return (
-    <Box sx={{ padding: "50px 0" }}>
-    <Box
+    <Box sx={{ 
+      mt: '100px',
+      bgcolor: "cover.bg4",
+      height: "100px",
+      width: "100%"}}>
+    <Container
       sx={{
-        bgcolor: "cover.bg4",
-        height: "300px",
-        width: "100%",
+        pt: '50px',
         display: "flex",
         alignItems: "center",
-        justifyContent: "center",
+        justifyContent: "start",
       }}
     >
-      Đây là phần footer chưa kịp viết !! thông cảm !!
-    </Box>
+
+    </Container>
   </Box>
   )
 }

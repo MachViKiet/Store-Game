@@ -18,17 +18,17 @@ function TagList() {
         </Box>
         <Grid container spacing={2}>
           {[
-            { key: "Action", color: "#3D5A80" },
-            { key: "Role Playing", color: "#98C1D9" },
-            { key: "Simulation", color: "#EE6C4D" },
-            { key: "Horror", color: "#293241" },
-            { key: "Casual", color: "#545B67" },
-            { key: "Survial", color: "#767C85" },
+            { key: "Action", tag: "Action" ,color: "#3D5A80" },
+            { key: "Role Playing", tag: "Role_Playing", color: "#98C1D9" },
+            { key: "Simulation", tag: "Simulation", color: "#EE6C4D" },
+            { key: "Horror", tag: "Horror", color: "#293241" },
+            { key: "Casual", tag: "Casual", color: "#545B67" },
+            { key: "Survial", tag: "Survial", color: "#767C85" },
           ].map((inf,index) => {
             return (
               <>
                 <Grid key = {index} item xs={4} md={2}>
-                  <Tag value={inf.key} color={inf.color} />
+                  <Tag value={inf.tag} color={inf.color} />
                 </Grid>
               </>
             );

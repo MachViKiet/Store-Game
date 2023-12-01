@@ -22,6 +22,7 @@ import Logo from "~/assets/Logo.png";
 import ModeButton from "~/components/Mode/Button";
 import theme from "~/theme";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 
 const Alert = forwardRef(function Alert(props, ref) {
@@ -46,11 +47,25 @@ function Login() {
   const horizontal = "right"; 
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [errorAlert, setErrorAlert] = useState("");
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const handleSubmit = async (event) => {
-    setOpen(true);
+    setOpen(false);
     event.preventDefault();
     // eslint-disable-next-line no-unused-vars
-    const data = new FormData(event.currentTarget);
+
+    setIsSubmit((cur)=>!cur);
+
+    console.log({
+      user: email,
+      password: password
+    })
+
+
   };
 
   const handleClose = (event, reason) => {
@@ -64,8 +79,56 @@ function Login() {
     return <Slide {...props} direction="left" />;
   }
 
+  useEffect(()=>{
+    const login = ()=>{
+        fetch("http://localhost:5000/api/user/login", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email,
+            password: password,
+          }),
+        })
+          .then((response) => {
+            if (!response.ok) {
+              throw new Error("Network response was not ok");
+            }
+            return response.json();
+          })
+          .then((res) => {
+            console.log("Server response:", res);
+            if (isSubmit && res.status === "OK") {
+
+              // Đánh dấu token đã đăng nhập
+              // todo ...
+
+              navigate("/store-game");
+            } else {
+              setErrorAlert(res.messgae);
+              console.log(res.messgae)
+              setOpen(true);
+              setIsSubmit((cur)=> !cur)
+            }
+            // Xử lý phản hồi từ server tại đây
+          })
+          .catch((error) => {
+            console.error("There was an error:", error);
+            alert('Error')
+            // Xử lý lỗi tại đây
+          });
+
+    }
+
+    if ( isSubmit  == true ){
+        login()
+    }
+  }, [email, password, isSubmit, navigate])
+
   return (
     <ThemeProvider theme={theme}>
+            <h1>{isSubmit ? "true" : "false"}</h1>
       <Snackbar
         open={open}
         autoHideDuration={3000}
@@ -74,9 +137,10 @@ function Login() {
         anchorOrigin={{ vertical, horizontal }}
       >
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          Failed! Enter correct username and password.
+          {errorAlert}
         </Alert>
       </Snackbar>
+
       <Box
         sx={{
           backgroundColor: (theme) => {
@@ -155,9 +219,11 @@ function Login() {
                             required
                             fullWidth
                             id="email"
-                            label="Email or number phone"
+                            label="Email"
                             name="email"
                             autoComplete="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </Grid>
                         <Grid
@@ -172,7 +238,9 @@ function Login() {
                             label="Password"
                             type="password"
                             id="password"
+                            value={password}
                             autoComplete="new-password"
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                         </Grid>
                         <Grid
