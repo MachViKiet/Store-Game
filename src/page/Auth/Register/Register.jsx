@@ -44,11 +44,13 @@ function Register() {
   const vertical = "top";
   const horizontal = "right";
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+
   const [errorAlert, setErrorAlert] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
@@ -56,18 +58,20 @@ function Register() {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [redirect, setRedirect] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const isValidPhone = (phone) => {
     // Thực hiện kiểm tra số điện thoại hợp lệ
     return true; // Thay true bằng kết quả kiểm tra số điện thoại của bạn
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const isValidEmail = email && /\S+@\S+\.\S+/.test(email);
     const isValidPhoneValue = phone && isValidPhone(phone);
     const isValidUsername = username && username.trim() !== "";
     const isValidPassword = password && password.trim() !== "";
-    const isValidConfirmPassword = confirmPassword === password;
+    const isValidConfirmPassword = confirmPassword === password && password !== "";
 
     // Set lỗi cho từng khung
     setEmailError(!isValidEmail);
@@ -75,6 +79,7 @@ function Register() {
     setUsernameError(!isValidUsername);
     setPasswordError(!isValidPassword);
     setConfirmPasswordError(!isValidConfirmPassword);
+
     // Nếu có lỗi, hiển thị thông báo lỗi
     if (!email) {
       setErrorAlert("Email is required");
@@ -97,14 +102,8 @@ function Register() {
     } else if (!isValidConfirmPassword) {
       setErrorAlert("Passwords do not match");
     } else {
-      setSuccess(true);
-      setOpen(true);
-      setTimeout(() => {
-        setRedirect(true);
-      }, 3000);
+      setIsSubmit((cur)=>!cur);
     }
-
-    setOpen(true);
   };
 
   const handleClose = (event, reason) => {
@@ -113,17 +112,63 @@ function Register() {
     }
     setOpen(false);
   };
+
   useEffect(() => {
-    if (redirect) {
-      navigate("/store-game"); 
+    const Register = ()=>{
+
+      fetch("http://localhost:5000/api/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: username,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+          phone : phone
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          setSuccess(true);
+          setOpen(true);
+          
+          return response.json();
+        })
+        .then((res) => {
+          console.log("Server response:", res);
+          if (isSubmit && res.status === "OK" && res.message === "SUCCESS") {
+            navigate("/store-game");
+          } else {
+            setErrorAlert(res.message);
+            setIsSubmit((cur)=> !cur)
+          }
+          // Xử lý phản hồi từ server tại đây
+        })
+        .catch((error) => {
+          console.error("There was an error:", error);
+          alert('Error')
+          // Xử lý lỗi tại đây
+        });
     }
-  }, [redirect, navigate]);
+
+    if (isSubmit == true){
+      Register()
+    }
+  
+  }, [email, phone, username, password, confirmPassword, isSubmit, navigate]);
+
   function TransitionLeft(props) {
-    return <Slide {...props} direction="left" />;
+    return <Slide {...props} direction="left"/>;
   }
 
   return (
     <ThemeProvider theme={theme}>
+      <h1>{isSubmit ? "true" : "false"}</h1>
       <Snackbar
         open={open}
         autoHideDuration={3000}
@@ -141,6 +186,7 @@ function Register() {
           </Alert>
         )}
       </Snackbar>
+
       <Box
         sx={{
           backgroundColor: (theme) => {
@@ -151,6 +197,7 @@ function Register() {
           color: "#f5f5f5",
         }}
       >
+        {/* Header */}
         <Box
           sx={{
             backgroundColor: "black",
@@ -162,6 +209,7 @@ function Register() {
         >
           <ModeButton />
         </Box>
+
         <Box
           sx={boxstyle}
           alignItems="center"
@@ -361,6 +409,8 @@ function Register() {
                 </ThemeProvider>
               </Box>
             </Grid>
+
+            {/* Background-image */}
             <Grid item lg={6}>
               <Box
                 style={{

@@ -2,6 +2,7 @@
 import TagList from "~/page/Content/Components/TagList/TagList";
 import SlideStore from "~/page/Content/Components/SlideStore";
 import ProductStore from "~/page/Content/Components/ProductStore";
+import ProductDetail from "~/page/Content/Components/ProductDetail/ProductDetail";
 
 // Auth
 import Login from "~/page/Auth/Login/Login";
@@ -20,6 +21,7 @@ import {sliderContent} from '~/apis/Home/Slider.js'
 import { OutStandingProduct } from "~/apis/Home/Products/OutStandingProduct";
 import { ActionProduct } from "~/apis/Home/Products/ActionProduct";
 import {Simulating} from "~/apis/Home/Products/Simulating"
+
 const publicPath = [
   {
     // Trang chủ
@@ -49,20 +51,16 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/:id",
+    path: "/store-game/product/:id/",
     content: [
-      { component: SlideStore, progs: sliderContent },
-      { component: ProductStore, progs: OutStandingProduct },
-      { component: TagList, progs: "" },
-      { component: ProductStore, progs: ActionProduct },
-      { component: ProductStore, progs: Simulating },
+      { component: ProductDetail},
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Action",
+    path: "/store-game/Action",
     content: [
       { component: ProductStore, progs: ActionProduct },
     ],
@@ -71,7 +69,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/Adventure",
+    path: "/store-game/Adventure",
     content: [
       { component: ProductStore },
     ],
@@ -80,7 +78,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/RolePlaying",
+    path: "/store-game/RolePlaying",
     content: [
       { component: ProductStore },
     ],
@@ -89,7 +87,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/Strategy",
+    path: "/store-game/Strategy",
     content: [
       { component: ProductStore},
     ],
@@ -98,7 +96,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/Sport&Racing",
+    path: "/store-game/Sport&Racing",
     content: [
       { component: ProductStore},
     ],
@@ -107,7 +105,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/Horror",
+    path: "/store-game/Horror",
     content: [
       { component: ProductStore},
     ],
@@ -116,7 +114,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/Casual",
+    path: "/store-game/Casual",
     content: [
       { component: ProductStore},
     ],
@@ -125,7 +123,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/Survival",
+    path: "/store-game/Survival",
     content: [
       { component: ProductStore},
     ],
@@ -134,7 +132,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/product/Simulation",
+    path: "/store-game/Simulation",
     content: [
       { component: ProductStore, progs: Simulating },
     ],

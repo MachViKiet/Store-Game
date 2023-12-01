@@ -21,7 +21,8 @@ function SildeStore(progs) {
 
   const navigate = useNavigate();
   const NAVHANDLE = (id) => {
-    navigate('/store-game/product/' + id)
+    window.scrollTo(0, 0);
+    navigate('/store-game/' + id)
   };
 
   return (
