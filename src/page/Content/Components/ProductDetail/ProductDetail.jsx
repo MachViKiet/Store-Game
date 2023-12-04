@@ -12,6 +12,7 @@ import LocalGroceryStoreIcon from '@mui/icons-material/LocalGroceryStore';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import { useEffect } from "react";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -21,15 +22,19 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function ProductDetail() {
+function ProductDetail(progs) {
   const [curImg, setCurImg] = useState(0);
   const [isFavor, setIsFavor] = useState(false);
-
   const [seeMoreButton, setSeeMoreButton] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
 
   const clickHandle = (num) => {
     setCurImg(num);
   };
+
+  useEffect(() => {
+    localStorage.getItem("accessToken") ? setIsLogin(true) : "";
+  }, []);
 
   const nexthandle = () => {
     setCurImg((prev) => {
@@ -44,9 +49,18 @@ function ProductDetail() {
     });
   };
 
+  const HANDLEBUYPRODUCT = ()=>{
+    // Xử lí cập nhật giỏ hàng
+    // CHưa đăng nhập 
+    // Nếu thất bại => báo lỗi
+    // Nếu thành công => Tăng số lượng giỏ hàng lên 
+
+    isLogin && progs.user.updateCart()
+  }
+
   return (
     <>
-      {/* <MuiImageSlider images={images}/> */}
+      {console.log(progs)}
       <Container
         sx={{
           py: "10px",
@@ -298,7 +312,7 @@ function ProductDetail() {
 
                   pt: 4
                 }}>
-                  <Button startIcon={<LocalGroceryStoreIcon />} variant="outlined" sx = {{width: '45%', height: '50px',  mr : 2}}>BUY PRODUCT</Button>
+                  <Button onClick={HANDLEBUYPRODUCT} startIcon={<LocalGroceryStoreIcon />} variant="outlined" sx = {{width: '45%', height: '50px',  mr : 2}}>BUY PRODUCT</Button>
                   <Button onClick= {()=> {setIsFavor((cur)=> !cur)}}>
                     { isFavor ? <FavoriteIcon sx = {{color:"#ff6262"}} /> : <FavoriteBorderIcon/> }  </Button>
                 </Box>
