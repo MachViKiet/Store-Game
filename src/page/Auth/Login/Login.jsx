@@ -109,7 +109,8 @@ function Login() {
               localStorage.setItem('user_id', res.user_id)
 
 
-              navigate("/store-game");
+              window.location= "/store-game/" ;
+              
             } else {
               setErrorAlert(res.messgae);
               console.log(res.messgae)
