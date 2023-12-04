@@ -21,6 +21,7 @@ import {sliderContent} from '~/apis/Home/Slider.js'
 import { OutStandingProduct } from "~/apis/Home/Products/OutStandingProduct";
 import { ActionProduct } from "~/apis/Home/Products/ActionProduct";
 import {Simulating} from "~/apis/Home/Products/Simulating"
+import CartFiled from "~/page/Content/CartFiled/CartFiled";
 
 const publicPath = [
   {
@@ -163,6 +164,15 @@ const publicPath = [
     path: "/store-game/register",
     content: [Register],
     layout: NoneHeaderAndFooter,
+  },
+
+  {
+    // Cart
+    path: "/store-game/:id/cart",
+    content: [
+      { component: CartFiled, progs: Simulating },
+    ],
+    layout: DefaultLayout,
   },
 ];
 

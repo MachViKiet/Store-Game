@@ -5,12 +5,23 @@ import { Link } from "react-router-dom";
 // import LocalOfferIcon from "@mui/icons-material/LocalOffer";
 
 import ModeButton from "~/components/Mode/Button";
+import SignOutButton from "../../Author/SignOut/SignOutButton";
+import { useEffect, useState } from "react";
 
 // const STYLEICON = {
 //   mr: "10%",
 // };
 
 function NavBar() {
+
+  const [isLogin, setIsLogin] = useState(false);
+  // const [amountInCart, setAmountInCart] = useState(0)
+
+  useEffect(() => {
+    localStorage.getItem("accessToken") ? setIsLogin(true) : "";
+    console.log(localStorage.getItem("accessToken"));
+  }, []);
+
   return (
     <>
       <Box
@@ -89,6 +100,8 @@ function NavBar() {
           </Box>
 
           <Box>
+
+          { isLogin  && <SignOutButton />}
             <ModeButton Title />
           </Box>
         </Container>

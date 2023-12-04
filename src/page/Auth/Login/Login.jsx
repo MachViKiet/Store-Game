@@ -34,7 +34,8 @@ const boxstyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "75%",
+  width: "95%",
+  maxWidth: '500px',
   height: "70%",
   bgcolor: "transparent",
   boxShadow: 24,
@@ -100,25 +101,32 @@ function Login() {
           .then((res) => {
             console.log("Server response:", res);
             if (isSubmit && res.status === "OK") {
-
+              console.log(res)
               // Đánh dấu token đã đăng nhập
               // todo ...
+
+              localStorage.setItem('accessToken', res.access_token)
+              localStorage.setItem('user_id', res.user_id)
+
 
               navigate("/store-game");
             } else {
               setErrorAlert(res.messgae);
               console.log(res.messgae)
               setOpen(true);
-              setIsSubmit((cur)=> !cur)
             }
             // Xử lý phản hồi từ server tại đây
           })
           .catch((error) => {
             console.error("There was an error:", error);
-            alert('Error')
+
+            setErrorAlert("có xíu lỗi");
+            console.log(error)
+            setOpen(true);
             // Xử lý lỗi tại đây
           });
 
+          setIsSubmit((cur)=> !cur)
     }
 
     if ( isSubmit  == true ){
@@ -128,7 +136,7 @@ function Login() {
 
   return (
     <ThemeProvider theme={theme}>
-            <h1>{isSubmit ? "true" : "false"}</h1>
+            {/* <h1>{isSubmit ? "true" : "false"}</h1> */}
       <Snackbar
         open={open}
         autoHideDuration={3000}
@@ -171,7 +179,7 @@ function Login() {
           }}
         >
           <Grid container>
-            <Grid item xs={12} sm={12} lg={6}>
+            <Grid item xs={12} sm={12} lg={12}>
               <Box
                 sx={{
                   backgroundSize: "cover",
@@ -196,10 +204,10 @@ function Login() {
                         flexDirection: "column",
                       }}
                     >
-                      <Avatar>
-                        <LockOutlinedIcon />
-                      </Avatar>
-                      <Typography component="h1" variant="h4">
+                      {/* <Avatar sx = {{ color: '#fff', bgcolor: '#31314d', height: '60px', width: '60px' }}> */}
+                        <LockOutlinedIcon color="#fff" fontSize="large" />
+                      {/* </Avatar> */}
+                      <Typography component="h1" variant="h4" pt={1}>
                         Sign In
                       </Typography>
                     </Box>
@@ -246,12 +254,15 @@ function Login() {
                         <Grid
                           item
                           xs={12}
-                          sx={{ ml: "3em", mr: "3em", textAlign: "center" }}
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
                         >
-                          <Stack direction="row" spacing={2}>
+                          <Stack direction="row" sx = {{
+                            display: 'flex',
+                            width: '100%',
+                            justifyContent: 'space-between'
+                          }}>
                             <FormControlLabel
                               sx={{
-                                width: "60%",
                                 display: { xs: "none", sm: "block" },
                               }}
                               onClick={() => setRemember(!remember)}
@@ -269,16 +280,17 @@ function Login() {
                             </Typography>
                           </Stack>
                         </Grid>
-                        <Grid item xs={12} sx={{ textAlign: "center" }}>
+                        <Grid item xs={12} 
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
+                          >
                           <Button
                             type="submit"
                             variant="contained"
                             fullWidth="true"
                             size="medium"
                             sx={{
-                              mt: "10px",
-                              mr: "20px",
-                              borderRadius: 28,
+                              width: '1',
+                              borderRadius: '10px',
                               color: "#ffffff",
                               minWidth: "170px",
                               backgroundColor: "#FF9A01",
@@ -319,7 +331,7 @@ function Login() {
                 </ThemeProvider>
               </Box>
             </Grid>
-            <Grid item lg={6}>
+            {/* <Grid item lg={6}>
               <Box
                 style={{
                   backgroundImage: `url(${bg})`,
@@ -339,7 +351,7 @@ function Login() {
                   height: "30%",
                 }}
               ></Box>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </Box>
