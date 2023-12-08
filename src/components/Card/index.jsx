@@ -11,27 +11,22 @@ function Card(progs) {
         <CardMedia id={key} image={url}></CardMedia>
       </div>
       <Box style = {{
-        display: 'flex',
+        // display: 'flex',
         width: '100%',
-        justifyContent: 'space-between',
-        alignItems: 'center'
-      }} pt={0.5}>
-        <Typography variant="h6" pt={1} color={'#f5f5f5'} style={{
+        // justifyContent: 'space-between',
+        // alignItems: 'center'
+      }} pt={0.5} pb = {0.5}>
+        <Typography variant="body1" pt={1} color={'#f5f5f5'} style={{
             fontWeight: '750'
         }}>
-            {inf.name}
-        </Typography>
-        <Typography variant="body1" pt={1} color={'#a2a9cf'} style={{
-            fontWeight: '600'
-        }}>
-            {inf.unitPrice.replace(/\B(?=(\d{3})+(?!\d))/g, ',')}
+            {inf.title}
         </Typography>
       </Box>
       <Box>
         <Typography variant="body2" align="justify" pt={1} sx={{
             color: '#ccc',
             '&.MuiTypography-root':{
-                wordBreak: 'break-word',
+                'wordBreak': 'break-word',
                 'overflow': 'hidden',
                 'text-overflow': 'ellipsis',
                 'display': '-webkit-box',
@@ -40,7 +35,22 @@ function Card(progs) {
                 '-webkit-box-orient': 'vertical !important'
             }
         }}>
-            {inf.desc}
+            {inf.short_desc}
+        </Typography>
+      </Box>
+
+      <Box style = {{
+        // display: 'flex',
+        width: '100%',
+        // justifyContent: 'space-between',
+        // alignItems: 'center'
+      }} pt={0.5}>
+        <Typography variant="body2" pt={1} color={'#a2a9cf'} style={{
+            fontWeight: '600',
+            width: '100%',
+            textAlign: 'start'
+        }}>
+            {inf.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VND
         </Typography>
       </Box>
     </>

@@ -119,7 +119,7 @@ function Register() {
 
   useEffect(() => {
     const Register = () => {
-      fetch("http://localhost:5000/api/user/register", {
+      fetch("https://store-game-server.onrender.com/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -197,13 +197,15 @@ function Register() {
           backgroundColor: (theme) => {
             return theme.palette.mode === "dark" ? "#1A2027" : "#f0f2f5";
           },
-          backgroundSize: "cover",
           height: "100vh",
           color: "#f5f5f5",
+          background: 'url(https://t3.ftcdn.net/jpg/03/95/37/18/360_F_395371888_kmvHp9FVzO4NI0pbYdLyZSW50aUqwgxX.jpg)',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
         }}
       >
         {/* Header */}
-        <Box
+        {/* <Box
           sx={{
             backgroundColor: "black",
             alignItems: "center",
@@ -213,7 +215,7 @@ function Register() {
           }}
         >
           <ModeButton />
-        </Box>
+        </Box> */}
 
         <Box
           sx={boxstyle}
@@ -228,8 +230,9 @@ function Register() {
               <Box
                 sx={{
                   backgroundSize: "cover",
-                  height: "85vh",
-                  minHeight: "500px",
+                  height: "fit-content",
+                  pb: 7,
+                  pt: 4,
                   backgroundColor: (theme) => {
                     return theme.palette.mode === "dark"
                       ? "#3f51b5"
@@ -240,7 +243,7 @@ function Register() {
               >
                 <ThemeProvider theme={theme}>
                   <Container>
-                    <Box height={10} />
+                    {/* Header */}
                     <Box
                       sx={{
                         display: "flex",
