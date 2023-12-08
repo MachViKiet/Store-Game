@@ -14,11 +14,12 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useEffect } from "react";
 
+import { getDetailProduct } from "~/apis/Product_api/DetailProduct/getDetailProduct";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
   padding: theme.spacing(1),
-  textAlign: "center",
   color: theme.palette.text.secondary,
 }));
 
@@ -27,21 +28,54 @@ function ProductDetail(progs) {
   const [isFavor, setIsFavor] = useState(false);
   const [seeMoreButton, setSeeMoreButton] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [image, setImage] = useState([]);
+
+  const [title, setTitle] = useState('')
+  const [release_date, setRelease_date] = useState('')
+  const [short_desc, setShort_desc] = useState('')
+  const [desc, setDesc] = useState('')
+  const [categories, setCategories] = useState('')
+  // const [rating, setRating] = useState('')
+  const [price, setPrice] = useState('')
+  
+  const [banner, setBanner] = useState('')
 
   const clickHandle = (num) => {
     setCurImg(num);
   };
 
+
+  let userId = window.location.pathname.split('/')[3];
+
   useEffect(() => {
     localStorage.getItem("accessToken") ? setIsLogin(true) : "";
-  }, []);
+
+    getDetailProduct(userId).then((res) => {
+      setBanner(res.banner_url)
+      setImage(res.img_urls)
+      setTitle(res.title)
+      setRelease_date(res.release_date)
+      setCategories(res.categories)
+      // setRating(res.rating)
+      setShort_desc(res.short_desc)
+      setDesc(res.desc)
+      setPrice(res.price)
+
+      console.log(res.img_urls[14].includes("116x65"))
+    })
+  }, [userId]);
+
+  const resizeImage = (image) =>{
+    return image && image.includes("116x65") ? image.replace("116x65", "600x338") : image
+  }
 
   const nexthandle = () => {
     setCurImg((prev) => {
       return prev + 1 >= image.length ? 0 : prev + 1;
     });
-    // setTimeout(nexthandle, 2000)
   };
+
+
 
   const prehandle = () => {
     setCurImg((prev) => {
@@ -60,7 +94,6 @@ function ProductDetail(progs) {
 
   return (
     <>
-      {console.log(progs)}
       <Container
         sx={{
           py: "10px",
@@ -74,7 +107,7 @@ function ProductDetail(progs) {
                   sx={{
                     width: "100%",
                     pt: "60%",
-                    background: `url(${image[curImg]})`,
+                    background: 'url(' + resizeImage(image[curImg]) + ')',
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -163,7 +196,7 @@ function ProductDetail(progs) {
                   sx={{
                     width: "100%",
                     pt: "50%",
-                    background: `url(${main_image})`,
+                    background: `url(${banner})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundRepeat: "no-repeat",
@@ -180,7 +213,7 @@ function ProductDetail(progs) {
                       lineHeight: "fit-content",
                     }}
                   >
-                    Stardew Valley
+                    {title}
                   </Typography>
                 </Box>
                 <Box>
@@ -201,11 +234,7 @@ function ProductDetail(progs) {
                       },
                     }}
                   >
-                    You've inherited your grandfather's old farm plot in Stardew
-                    Valley. Armed with hand-me-down tools and a few coins, you
-                    set out to begin your new life. Can you learn to live off
-                    the land and turn these overgrown fields into a thriving
-                    home?
+                    {short_desc}
                   </Typography>
                 </Box>
 
@@ -225,6 +254,7 @@ function ProductDetail(progs) {
                     }}
                   > TYPE:
                   </Typography>
+
                   <Link
                       variant="body2"
                       sx={{
@@ -234,21 +264,11 @@ function ProductDetail(progs) {
                         color: '#67c1f5'
                       }}
                     >
-                      Action
-                    </Link>
-                    <Link
-                      variant="body2"
-                      sx={{
-                        textAlign: "justify",
-                        pl: 1,
-                        color: '#67c1f5'
-                      }}
-                    >
-                      Single-player
+                      {categories}
                     </Link>
                 </Box>
 
-{/* Type */}
+{/* release_date */}
                 <Box sx = {{
                   display: 'flex',
                   width: 'fit-content',
@@ -262,7 +282,7 @@ function ProductDetail(progs) {
                       color: '#fff',
                       opacity: 0.5
                     }}
-                  > PRODUCT BY
+                  > Release Date
                   </Typography>
                   <Link
                       variant="body2"
@@ -273,7 +293,7 @@ function ProductDetail(progs) {
                         color: '#67c1f5'
                       }}
                     >
-                      Overwhelmingly Positive
+                      {release_date}
                     </Link>
                 </Box>
 
@@ -291,7 +311,7 @@ function ProductDetail(progs) {
                       color: '#fff',
                       opacity: 0.5
                     }}
-                  > DEVERLOPER:
+                  > Unit Price:
                   </Typography>
                   <Link
                       variant="body2"
@@ -302,7 +322,7 @@ function ProductDetail(progs) {
                         color: '#67c1f5'
                       }}
                     >
-                      ConcernedApe
+                      {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VND
                     </Link>
                 </Box>
 
@@ -322,11 +342,11 @@ function ProductDetail(progs) {
         </Box>
 
         <Box>
-          <Item sx = {{mt: 2}}>
+          <Item sx = {{mt: 2, p: 5, }}>
             {!seeMoreButton ? (
               <Button endIcon = {<ExpandMoreIcon/>} variant = "text" onClick={()=> setSeeMoreButton((cur)=> !cur)}>More information</Button>
-            ): (<Box sx = {{height: '300px'}}>
-                  No found
+            ): (<Box sx = {{height: 'fit-content'}}>
+                  {desc}
             </Box>)}
           </Item>
         </Box>
@@ -337,14 +357,3 @@ function ProductDetail(progs) {
 
 export default ProductDetail;
 
-const image = [
-  "https://cdn.akamai.steamstatic.com/steam/apps/413150/ss_64d942a86eb527ac817f30cc04406796860a6fc1.600x338.jpg?t=1666917466",
-  "https://cdn.akamai.steamstatic.com/steam/apps/413150/ss_b887651a93b0525739049eb4194f633de2df75be.600x338.jpg?t=1666917466",
-  "https://cdn.akamai.steamstatic.com/steam/apps/413150/ss_9ac899fe2cda15d48b0549bba77ef8c4a090a71c.600x338.jpg?t=1666917466",
-  "https://cdn.akamai.steamstatic.com/steam/apps/413150/ss_6422d297347258086b389e3d5d9c0e0c698312e4.600x338.jpg?t=1666917466",
-  "https://cdn.akamai.steamstatic.com/steam/apps/413150/ss_4fa0866709ede3753fdf2745349b528d5e8c4054.600x338.jpg?t=1666917466",
-  "https://cdn.akamai.steamstatic.com/steam/apps/413150/ss_b887651a93b0525739049eb4194f633de2df75be.600x338.jpg?t=1666917466",
-];
-
-const main_image =
-  "https://cdn.akamai.steamstatic.com/steam/apps/413150/header.jpg?t=1666917466";

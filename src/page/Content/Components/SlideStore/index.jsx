@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -5,6 +6,8 @@ import Grid from "@mui/material/Unstable_Grid2";
 import ImageSteper from "../ImageSteper";
 import CardMedia from "~/components/Card/CardMedia";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useEffect } from "react";
 
 const STYLEBOX = {
   width: "100%",
@@ -13,11 +16,38 @@ const STYLEBOX = {
 };
 
 function SildeStore(progs) {
-  const TYPEGAME = progs.progs.type;
+  // const TYPEGAME = progs.progs.type;
 
-  const POSTERS = progs.progs.poster;
+  // const POSTERS = progs.progs.poster;
 
-  const CARDMEDIA = progs.progs.cardMedia;
+  // const CARDMEDIA = progs.progs.cardMedia;
+
+  const getTypegameAPI = progs.progs.getListOfCategory
+  const getCardMediaAPI = progs.progs.getTopRatedProduct
+  
+
+  const [TYPEGAME, setTYPEGAME] = useState([])
+  const [POSTERS, setPOSTERS] = useState([])
+  const [CARDMEDIA, setCARDMEDIA] = useState([])
+
+  useEffect(()=>{
+    getTypegameAPI().then((res)=>{
+      setTYPEGAME(res)
+    })
+
+    getCardMediaAPI().then((res)=>{
+      setCARDMEDIA(res)
+    })
+
+    const poster = [
+    "https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg?t=1694608943",
+    "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/8ad799076d8330ab5503472c/page_bg_english.jpg?t=1698557339",
+    "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg?t=1695930392",
+  ]
+    setPOSTERS(poster)
+
+
+  }, [getTypegameAPI, getCardMediaAPI])
 
   const navigate = useNavigate();
   const NAVHANDLE = (id) => {
@@ -70,7 +100,7 @@ function SildeStore(progs) {
                       </Typography>
                       <Typography
                         onClick={() => {
-                          NAVHANDLE(inf.id);
+                          NAVHANDLE(inf.cateName);
                         }}
                         variant="h6"
                         sx={{
@@ -85,7 +115,7 @@ function SildeStore(progs) {
                           fontWeight: "500",
                         }}
                       >
-                        {inf.value}
+                        {inf.cateName}
                       </Typography>
                     </Box>
                   </>
@@ -106,13 +136,13 @@ function SildeStore(progs) {
             <Box sx={STYLEBOX}>
               <Grid container spacing={[0, 2]}>
                 {CARDMEDIA.map((image, index) => {
-                  let url = image.image;
-                  let key = image.key;
+                  let url = image.banner_url;
+                  let key = image.id;
                   return (
                     index < 2 && (
                       <>
                         <Grid key={key} xs={6} sm={6} md={12} lg={12}>
-                          <CardMedia image={url} />
+                          <CardMedia image={url} id = {key} />
                         </Grid>
                       </>
                     )
@@ -125,13 +155,13 @@ function SildeStore(progs) {
 
         <Grid container spacing={2}>
           {CARDMEDIA.map((image, index) => {
-            let url = image.image;
-            let key = image.key;
+            let url = image.banner_url;
+            let key = image.id;
             return (
               index > 1 && (
                 <>
                   <Grid key={key} xs={6} sm={6} md={3} lg={3}>
-                    <CardMedia image={url} />
+                    <CardMedia image={url} id = {key} />
                   </Grid>
                 </>
               )

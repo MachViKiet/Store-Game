@@ -36,6 +36,7 @@ function CardMedia(progs) {
           backgroundSize: "cover",
           backgroundPosition: "center",
           position: "relative", 
+          backgroundRepeat: 'no-repeat',
           border: '1.5px solid #ffffff47'         
         },...disableMore}}
       >

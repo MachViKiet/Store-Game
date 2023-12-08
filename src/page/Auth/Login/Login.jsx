@@ -16,14 +16,14 @@ import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
 
-import bg from "./bg/Login.svg";
-import Logo from "~/assets/Logo.png";
+// import bg from "./bg/Login.svg";
+// import Logo from "~/assets/Logo.png";
 
-import ModeButton from "~/components/Mode/Button";
+// import ModeButton from "~/components/Mode/Button";
 import theme from "~/theme";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-
+import { loginAPI } from "~/apis/Auth_api/Login";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -57,16 +57,8 @@ function Login() {
   const handleSubmit = async (event) => {
     setOpen(false);
     event.preventDefault();
-    // eslint-disable-next-line no-unused-vars
 
     setIsSubmit((cur)=>!cur);
-
-    console.log({
-      user: email,
-      password: password
-    })
-
-
   };
 
   const handleClose = (event, reason) => {
@@ -126,10 +118,8 @@ function Login() {
             setOpen(true);
             // Xử lý lỗi tại đây
           });
-
           setIsSubmit((cur)=> !cur)
     }
-
     if ( isSubmit  == true ){
         login()
     }
@@ -155,12 +145,15 @@ function Login() {
           backgroundColor: (theme) => {
             return theme.palette.mode === "dark" ? "#1A2027" : "#f0f2f5";
           },
-          backgroundSize: "cover",
           height: "100vh",
           color: "#f5f5f5",
+          background: 'url(https://img.freepik.com/premium-photo/abstract-backgound-video-game-esports-scifi-gaming-cyberpunk-vr-virtual-reality-simulation-metaverse-scene-stand-pedestal-stage-3d-illustration-rendering-futuristic-neon-glow-room_42100-3372.jpg)',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
         }}
       >
-        <Box
+        {/* Header */}
+        {/* <Box
           sx={{
             backgroundColor: "black",
             alignItems: "center",
@@ -170,7 +163,9 @@ function Login() {
           }}
         >
           <ModeButton />
-        </Box>
+        </Box> */}
+
+        {/* Content */}
         <Box
           sx={boxstyle}
           alignItems="center"
@@ -184,8 +179,8 @@ function Login() {
               <Box
                 sx={{
                   backgroundSize: "cover",
-                  height: "70vh",
-                  minHeight: "500px",
+                  height: "fit-content",
+                  pb: 7,
                   backgroundColor: (theme) => {
                     return theme.palette.mode === "dark"
                       ? "#3f51b5"
@@ -219,6 +214,8 @@ function Login() {
                       sx={{ mt: 2 }}
                     >
                       <Grid container spacing={1}>
+
+{/* Email */}
                         <Grid
                           item
                           xs={12}
@@ -235,6 +232,7 @@ function Login() {
                             onChange={(e) => setEmail(e.target.value)}
                           />
                         </Grid>
+{/* Passwork */}
                         <Grid
                           item
                           xs={12}
@@ -252,6 +250,7 @@ function Login() {
                             onChange={(e) => setPassword(e.target.value)}
                           />
                         </Grid>
+
                         <Grid
                           item
                           xs={12}
@@ -281,6 +280,7 @@ function Login() {
                             </Typography>
                           </Stack>
                         </Grid>
+
                         <Grid item xs={12} 
                           sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
                           >
@@ -303,6 +303,7 @@ function Login() {
                             Sign in
                           </Button>
                         </Grid>
+
                         <Grid
                           item
                           xs={12}
@@ -326,10 +327,13 @@ function Login() {
                             </Typography>
                           </Stack>
                         </Grid>
+
                       </Grid>
                     </Box>
                   </Container>
                 </ThemeProvider>
+
+
               </Box>
             </Grid>
             {/* <Grid item lg={6}>

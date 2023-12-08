@@ -11,12 +11,13 @@ export const sliderContent = {
     { key: "type-09", id :"Role-Playing", value: "Role Playing", icon: "" },
     { key: "type-10", id :"Survival", value: "Survival", icon: "" },
   ],
-  poster: [
-    "https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg?t=1694608943",
-    "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/8ad799076d8330ab5503472c/page_bg_english.jpg?t=1698557339",
-    "https://cdn.akamai.steamstatic.com/steam/apps/227300/header_alt_assets_6.jpg?t=1698477436",
-    "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg?t=1695930392",
-  ],
+  // poster: [
+  //   "https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg?t=1694608943",
+  //   "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/8ad799076d8330ab5503472c/page_bg_english.jpg?t=1698557339",
+  //   "https://cdn.akamai.steamstatic.com/steam/apps/227300/header_alt_assets_6.jpg?t=1698477436",
+  //   "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg?t=1695930392",
+  // ],
+  poster: [],
 
   cardMedia: [
     {
