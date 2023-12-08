@@ -2,7 +2,7 @@
 
 export const getProductByCategory = (type) => {
 
-    return fetch("http://localhost:5000/api/product/getType-Pro/" + type, {
+    return fetch("https://store-game-server.onrender.com/api/product/getType-Pro/" + type, {
       method: "GET"
       }).then((response) => {
       if (!response.ok) {

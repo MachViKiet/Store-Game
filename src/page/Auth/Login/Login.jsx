@@ -74,7 +74,7 @@ function Login() {
 
   useEffect(()=>{
     const login = ()=>{
-        fetch("http://localhost:5000/api/user/login", {
+        fetch("https://store-game-server.onrender.com/api/user/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

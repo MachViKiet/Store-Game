@@ -2,7 +2,7 @@
 
 export const getListOfCategory = () => {
 
-    return fetch("http://localhost:5000/api/category/getAll-category", {
+    return fetch("https://store-game-server.onrender.com/api/category/getAll-category", {
       method: "GET"
       }).then((response) => {
       if (!response.ok) {

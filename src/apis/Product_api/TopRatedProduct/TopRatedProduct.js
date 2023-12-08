@@ -1,5 +1,5 @@
 export const getTopRatedProduct = () => {
-    return fetch("http://localhost:5000/api/product/getTopRated-Pro", {
+    return fetch("https://store-game-server.onrender.com/api/product/getTopRated-Pro", {
       method: "GET",
     })
       .then((response) => {

@@ -119,7 +119,7 @@ function Register() {
 
   useEffect(() => {
     const Register = () => {
-      fetch("http://localhost:5000/api/user/register", {
+      fetch("https://store-game-server.onrender.com/api/user/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
