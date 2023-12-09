@@ -1,6 +1,5 @@
 export const loginAPI = (email, password) => {
-    let res = {} 
-  fetch("https://store-game-server.onrender.com/api/user/login", {
+  return fetch("https://store-game-server.onrender.com/api/user/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -10,12 +9,13 @@ export const loginAPI = (email, password) => {
       password: password,
     }),
   }).then((response) => {
-    if (!response.ok) {
-      throw new Error("Network response was not ok");
-    }
-    res = response.json()
+    // if (!response.ok) {
+    //   return {
+    //     message: 'Unconnected on server',
+    //     status: 'ERROR'
+    //   }
+    // }
+    console.log(response)
     return response.json();
   });
-
-  return res
 };
