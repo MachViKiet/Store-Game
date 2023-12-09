@@ -34,7 +34,7 @@ function App() {
     const getInf = () => {
 
       fetch(
-        `http://localhost:5000/api/user/getDetails-user/${localStorage.getItem(
+        `https://store-game-server.onrender.com/api/user/getDetails-user/${localStorage.getItem(
           "user_id"
         )}`,
         {

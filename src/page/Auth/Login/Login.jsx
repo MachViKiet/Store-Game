@@ -1,13 +1,11 @@
-/* eslint-disable no-unused-vars */
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState, forwardRef } from "react";
@@ -15,15 +13,10 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
-
-// import bg from "./bg/Login.svg";
-// import Logo from "~/assets/Logo.png";
-
-// import ModeButton from "~/components/Mode/Button";
 import theme from "~/theme";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
-import { loginAPI } from "~/apis/Auth_api/Login";
+import { authAPI } from "~/apis/Auth_api";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -73,61 +66,25 @@ function Login() {
   }
 
   useEffect(()=>{
-    const login = ()=>{
-        fetch("https://store-game-server.onrender.com/api/user/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: email,
-            password: password,
-          }),
-        })
-          .then((response) => {
-            if (!response.ok) {
-              throw new Error("Network response was not ok");
-            }
-            return response.json();
-          })
-          .then((res) => {
-            console.log("Server response:", res);
-            if (isSubmit && res.status === "OK") {
-              console.log(res)
-              // Đánh dấu token đã đăng nhập
-              // todo ...
-
-              localStorage.setItem('accessToken', res.access_token)
-              localStorage.setItem('user_id', res.user_id)
-
-
-              window.location= "/store-game/" ;
-              
-            } else {
-              setErrorAlert(res.messgae);
-              console.log(res.messgae)
-              setOpen(true);
-            }
-            // Xử lý phản hồi từ server tại đây
-          })
-          .catch((error) => {
-            console.error("There was an error:", error);
-
-            setErrorAlert("có xíu lỗi");
-            console.log(error)
-            setOpen(true);
-            // Xử lý lỗi tại đây
-          });
-          setIsSubmit((cur)=> !cur)
-    }
+    const loginFunction = (email, password) => authAPI.loginAPI(email, password)
     if ( isSubmit  == true ){
-        login()
+      loginFunction(email, password).then((res)=>{
+        console.log('res', res)
+        if (isSubmit && res.status === "OK") {
+          localStorage.setItem('accessToken', res.access_token)
+          localStorage.setItem('user_id', res.user_id)
+          window.location= "/store-game/" ;
+        } else {
+          setErrorAlert(res.message);
+          setOpen(true);
+        }
+        setIsSubmit((cur)=> !cur)
+      })
     }
   }, [email, password, isSubmit, navigate])
 
   return (
     <ThemeProvider theme={theme}>
-            {/* <h1>{isSubmit ? "true" : "false"}</h1> */}
       <Snackbar
         open={open}
         autoHideDuration={3000}
