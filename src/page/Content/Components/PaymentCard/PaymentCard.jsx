@@ -1,7 +1,15 @@
 import Box from "@mui/material/Box";
 import { Typography, Button } from "@mui/material";
+import CampaignIcon from '@mui/icons-material/Campaign';
 
-function PaymentCard() {
+function PaymentCard(progs) {
+  console.log(progs)
+  const banner_url = progs.progs.banner_url
+  const price = progs.progs.price
+  const short_desc = progs.progs.short_desc
+  const title = progs.progs.title
+
+
   return (
     <Box
       sx={{
@@ -21,7 +29,9 @@ function PaymentCard() {
           width: "290px",
           borderRadius: "10px",
           background:
-            "url(https://cdn.akamai.steamstatic.com/steam/apps/587430/header_292x136.jpg?t=1677003160)",
+            `url(${banner_url})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center'
         }}
       />
 
@@ -43,9 +53,9 @@ function PaymentCard() {
               px: 2,
               color: '#d2d2d2'
             }}
-            variant="h5"
+            variant="h6"
           >
-            I expext you to die
+            {title}
           </Typography>
 
           {/* Price */}
@@ -57,121 +67,39 @@ function PaymentCard() {
               width: "fit-content",
               px: 2,
               fontWeight: "700",
-              color: "#c3d4ff",
+              display: 'flex',
+              alignItems: 'center',
+              color: price == 0 ? '#a4dda4' : "#c3d4ff",
             }}
             variant="body2"
           >
-            200.000đ
+            {price == 0 && <CampaignIcon/>}  
+            {price == 0 ? 'Free  '  : ( price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VND' )}
           </Typography>
+         
         </Box>
 
-        {/* Type */}
-        <Box
-          sx={{
-            display: "flex",
-            width: "fit-content",
+        <Box>
+        <Typography variant="body2" align="justify" sx={{
+            color: '#ccc',
             px: 2,
-            pt: 0.5,
-          }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "justify",
-              color: "#fff",
-              opacity: 0.5,
-            }}
-          >
-            {" "}
-            Type:
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "justify",
+            '&.MuiTypography-root':{
+                'wordBreak': 'break-word',
+                'overflow': 'auto',
+                'text-overflow': 'ellipsis',
+                'display': '-webkit-box',
+                'min-height': '66px', /* fallback */
+                'max-height': '68px', /* fallback */
+                '-webkit-line-clamp': '3', /* number of lines to show */
+                '-webkit-box-orient': 'vertical !important'
+            }
+        }}>
+            {short_desc || 'No decriptions'}
+        </Typography>
+      </Box>
 
-              pl: 1,
-              color: "#9eabf3",
-            }}
-          >
-            Action
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "justify",
-              pl: 1,
-              color: "#9eabf3",
-            }}
-          >
-            Single-player
-          </Typography>
-        </Box>
 
-        {/* Deverloper */}
-        <Box
-          sx={{
-            display: "flex",
-            width: "fit-content",
-            px: 2,
-            pt: 0,
-          }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "justify",
-              color: "#fff",
-              opacity: 0.5,
-            }}
-          >
-            {" "}
-            Deverloper:
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "justify",
-              pl: 1,
-              color: "#9eabf3",
-            }}
-          >
-            ConcernedApe
-          </Typography>
-        </Box>
-         {/* Deverloper */}
-         <Box
-          sx={{
-            display: "flex",
-            width: "fit-content",
-            px: 2,
-            pt: 0,
-          }}
-        >
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "justify",
-              color: "#fff",
-              opacity: 0.5,
-            }}
-          >
-            {" "}
-            Rating:
-          </Typography>
-          <Typography
-            variant="body2"
-            sx={{
-              textAlign: "justify",
-              pl: 1,
-              color: "#9eabf3",
-            }}
-          >
-            500.000 following
-          </Typography>
-        </Box>
-
-        {/* Delete */}
+        {/* Delete button */}
         <Box sx= {{
               display: "flex",
               justifyContent: "end",

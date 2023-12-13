@@ -1,0 +1,142 @@
+import { Box, Container } from "@mui/material";
+import { useEffect, useState } from "react";
+import Grid from "@mui/material/Unstable_Grid2";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
+import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
+import Card from "~/components/Card";
+
+function WishlistContainer(progs) {
+  const [isLogin, setIslogin] = useState(false);
+
+  useEffect(() => {
+    localStorage.getItem("accessToken") ? setIslogin(true) : setIslogin(false);
+  }, [isLogin]);
+
+  const [CARDMEDIA, setCARDMEDIA] = useState(progs.user.wishlist);
+//   const [TITLE] = useState("Your wishlist");
+
+  const SHOW_PRODUCT_COUNT = 8;
+  const [ProductCount, SetProductCount] = useState(SHOW_PRODUCT_COUNT);
+
+  const SeeMoreProductHandle = () => {
+    SetProductCount(CARDMEDIA.length);
+  };
+  const HiddenProductHandle = () => {
+    SetProductCount(SHOW_PRODUCT_COUNT);
+  };
+
+  useEffect(() => {
+    setCARDMEDIA(progs.user.wishlist);
+  }, [progs.user.wishlist]);
+
+  return (
+    isLogin && (
+      <Box
+        sx={{
+          width: "100vw",
+          height: "fit-content",
+          bgcolor: "#fff",
+          minHeight: " 100vh",
+          background: "url(https://wallpaperaccess.com/full/5495850.png)",
+          backgroundSize: "cover",
+          backgroundPosition: "fixed",
+          backgroundRepeat: "no-repeat",
+          position: "relative",
+          display: "flex",
+          justifyContent: "center",
+        }}
+      >
+        <Box sx = {{
+             position: "absolute",
+             height: "100%",
+             width: '100%',
+             bgcolor: '#000000a1',
+             pt: 3
+        }}>
+          <Container
+            sx={{
+              
+            }}
+          >
+            <Box sx={{ width: "100%" }}>
+              {/* Information Card  */}
+              <Box
+                sx={{
+                  padding: "20px 0",
+                }}
+              >
+                <Typography
+                  variant="h4"
+                  component="h2"
+                  fontWeight={600}
+                >
+                  {/* {TITLE} */}
+                </Typography>
+              </Box>
+              {/* Container Card  */}
+              <Grid container spacing={2}>
+                {CARDMEDIA != [] &&
+                  CARDMEDIA.map((imageInf, index) => {
+                    let url = imageInf.banner_url;
+                    let key = imageInf.id;
+                    let inf = imageInf;
+                    return (
+                      index < 6 && index < ProductCount && (
+                        <>
+                          <Grid key={key} xs={6} sm={6} md={4} lg={4}>
+                            <Card id={key} image={url} inf={inf} />
+                          </Grid>
+                        </>
+                      )
+                    );
+                  })}
+
+                {CARDMEDIA.length > ProductCount && (
+                  <Box
+                    sx={{
+                      width: "100%",
+                      display: "flex",
+                      justifyContent: "center",
+                      padding: "10px 0",
+                    }}
+                  >
+                    <Button
+                      sx={{ color: "text.primary" }}
+                      onClick={SeeMoreProductHandle}
+                      endIcon={<KeyboardArrowDownIcon />}
+                    >
+                      See more
+                    </Button>
+                  </Box>
+                )}
+                {CARDMEDIA.length == ProductCount &&
+                  ProductCount > SHOW_PRODUCT_COUNT && (
+                    <Box
+                      sx={{
+                        width: "100%",
+                        display: "flex",
+                        justifyContent: "center",
+                        paddingTop: "10px",
+                      }}
+                    >
+                      <Button
+                        sx={{ color: "text.primary" }}
+                        onClick={HiddenProductHandle}
+                        endIcon={<KeyboardArrowUpIcon />}
+                      >
+                        Hidden
+                      </Button>
+                    </Box>
+                  )}
+              </Grid>
+            </Box>
+          </Container>
+        </Box>
+      </Box>
+    )
+  );
+}
+
+export default WishlistContainer;

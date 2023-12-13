@@ -67,10 +67,12 @@ function Login() {
 
   useEffect(()=>{
     const loginFunction = (email, password) => authAPI.loginAPI(email, password)
+
     if ( isSubmit  == true ){
       loginFunction(email, password).then((res)=>{
         console.log('res', res)
         if (isSubmit && res.status === "OK") {
+          console.log(res.access_token)
           localStorage.setItem('accessToken', res.access_token)
           localStorage.setItem('user_id', res.user_id)
           window.location= "/store-game/" ;

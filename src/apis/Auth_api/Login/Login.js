@@ -9,13 +9,6 @@ export const loginAPI = (email, password) => {
       password: password,
     }),
   }).then((response) => {
-    // if (!response.ok) {
-    //   return {
-    //     message: 'Unconnected on server',
-    //     status: 'ERROR'
-    //   }
-    // }
-    console.log(response)
     return response.json();
   });
 };

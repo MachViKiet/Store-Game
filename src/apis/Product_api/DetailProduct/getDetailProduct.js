@@ -1,7 +1,6 @@
 
 
 export const getDetailProduct = (id_product) => {
-    console.log('id: ',id_product)
     return fetch("https://store-game-server.onrender.com/api/product/getDetails-Pro/" + id_product, {
       method: "GET"
       }).then((response) => {

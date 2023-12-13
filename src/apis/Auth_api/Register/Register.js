@@ -21,13 +21,14 @@ export const registerAPI = (
     }),
   })
     .then((response) => {
-      // if (!response.ok) {
-      //   return {
-      //     message: 'Unconnected on server',
-      //     status: 'ERROR'
-      //   }
-      // }
-      console.log(response)
+      console.log({
+        name: username,
+        email: email,
+        password: password,
+        confirmPassword: confirmPassword,
+        phone: phone,
+        role: role,
+      })
       return response.json();
     });
 };

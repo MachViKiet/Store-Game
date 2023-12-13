@@ -8,6 +8,7 @@ import { route } from "~/route/route";
 import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import { useState } from "react";
 import { useEffect } from "react";
+import { getUserInf as user_api } from "~/apis/User";
 
 function App() {
   const publicPath = route.publicPath;
@@ -31,57 +32,31 @@ function App() {
   };
 
   useEffect(() => {
-    const getInf = () => {
+    const getUserInf = (userID) => user_api(userID).then((res)=>{
+      if (res.status === "OK") {
+        setUserName(res.data.name)
+        setAmountInCart(res.data.cart.length)
+        setWishList(res.data.wishlist)
+        setCart(res.data.cart)
+        setID(res.data._id)
 
-      fetch(
-        `https://store-game-server.onrender.com/api/user/getDetails-user/${localStorage.getItem(
-          "user_id"
-        )}`,
-        {
-          method: "GET",
-        }
-      )
-        .then((response) => {
-          if (!response.ok) {
-            throw new Error("Network response was not ok");
-          }
-          return response.json();
-        })
-        .then((res) => {
-          console.log("Server response:", res);
-          if (res.status === "OK") {
+        // XỬ lí data
+      } else {
+        localStorage.removeItem("accessToken");
+      }
+    }).catch((error) => {
+      console.error("There was an error:", error);
+    });
 
-            localStorage.setItem("accessToken", res.access_token);
+    localStorage.getItem("user_id") && getUserInf(localStorage.getItem("user_id"))
 
-            setUserName(res.data.name)
-            setAmountInCart(res.data.cart.length())
-            setWishList(res.data.wishlist)
-            setCart(res.data.cart)
-            setID(res.data.id)
-
-            // XỬ lí data
-          } else {
-            localStorage.removeItem("accessToken");
-          }
-
-          // Xử lý phản hồi từ server tại đây
-        })
-        .catch((error) => {
-          console.error("There was an error:", error);
-          // Xử lý lỗi tại đây
-        });
-    };
-
-
-    localStorage.getItem("user_id") && getInf() 
   }, []);
+
+
 
   return (
     <>
       <Routes>
-        {/* <Route path="/store-game/" exact element={<Layout />}></Route>
-        <Route path="/store-game/login" element={<Login />}></Route>
-        <Route path="/store-game/register" element={<Register />}></Route> */}
         {publicPath.map((route, index) => {
           let contents = route.content;
           let path = route.path;

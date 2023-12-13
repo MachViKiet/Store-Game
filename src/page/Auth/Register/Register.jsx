@@ -12,13 +12,11 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
-import bg from "../Login/bg/Login.svg";
-import Logo from "~/assets/Logo.png";
-import ModeButton from "~/components/Mode/Button";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import theme from "~/theme";
 import { useNavigate } from "react-router-dom";
 import MenuItem from '@mui/material/MenuItem';
+import { authAPI } from "~/apis/Auth_api";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -106,7 +104,7 @@ function Register() {
     } else if (!isValidConfirmPassword) {
       setErrorAlert("Passwords do not match");
     } else {
-      setIsSubmit((cur) => !cur);
+      setIsSubmit(true);
     }
   };
 
@@ -162,8 +160,35 @@ function Register() {
       setIsSubmit((cur) => !cur);
     };
 
+    const register = () => authAPI.registerAPI(
+      username,
+      email,
+      password,
+      confirmPassword,
+      phone,
+      role,
+    )
+
     if (isSubmit == true) {
-      Register();
+      register().then((res)=>{
+        console.log(res)
+        if (res.status === "OK" && res.message === "SUCCESS") {
+          setSuccess(true)
+          setOpen(true);
+          setTimeout(()=>{
+            navigate("/store-game/login");
+          }, 1000)
+        } else {
+          setErrorAlert(res.message);
+          setOpen(true);
+        }
+        // Xử lý phản hồi từ server tại đây
+      }).catch((error) => {
+        setErrorAlert("Any problems happened");
+        setOpen(true);
+        // Xử lý lỗi tại đây
+      });
+      setIsSubmit(false)
     }
   }, [email, phone, username, password, confirmPassword, isSubmit, role, navigate]);
 
