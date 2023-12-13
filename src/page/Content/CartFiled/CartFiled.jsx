@@ -9,6 +9,7 @@ import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
+import { Container } from "@mui/material";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -31,7 +32,7 @@ function CartFiled(progs) {
     })
   },[cartInf])
   return (
-    <Box pt="20px">
+    <Container pt="20px">
       <Item>
         <Grid container spacing={2}>
           <Grid xs={8} p={2}>
@@ -141,7 +142,7 @@ function CartFiled(progs) {
           </Grid>
         </Grid>
       </Item>
-    </Box>
+    </Container>
   );
 }
 

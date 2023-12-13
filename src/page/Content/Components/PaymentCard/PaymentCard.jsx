@@ -47,13 +47,14 @@ function PaymentCard(progs) {
           {/* Name */}
           <Typography
             maxWidth={"calc(100% - 100px)"}
+            variant="h6"
             sx={{
               textAlign: "start",
               fontWeight: "700",
               px: 2,
-              color: '#d2d2d2'
+              color: '#d2d2d2',
+              fontSize: '18px'
             }}
-            variant="h6"
           >
             {title}
           </Typography>
