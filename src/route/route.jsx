@@ -177,7 +177,7 @@ const publicPath = [
 
   {
     // Cart
-    path: "/store-game/:id/cart",
+    path: "/store-game/cart",
     content: [
       { component: CartFiled },
     ],
