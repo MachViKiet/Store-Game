@@ -16,7 +16,7 @@ function Cart(progs) {
 
   const navigate = useNavigate();
   const HandleClick = ()=>{
-    isLogin ?  window.location = "/store-game/cart" : navigate("/store-game/login" );
+    isLogin ?  navigate("/store-game/cart") : navigate("/store-game/login" );
   }
   return (
     <>

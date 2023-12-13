@@ -11,6 +11,8 @@ import TextField from "@mui/material/TextField";
 import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 
+import { getUserInf as user_api } from "~/apis/User";
+
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
   ...theme.typography.body2,
@@ -19,18 +21,34 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function CartFiled(progs) {
-  const cartInf = progs.user.cart
 
   const [total, setTotal] = useState(0)
+  const [cartInf, setCartInf] = useState(progs.user.cart)
+  
+  useEffect(()=>{
+    const getUserInf = (userID) => user_api(userID).then((res)=>{
+      if (res.status === "OK") {
+        // XỬ lí data
+        setCartInf(res.data.cart)
+      } 
+    }).catch((error) => {
+      console.error("There was an error:", error);
+    });
+
+    setTotal(0)
+    getUserInf(progs.user.id)
+  }, [progs, progs.user.id])
 
   useEffect(()=>{
     cartInf.map((cart)=> {
-      console.log(cart.price)
       setTotal((cur)=>{
         return cur + cart.price
       })
     })
   },[cartInf])
+
+
+
   return (
     <Container pt="20px">
       <Item>
