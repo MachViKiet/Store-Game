@@ -40,11 +40,11 @@ function CartFiled(progs) {
   }, [progs, progs.user.id])
 
   useEffect(()=>{
+    let sum = 0 
     cartInf.map((cart)=> {
-      setTotal((cur)=>{
-        return cur + cart.price
-      })
+      sum = sum + cart.price
     })
+    setTotal(sum)
   },[cartInf])
 
 
