@@ -7,6 +7,8 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Card from "~/components/Card";
 
+import { getUserInf as user_api } from "~/apis/User";
+
 function WishlistContainer(progs) {
   const [isLogin, setIslogin] = useState(false);
 
@@ -19,7 +21,7 @@ function WishlistContainer(progs) {
 
   const SHOW_PRODUCT_COUNT = 8;
   const [ProductCount, SetProductCount] = useState(SHOW_PRODUCT_COUNT);
-
+  
   const SeeMoreProductHandle = () => {
     SetProductCount(CARDMEDIA.length);
   };
@@ -28,17 +30,26 @@ function WishlistContainer(progs) {
   };
 
   useEffect(() => {
-    setCARDMEDIA(progs.user.wishlist);
-  }, [progs.user.wishlist]);
+    const getUserInf = (userID) => user_api(userID).then((res)=>{
+        if (res.status === "OK") {
+          // XỬ lí data
+          setCARDMEDIA(res.data.wishlist)
+        } 
+      }).catch((error) => {
+        console.error("There was an error:", error);
+      });
+
+    getUserInf(progs.user.id)
+  }, [progs.user.id, progs.user.wishlist]);
 
   return (
     isLogin && (
       <Box
         sx={{
-          width: "100vw",
+          width: "100%",
           height: "fit-content",
           bgcolor: "#fff",
-          minHeight: " 100vh",
+          minHeight: "720px",
           background: "url(https://wallpaperaccess.com/full/5495850.png)",
           backgroundSize: "cover",
           backgroundPosition: "fixed",
@@ -51,36 +62,31 @@ function WishlistContainer(progs) {
         <Box sx = {{
              position: "absolute",
              height: "100%",
-             width: '100%',
              bgcolor: '#000000a1',
-             pt: 3
+             width: '100%'
         }}>
           <Container
             sx={{
               
             }}
           >
-            <Box sx={{ width: "100%" }}>
+            <Box>
               {/* Information Card  */}
-              <Box
-                sx={{
-                  padding: "20px 0",
-                }}
-              >
+              <Box pt= {3} >
                 <Typography
                   variant="h4"
                   component="h2"
                   fontWeight={600}
                 >
-                  {/* {TITLE} */}
                 </Typography>
               </Box>
+
               {/* Container Card  */}
               <Grid container spacing={2}>
                 {CARDMEDIA != [] &&
                   CARDMEDIA.map((imageInf, index) => {
                     let url = imageInf.banner_url;
-                    let key = imageInf.id;
+                    let key = imageInf.id ? imageInf.id : imageInf._id;
                     let inf = imageInf;
                     return (
                       index < 6 && index < ProductCount && (

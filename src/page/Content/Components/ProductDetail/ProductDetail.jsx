@@ -144,11 +144,10 @@ function ProductDetail(progs) {
 
     const addToCart = () => cart_api.addToCart(progs.user.id, product, localStorage.getItem("accessToken"))
 
-    isLogin && progs.user.updateCart()
-
     isLogin && addToCart().then((res)=>{
-      console.log(res)
+      console.log('+',res)
       if (res.status == 'OK'){
+        console.log(res.status)
         progs.user.updateCart()
       }
       else{
