@@ -15,6 +15,7 @@ import NoneHeaderAndFooter from "~/layouts/NoneHeaderAndFooter/NoneHeaderAndFoot
 // Page 
 import News from "~/page/Content/News/News";
 import Contact from "~/page/Content/Contact/Contact"
+import PaymentForm from "~/page/Content/PaymentField/PaymentField";
 
 // Apis
 import CartFiled from "~/page/Content/CartFiled/CartFiled";
@@ -183,6 +184,16 @@ const publicPath = [
     ],
     layout: DefaultLayout,
   },
+
+  {
+    // Cart
+    path: "/store-game/payment",
+    content: [
+      { component: PaymentForm },
+    ],
+    layout: DefaultLayout,
+  },
+
 ];
 
 const privatePath = [];
