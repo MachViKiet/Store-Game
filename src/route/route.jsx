@@ -3,7 +3,7 @@ import TagList from "~/page/Content/Components/TagList/TagList";
 import SlideStore from "~/page/Content/Components/SlideStore";
 import ProductStore from "~/page/Content/Components/ProductStore";
 import ProductDetail from "~/page/Content/Components/ProductDetail/ProductDetail";
-
+import WishlistContainer from "~/page/Content/Components/WishlistContainer/WishlistContainer";
 // Auth
 import Login from "~/page/Auth/Login/Login";
 import Register from "~/page/Auth/Register/Register";
@@ -17,14 +17,8 @@ import News from "~/page/Content/News/News";
 import Contact from "~/page/Content/Contact/Contact"
 
 // Apis
-// import {sliderContent} from '~/apis/Home/Slider.js'
-// import { OutStandingProduct } from "~/apis/Home/Products/OutStandingProduct";
-// import { ActionProduct } from "~/apis/Home/Products/ActionProduct";
-import {Simulating} from "~/apis/Home/Products/Simulating"
 import CartFiled from "~/page/Content/CartFiled/CartFiled";
-
 import { SliderAPI } from "~/apis/Slider.js";
-// import { getPopularProduct } from "~/apis/Product_api/PopularProduct/getPopularProduct";
 import { getProductByCategory } from "../apis/Product_api/ProductByCategory/getProductByCategory";
 
 const publicPath = [
@@ -36,6 +30,7 @@ const publicPath = [
       // { component: ProductStore, progs: { getProduct : getPopularProduct() }},
       { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} ,
       { component: TagList, progs: "" },
+      { component: WishlistContainer } ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Adventure') , title: 'Adventure'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Horror') , title: 'Horror'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Sports & Racing') , title: 'Sports & Racing'}} ,
@@ -50,9 +45,9 @@ const publicPath = [
     path: "/store-game/Home",
     content: [
       { component: SlideStore, progs: SliderAPI },
-      // { component: ProductStore, progs: { getProduct : getPopularProduct() }},
       { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} ,
       { component: TagList, progs: "" },
+      { component: WishlistContainer } ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Adventure') , title: 'Adventure'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Horror') , title: 'Horror'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Sports & Racing') , title: 'Sports & Racing'}} ,
@@ -184,7 +179,7 @@ const publicPath = [
     // Cart
     path: "/store-game/:id/cart",
     content: [
-      { component: CartFiled, progs: Simulating },
+      { component: CartFiled },
     ],
     layout: DefaultLayout,
   },

@@ -8,6 +8,7 @@ import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
+import { useEffect, useState } from "react";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -16,7 +17,19 @@ const Item = styled(Paper)(({ theme }) => ({
   color: theme.palette.text.secondary,
 }));
 
-function CartFiled() {
+function CartFiled(progs) {
+  const cartInf = progs.user.cart
+
+  const [total, setTotal] = useState(0)
+
+  useEffect(()=>{
+    cartInf.map((cart)=> {
+      console.log(cart.price)
+      setTotal((cur)=>{
+        return cur + cart.price
+      })
+    })
+  },[cartInf])
   return (
     <Box pt="20px">
       <Item>
@@ -30,15 +43,15 @@ function CartFiled() {
               }}
             >
               <Typography variant="h5" fontWeight={600}>
-                Your Cart ( 2 product )
+                Your Cart ( {cartInf.length} product )
               </Typography>
             </Box>
 
             <Divider />
 
             <Box>
-              {["", "", ""].map((product, index) => {
-                return <PaymentCard key={index} progs={product} />;
+              {cartInf.map((product) => {
+                return <PaymentCard key={product.id} progs={product} />;
               })}
             </Box>
           </Grid>
@@ -69,7 +82,9 @@ function CartFiled() {
                 sx={{ pb: 1, display: "flex", justifyContent: "space-between" }}
               >
                 <Typography variant="body2">Total product value</Typography>
-                <Typography variant="body2">558.000 VND</Typography>
+                <Typography variant="body2">
+                  {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VND' }
+                </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography variant="body2">Discount</Typography>
@@ -83,7 +98,7 @@ function CartFiled() {
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography variant="body2">Total value to be paid</Typography>
                 <Typography variant="body2" fontWeight={800} color={"#bebdff"}>
-                  558.000 VND
+                  {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VND' }
                 </Typography>
               </Box>
             </Box>

@@ -16,6 +16,8 @@ import { useEffect } from "react";
 import Rating from '@mui/material/Rating';
 import { getDetailProduct } from "~/apis/Product_api/DetailProduct/getDetailProduct";
 import StarIcon from '@mui/icons-material/Star';
+import { wishlist_api } from "~/apis/Wishlist_api/Wishlist";
+import { cart_api } from "~/apis/Cart_api/Cart";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -61,18 +63,20 @@ function ProductDetail(progs) {
   const [review, setReview] = useState('')
   const [video, setVideo] = useState('')
 
+  const [product, setProduct] = useState({})
 
   const clickHandle = (num) => {
     setCurImg(num);
   };
 
 
-  let userId = window.location.pathname.split('/')[3];
+  let productId = window.location.pathname.split('/')[3];
+   
 
   useEffect(() => {
     localStorage.getItem("accessToken") ? setIsLogin(true) : "";
 
-    getDetailProduct(userId).then((res) => {
+    getDetailProduct(productId).then((res) => {
       setBanner(res.banner_url)
       setImage(res.img_urls)
       setTitle(res.title)
@@ -84,10 +88,9 @@ function ProductDetail(progs) {
       setReview(res.reviews_count)
       setPrice(res.price)
       setVideo(res.vid_urls[0])
-      console.log('video',res.vid_urls[0])
-
+      setProduct(res)
     })
-  }, [userId]);
+  }, [productId]);
 
   const resizeImage = (image) =>{
     return image && image.includes("116x65") ? image.replace("116x65", "1920x1080") : image
@@ -102,6 +105,27 @@ function ProductDetail(progs) {
       return prev + 1 >= image.length ? 0 : prev + 1;
     });
   };
+
+  const favorHandle = ()=>{
+    const removeWishlist = () => wishlist_api.removeWishlist(progs.user.id, product, localStorage.getItem("accessToken"))
+    const addWishlist = () => wishlist_api.addWishlist(progs.user.id, product, localStorage.getItem("accessToken"))
+    
+    isFavor ? removeWishlist().then((res)=>{
+      console.log('Remove wishlist ', res)
+      if(res.status === "OK"){
+        setIsFavor(false)
+      }
+    }).catch((error) => {
+      console.error("There was an error:", error);
+    }) : addWishlist().then((res)=>{
+      console.log('Add wishlist ', res)
+      if(res.status === "OK"){
+        setIsFavor(true)
+      }
+    }).catch((error) => {
+      console.error("There was an error:", error);
+    })
+  }
 
 
 
@@ -118,7 +142,20 @@ function ProductDetail(progs) {
     // Nếu thất bại => báo lỗi
     // Nếu thành công => Tăng số lượng giỏ hàng lên 
 
+    const addToCart = () => cart_api.addToCart(progs.user.id, product, localStorage.getItem("accessToken"))
+
     isLogin && progs.user.updateCart()
+
+    isLogin && addToCart().then((res)=>{
+      console.log(res)
+      if (res.status == 'OK'){
+        progs.user.updateCart()
+      }
+      else{
+        // Hiện thông báo đã tồn tại trong giỏ hàng
+      }
+    })
+
   }
 
   return (
@@ -289,8 +326,9 @@ function ProductDetail(progs) {
                       opacity: 0.7,
                       "&.MuiTypography-root": {
                         wordBreak: "break-word",
-                        overflow: "hidden",
+                        overflow: "auto",
                         "text-overflow": "ellipsis",
+                        height: '80px',
                         display: "-webkit-box",
                         "-webkit-line-clamp": "4" /* number of lines to show */,
                         "-webkit-box-orient": "vertical !important",
@@ -427,9 +465,9 @@ function ProductDetail(progs) {
                       width: '100%',
                       textAlign: 'end',
                       pr: 2.5,
-                      color: '#bebdff',
+                      color: price == 0 ? '#a4dda4' :'#bebdff',
                     }}
-                  > {price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')} VND
+                  > { price == 0 ? "Free" : price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')+ ' VND'}
                   </Typography>
                 </Box>
 
@@ -439,7 +477,7 @@ function ProductDetail(progs) {
                   justifyContent: 'space-between',
                   pt: 2
                 }}>
-                  <Button onClick= {()=> {setIsFavor((cur)=> !cur)}}>
+                  <Button onClick= {favorHandle}>
                     { isFavor ? <FavoriteIcon sx = {{color:"#ff6262"}} fontSize= 'large' /> : <FavoriteBorderIcon fontSize= 'large' /> }  </Button>
                   <Button onClick={HANDLEBUYPRODUCT} startIcon={<LocalGroceryStoreIcon />} variant="outlined" sx = {{width: '45%', height: '50px',  mr : 2}}>BUY PRODUCT</Button>
                 </Box>
