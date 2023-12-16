@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import { Container } from "@mui/material";
 
 import { getUserInf as user_api } from "~/apis/User";
+import { cart_api } from "~/apis/Cart_api/Cart";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -21,39 +22,63 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 function CartFiled(progs) {
+  const [total, setTotal] = useState(0);
+  const [cartInf, setCartInf] = useState(progs.user.cart);
 
-  const [total, setTotal] = useState(0)
-  const [cartInf, setCartInf] = useState(progs.user.cart)
-  
-  useEffect(()=>{
-    const getUserInf = (userID) => user_api(userID).then((res)=>{
-      if (res.status === "OK") {
-        // XỬ lí data
-        setCartInf(res.data.cart)
-      } 
-    }).catch((error) => {
-      console.error("There was an error:", error);
+  useEffect(() => {
+    const getUserInf = (userID) =>
+      user_api(userID)
+        .then((res) => {
+          if (res.status === "OK") {
+            // XỬ lí data
+            setCartInf(res.data.cart);
+          }
+        })
+        .catch((error) => {
+          console.error("There was an error:", error);
+        });
+
+    setTotal(0);
+    getUserInf(progs.user.id);
+  }, [progs, progs.user.id]);
+
+  useEffect(() => {
+    let sum = 0;
+    cartInf.map((cart) => {
+      sum = sum + cart.price;
     });
+    setTotal(sum);
+  }, [cartInf]);
 
-    setTotal(0)
-    getUserInf(progs.user.id)
-  }, [progs, progs.user.id])
-
-  useEffect(()=>{
-    let sum = 0 
-    cartInf.map((cart)=> {
-      sum = sum + cart.price
-    })
-    setTotal(sum)
-  },[cartInf])
-
-
+  const HANDLEDELETE = (productID) => {
+    console.log(progs);
+    const productNeedRemove = cartInf.filter((product) => {
+      const id = product.id || product._id;
+      return id === productID;
+    });
+    const removeCart = () =>
+      cart_api.removeCart(
+        progs.user.id,
+        productNeedRemove,
+        localStorage.getItem("accessToken")
+      );
+    removeCart().then((res) => {
+      if (res?.status && res.status == "OK") {
+        const newCart = cartInf.filter((product) => {
+          const id = product.id || product._id;
+          return id !== productID;
+        });
+        setCartInf(newCart);
+        progs.user.removeCart();
+      }
+    });
+  };
 
   return (
     <Container pt="20px">
       <Item>
         <Grid container spacing={2}>
-          <Grid xs={8} p={2}>
+          <Grid xs={12} md={8}  p={2}>
             <Box
               sx={{
                 display: "flex",
@@ -70,11 +95,17 @@ function CartFiled(progs) {
 
             <Box>
               {cartInf.map((product) => {
-                return <PaymentCard key={product.id} progs={product} />;
+                return (
+                  <PaymentCard
+                    key={product?.id ? product.id : product._id}
+                    progs={product}
+                    func={{ deteleProduct: HANDLEDELETE }}
+                  />
+                );
               })}
             </Box>
           </Grid>
-          <Grid xs={4} p={2}>
+          <Grid xs={12} md={4} p={2}>
             <Divider />
             <Box
               sx={{
@@ -102,7 +133,8 @@ function CartFiled(progs) {
               >
                 <Typography variant="body2">Total product value</Typography>
                 <Typography variant="body2">
-                  {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VND' }
+                  {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                    " VND"}
                 </Typography>
               </Box>
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
@@ -117,7 +149,8 @@ function CartFiled(progs) {
               <Box sx={{ display: "flex", justifyContent: "space-between" }}>
                 <Typography variant="body2">Total value to be paid</Typography>
                 <Typography variant="body2" fontWeight={800} color={"#bebdff"}>
-                  {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',') + ' VND' }
+                  {total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",") +
+                    " VND"}
                 </Typography>
               </Box>
             </Box>
@@ -127,9 +160,9 @@ function CartFiled(progs) {
             <Box
               sx={{
                 py: 1.5,
-                display: 'flex',
-                flexDirection: 'column',
-                gap: 2
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
               }}
             >
               <Button
@@ -137,7 +170,7 @@ function CartFiled(progs) {
                 sx={{
                   color: "#fff",
                   bgcolor: "#2579f2",
-                  height: '45px'
+                  height: "45px",
                 }}
               >
                 Buy super fast through Mobile Banking
@@ -148,10 +181,10 @@ function CartFiled(progs) {
                 sx={{
                   color: "#fff",
                   bgcolor: "#ae2070",
-                  height: '45px',
-                  '&:hover': {
+                  height: "45px",
+                  "&:hover": {
                     bgcolor: "#d268d2",
-                  }
+                  },
                 }}
               >
                 Buy super fast with MoMo
