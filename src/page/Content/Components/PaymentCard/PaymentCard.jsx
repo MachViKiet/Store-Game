@@ -1,14 +1,25 @@
 import Box from "@mui/material/Box";
 import { Typography, Button } from "@mui/material";
 import CampaignIcon from '@mui/icons-material/Campaign';
+import { useEffect, useState } from "react";
 
 function PaymentCard(progs) {
-  console.log(progs)
-  const banner_url = progs.progs.banner_url
-  const price = progs.progs.price
-  const short_desc = progs.progs.short_desc
-  const title = progs.progs.title
 
+  const [banner_url, setbanner_url] = useState('')
+  const [price, setprice] = useState('')
+  const [short_desc, setshort_desc] = useState('')
+  const [title, settitle] = useState('')
+  const [id, setid] = useState('')
+
+  useEffect(()=>{ 
+    progs.progs?.banner_url && setbanner_url(progs.progs.banner_url)
+    progs.progs?.price && setprice(progs.progs.price)
+    progs.progs?.short_desc && setshort_desc(progs.progs.short_desc)
+    progs.progs?.title && settitle(progs.progs.title)
+    setid(progs.progs?.id ? progs.progs.id : progs.progs._id)
+  },[progs.progs._id, progs.progs.banner_url, progs.progs.id, progs.progs.price, progs.progs.short_desc, progs.progs.title])
+
+  const HANDLEDELETE = () => progs.func.deteleProduct(id)
 
   return (
     <Box
@@ -16,26 +27,32 @@ function PaymentCard(progs) {
         background: "#393a40",
         my: 1,
         width: "100%",
-        height: "150px",
+        height: { md: '150px'},
         borderRadius: "10px",
         p: 1,
-        display: "flex",
+        display: { md: "flex" },
         gap: 1,
       }}
     >
       <Box
         sx={{
-          height: "100%",
-          width: "290px",
+          height:  { md: '100%'},
+          pt: {xs: '50%', md: 0},
+          width: {xs : '100%', md: '290px' },
           borderRadius: "10px",
           background:
             `url(${banner_url})`,
           backgroundSize: 'cover',
-          backgroundPosition: 'center'
+          backgroundPosition: 'center',
+          mb: {xs: 2, md: 0}
         }}
       />
 
-      <Box sx={{ py: 1, width: "calc(100% - 290px)" }}>
+      <Box sx={{ 
+        py: 1, 
+        // width: "calc(100% - 290px)" 
+        width: { xs: '100%', md: 'calc(100% - 290px)' }
+      }}>
         <Box
           sx={{
             display: "flex",
@@ -87,8 +104,6 @@ function PaymentCard(progs) {
             '&.MuiTypography-root':{
                 'wordBreak': 'break-word',
                 'overflow': 'auto',
-                'text-overflow': 'ellipsis',
-                'display': '-webkit-box',
                 'min-height': '66px', /* fallback */
                 'max-height': '68px', /* fallback */
                 '-webkit-line-clamp': '3', /* number of lines to show */
@@ -112,6 +127,7 @@ function PaymentCard(progs) {
               px: 2,
               color: "#c69dfb",
             }}
+            onClick={HANDLEDELETE}
             variant="body2"
           >
             Delete

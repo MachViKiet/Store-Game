@@ -22,153 +22,166 @@ function SildeStore(progs) {
 
   // const CARDMEDIA = progs.progs.cardMedia;
 
-  const getTypegameAPI = progs.progs.getListOfCategory
-  const getCardMediaAPI = progs.progs.getTopRatedProduct
-  
+  const getTypegameAPI = progs.progs.getListOfCategory;
+  const getCardMediaAPI = progs.progs.getTopRatedProduct;
 
-  const [TYPEGAME, setTYPEGAME] = useState([])
-  const [POSTERS, setPOSTERS] = useState([])
-  const [CARDMEDIA, setCARDMEDIA] = useState([])
+  const [TYPEGAME, setTYPEGAME] = useState([]);
+  const [POSTERS, setPOSTERS] = useState([]);
+  const [CARDMEDIA, setCARDMEDIA] = useState([]);
 
-  useEffect(()=>{
-    getTypegameAPI().then((res)=>{
-      setTYPEGAME(res)
-    })
+  useEffect(() => {
+    getTypegameAPI().then((res) => {
+      setTYPEGAME(res);
+    });
 
-    getCardMediaAPI().then((res)=>{
-      setCARDMEDIA(res)
-    })
+    getCardMediaAPI().then((res) => {
+      setCARDMEDIA(res);
+    });
 
     const poster = [
-    "https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg?t=1694608943",
-    "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/8ad799076d8330ab5503472c/page_bg_english.jpg?t=1698557339",
-    "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg?t=1695930392",
-  ]
-    setPOSTERS(poster)
-
-
-  }, [getTypegameAPI, getCardMediaAPI])
+      "https://cdn.akamai.steamstatic.com/steam/apps/578080/header.jpg?t=1694608943",
+      "https://cdn.akamai.steamstatic.com/steam/clusters/frontpage/8ad799076d8330ab5503472c/page_bg_english.jpg?t=1698557339",
+      "https://cdn.akamai.steamstatic.com/steam/apps/1172470/header.jpg?t=1695930392",
+    ];
+    setPOSTERS(poster);
+  }, [getTypegameAPI, getCardMediaAPI]);
 
   const navigate = useNavigate();
   const NAVHANDLE = (id) => {
     window.scrollTo(0, 0);
-    navigate('/store-game/' + id)
+    navigate("/store-game/" + id);
   };
 
   return (
-    <Box sx={{ padding: "20px 0", flexGrow: 1, bgcolor: "cover.bg1" }}>
-      <Container maxWidth="lg">
-        <Grid container pb={2} spacing={2}>
-          {/* grid-1 */}
-          <Grid
-            xs={0}
-            sm={0}
-            md={2.5}
-            lg={2.5}
-            sx={{ display: { xs: "none", md: "flex" } }}
-          >
-            <Box
-              sx={{
-                ...STYLEBOX,
-                ...{
-                  padding: "10px",
-                  bgcolor: "cover.bg4",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                },
-              }}
+    <Box
+      sx={{
+        flexGrow: 1,
+        bgcolor: "cover.bg1",
+        background: "url(https://t4.ftcdn.net/jpg/03/18/16/35/360_F_318163561_pnRujkQWz2PgpBaRIhdHAqnIAbV1hozN.jpg)",
+        backgroundSize: "cover",
+        backgroundPosition: "bottom",
+        backgroundRepeat: "no-repeat",
+      }}
+    >
+      <Box sx = {{
+        width: '100%',
+        height: '100%',
+        bgcolor: '#000000a1',
+        padding: "40px 0",
+      }}>
+        <Container maxWidth="lg">
+          <Grid container pb={2} spacing={2}>
+            {/* grid-1 */}
+            <Grid
+              xs={0}
+              sm={0}
+              md={2.5}
+              lg={2.5}
+              sx={{ display: { xs: "none", md: "flex" } }}
             >
-              {TYPEGAME.map((inf, index) => {
-                return (
-                  <>
-                    <Box key={index}>
-                      <Typography
-                        variant="h6"
-                        sx={{
-                          minWidth: "35px",
-                          display: "inline-block",
-                          textAlign: "center",
-                          "&:hover": {
-                            cursor: "pointer",
-                          },
-                          fontSize: "14px",
-                          fontWeight: "500",
-                        }}
-                      >
-                        {index + 1}.{" "}
-                      </Typography>
-                      <Typography
-                        onClick={() => {
-                          NAVHANDLE(inf.cateName);
-                        }}
-                        variant="h6"
-                        sx={{
-                          minWidth: "35px",
-                          display: "inline-block",
-                          textAlign: "center",
-                          "&:hover": {
-                            cursor: "pointer",
-                            textDecoration: "underline",
-                          },
-                          fontSize: "14px",
-                          fontWeight: "500",
-                        }}
-                      >
-                        {inf.cateName}
-                      </Typography>
-                    </Box>
-                  </>
-                );
-              })}
-            </Box>
-          </Grid>
-
-          {/* grid-2 */}
-          <Grid xs={12} sm={12} md={6.5} lg={6.5}>
-            <Box sx={STYLEBOX}>
-              <ImageSteper image={POSTERS} />
-            </Box>
-          </Grid>
-
-          {/* grid-3 */}
-          <Grid xs={12} sm={12} md={3} lg={3}>
-            <Box sx={STYLEBOX}>
-              <Grid container spacing={[0, 2]}>
-                {CARDMEDIA.map((image, index) => {
-                  let url = image.banner_url;
-                  let key = image.id;
+              <Box
+                sx={{
+                  ...STYLEBOX,
+                  ...{
+                    padding: "10px",
+                    bgcolor: "cover.bg4",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "space-between",
+                  },
+                }}
+              >
+                {TYPEGAME.map((inf, index) => {
                   return (
-                    index < 2 && (
-                      <>
-                        <Grid key={key} xs={6} sm={6} md={12} lg={12}>
-                          <CardMedia image={url} id = {key} />
-                        </Grid>
-                      </>
-                    )
+                    <>
+                      <Box key={index}>
+                        <Typography
+                          variant="h6"
+                          sx={{
+                            minWidth: "35px",
+                            display: "inline-block",
+                            textAlign: "center",
+                            "&:hover": {
+                              cursor: "pointer",
+                            },
+                            fontSize: "14px",
+                            fontWeight: "500",
+                          }}
+                        >
+                          {index + 1}.{" "}
+                        </Typography>
+                        <Typography
+                          onClick={() => {
+                            NAVHANDLE(inf.cateName);
+                          }}
+                          variant="h6"
+                          sx={{
+                            minWidth: "35px",
+                            display: "inline-block",
+                            textAlign: "center",
+                            "&:hover": {
+                              cursor: "pointer",
+                              textDecoration: "underline",
+                            },
+                            fontSize: "14px",
+                            fontWeight: "500",
+                          }}
+                        >
+                          {inf.cateName}
+                        </Typography>
+                      </Box>
+                    </>
                   );
                 })}
-              </Grid>
-            </Box>
-          </Grid>
-        </Grid>
+              </Box>
+            </Grid>
 
-        <Grid container spacing={2}>
-          {CARDMEDIA.map((image, index) => {
-            let url = image.banner_url;
-            let key = image.id;
-            return (
-              index > 1 && (
-                <>
-                  <Grid key={key} xs={6} sm={6} md={3} lg={3}>
-                    <CardMedia image={url} id = {key} />
-                  </Grid>
-                </>
-              )
-            );
-          })}
-        </Grid>
-      </Container>
+            {/* grid-2 */}
+            <Grid xs={12} sm={12} md={6.5} lg={6.5}>
+              <Box sx={STYLEBOX}>
+                <ImageSteper image={POSTERS} />
+              </Box>
+            </Grid>
+
+            {/* grid-3 */}
+            <Grid xs={12} sm={12} md={3} lg={3}>
+              <Box sx={STYLEBOX}>
+                <Grid container spacing={[0, 2]}>
+                  {CARDMEDIA.map((image, index) => {
+                    let url = image.banner_url;
+                    let key = image.id;
+                    return (
+                      index < 2 && (
+                        <>
+                          <Grid key={key} xs={6} sm={6} md={12} lg={12}>
+                            <CardMedia image={url} id={key} />
+                          </Grid>
+                        </>
+                      )
+                    );
+                  })}
+                </Grid>
+              </Box>
+            </Grid>
+          </Grid>
+
+          <Grid container spacing={2}>
+            {CARDMEDIA.map((image, index) => {
+              let url = image.banner_url;
+              let key = image.id;
+              return (
+                index > 1 && (
+                  <>
+                    <Grid key={key} xs={6} sm={6} md={3} lg={3}>
+                      <CardMedia image={url} id={key} />
+                    </Grid>
+                  </>
+                )
+              );
+            })}
+          </Grid>
+        </Container>
+      </Box>
     </Box>
   );
 }

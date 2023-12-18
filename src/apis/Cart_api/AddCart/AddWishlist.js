@@ -14,4 +14,3 @@ export const addToCart = (userID, productInf, accessToken) => {
         return response
       });
   };
-  

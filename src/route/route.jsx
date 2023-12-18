@@ -29,9 +29,9 @@ const publicPath = [
     content: [
       { component: SlideStore, progs: SliderAPI },
       // { component: ProductStore, progs: { getProduct : getPopularProduct() }},
-      { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} ,
-      { component: TagList, progs: "" },
       { component: WishlistContainer } ,
+      { component: TagList, progs: "" },
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Adventure') , title: 'Adventure'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Horror') , title: 'Horror'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Sports & Racing') , title: 'Sports & Racing'}} ,
@@ -46,9 +46,9 @@ const publicPath = [
     path: "/store-game/Home",
     content: [
       { component: SlideStore, progs: SliderAPI },
-      { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} ,
-      { component: TagList, progs: "" },
       { component: WishlistContainer } ,
+      { component: TagList, progs: "" },
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Adventure') , title: 'Adventure'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Horror') , title: 'Horror'}} ,
       { component: ProductStore, progs: { getProduct : getProductByCategory('Sports & Racing') , title: 'Sports & Racing'}} ,
@@ -187,6 +187,14 @@ const publicPath = [
 
   {
     // Cart
+    path: "/store-game/payment",
+    content: [
+      { component: PaymentForm },
+    ],
+    layout: DefaultLayout,
+  },
+  {
+    // Test page
     path: "/store-game/payment",
     content: [
       { component: PaymentForm },
