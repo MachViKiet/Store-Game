@@ -30,6 +30,7 @@ function SildeStore(progs) {
   const [CARDMEDIA, setCARDMEDIA] = useState([]);
 
   useEffect(() => {
+    console.log('ff', progs)
     getTypegameAPI().then((res) => {
       setTYPEGAME(res);
     });
@@ -57,17 +58,13 @@ function SildeStore(progs) {
       sx={{
         flexGrow: 1,
         bgcolor: "cover.bg1",
-        background: "url(https://t4.ftcdn.net/jpg/03/18/16/35/360_F_318163561_pnRujkQWz2PgpBaRIhdHAqnIAbV1hozN.jpg)",
-        backgroundSize: "cover",
-        backgroundPosition: "bottom",
-        backgroundRepeat: "no-repeat",
       }}
     >
-      <Box sx = {{
+      <Box sx={{
         width: '100%',
         height: '100%',
-        bgcolor: '#000000a1',
         padding: "40px 0",
+        pb: '20px'
       }}>
         <Container maxWidth="lg">
           <Grid container pb={2} spacing={2}>
@@ -170,7 +167,7 @@ function SildeStore(progs) {
               let url = image.banner_url;
               let key = image.id;
               return (
-                index > 1 && (
+                index > 1 && index < 6 && (
                   <>
                     <Grid key={key} xs={6} sm={6} md={3} lg={3}>
                       <CardMedia image={url} id={key} />
@@ -180,6 +177,35 @@ function SildeStore(progs) {
               );
             })}
           </Grid>
+
+          {!localStorage.getItem('accessToken') &&
+            <>
+              <Box py={1} >
+                <Typography
+                  variant="h5"
+                  component="h2"
+                  fontWeight={600}
+                >
+                  GAMES YOU MIGHT LOVE
+                </Typography>
+              </Box>
+              <Grid container spacing={2} >
+                {CARDMEDIA.map((image, index) => {
+                  let url = image.banner_url;
+                  let key = image.id;
+                  return (
+                    index > 5 && (
+                      <>
+                        <Grid key={key} xs={3} sm={3} md={4} lg={4}>
+                          <CardMedia image={url} id={key} />
+                        </Grid>
+                      </>
+                    )
+                  );
+                })}
+              </Grid>
+            </>
+          }
         </Container>
       </Box>
     </Box>

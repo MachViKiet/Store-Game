@@ -8,6 +8,7 @@ import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Card from "~/components/Card";
 
 import { getUserInf as user_api } from "~/apis/User";
+import { getTopRatedProduct } from "~/apis/Product_api/RecommendedProduct/RecommendedProduct";
 
 function WishlistContainer(progs) {
   const [isLogin, setIslogin] = useState(false);
@@ -30,16 +31,20 @@ function WishlistContainer(progs) {
   };
 
   useEffect(() => {
-    const getUserInf = (userID) => user_api(userID).then((res)=>{
-        if (res.status === "OK") {
-          // XỬ lí data
-          setCARDMEDIA(res.data.wishlist)
-        } 
-      }).catch((error) => {
-        console.error("There was an error:", error);
-      });
+    // const getUserInf = (userID) => user_api(userID).then((res)=>{
+    //     if (res.status === "OK") {
+    //       // XỬ lí data
+    //       setCARDMEDIA(res.data.wishlist)
+    //     } 
+    //   }).catch((error) => {
+    //     console.error("There was an error:", error);
+    //   });
 
-    getUserInf(progs.user.id)
+    getTopRatedProduct(progs.user.id, localStorage.getItem('accessToken')).then((res)=>{
+      setCARDMEDIA(res)
+    })
+
+    // getUserInf(progs.user.id)
   }, [progs.user.id, progs.user.wishlist]);
 
   return (
@@ -48,21 +53,21 @@ function WishlistContainer(progs) {
         sx={{
           width: "100%",
           height: "fit-content",
-          bgcolor: "#fff",
+          // bgcolor: "#fff",
           minHeight: "720px",
-          background: "url(https://wallpaperaccess.com/full/5495850.png)",
-          backgroundSize: "cover",
-          backgroundPosition: "fixed",
-          backgroundRepeat: "no-repeat",
+          // background: "url(https://wallpaperaccess.com/full/5495850.png)",
+          // backgroundSize: "cover",
+          // backgroundPosition: "fixed",
+          // backgroundRepeat: "no-repeat",
           position: "relative",
           display: "flex",
           justifyContent: "center",
         }}
       >
         <Box sx = {{
-             position: "absolute",
+            //  position: "absolute",
              height: "100%",
-             bgcolor: '#000000a1',
+            //  bgcolor: '#000000a1',
              width: '100%'
         }}>
           <Container
@@ -72,12 +77,13 @@ function WishlistContainer(progs) {
           >
             <Box>
               {/* Information Card  */}
-              <Box pt= {3} >
+              <Box py= {3} >
                 <Typography
-                  variant="h4"
+                  variant="h6"
                   component="h2"
-                  fontWeight={600}
+                  fontWeight={400}
                 >
+                  GAMES YOU MIGHT LOVE
                 </Typography>
               </Box>
 
