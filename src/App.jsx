@@ -6,7 +6,7 @@ import DefaultLayout from "~/layouts/DefaultLayout/DefaultLayout";
 import { useState } from "react";
 import { useEffect } from "react";
 import { getUserInf as user_api } from "~/apis/User";
-// import { ChatBubble } from "~/page/ChatBot/ChatBubble";
+import { ChatBubble } from "~/page/ChatBot/ChatBubble";
 
 function App() {
   const publicPath = route.publicPath;
@@ -93,9 +93,9 @@ function App() {
         })}
       </Routes>
 
-      {/* <div>
+      <div>
         <ChatBubble />
-      </div> */}
+      </div>
 
       <ToastContainer
         position="bottom-center"

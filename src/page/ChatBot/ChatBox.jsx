@@ -1,7 +1,7 @@
 // ChatBox.jsx
 
 import { useState } from "react";
-import "./ChatBox.css"; // Import file CSS (đã tạo từ ví dụ trước)
+import "./style.css"; // Import file CSS (đã tạo từ ví dụ trước)
 import { Box, Button } from "@mui/material";
 
 const ChatBox = () => {
