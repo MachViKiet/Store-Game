@@ -90,7 +90,7 @@ const publicPath = [
 
   {
     // Trang chủ
-    path: "/store-game/Role Playing",
+    path: "/store-game/Role_Playing",
     content: [
       { component: ProductStore, progs: { getProduct : getProductByCategory('Role Playing') , title: 'RolePlaying'}} 
 

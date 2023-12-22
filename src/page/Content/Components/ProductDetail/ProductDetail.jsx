@@ -44,6 +44,7 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
+import { useRef } from "react";
 
 function ProductDetail(progs) {
   const location = useLocation();
@@ -157,8 +158,21 @@ function ProductDetail(progs) {
         // Hiện thông báo đã tồn tại trong giỏ hàng
       }
     })
-
   }
+
+  const videoRef = useRef(null); // Ref to access the video element
+
+  const changeVideoSource = (newSource) => {
+    if (videoRef.current) {
+      videoRef.current.src = newSource;
+      videoRef.current.load(); // Reload the video
+      videoRef.current.play(); // Start playing the reloaded video
+    }
+  };
+
+  useEffect(() => {
+    changeVideoSource(video)
+  }, [video])
 
   return (
     <>
@@ -175,7 +189,7 @@ function ProductDetail(progs) {
               <Item sx = {{ height: '100%'}}>
                 {             
                 curImg == 0? (<Grid item xs={12}>
-                  { video != '' && <video width="100%" controls autoPlay >
+                  { video != '' && <video ref={videoRef} width="100%" controls >
                     <source src= {video} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video> }

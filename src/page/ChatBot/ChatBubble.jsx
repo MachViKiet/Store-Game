@@ -4,7 +4,7 @@ import ChatIcon from '@mui/icons-material/Chat';
 import Box from '@mui/material/Box';
 import ChatBox from './Chatbox';
 
-const ChatBubble = () => {
+export const ChatBubble = () => {
   const [showChatBox, setShowChatBox] = useState(false);
   const chatBoxRef = useRef();
 
@@ -86,4 +86,3 @@ const ChatBubble = () => {
   );
 };
 
-export default ChatBubble;

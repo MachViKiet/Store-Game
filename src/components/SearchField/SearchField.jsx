@@ -122,7 +122,7 @@ import { useNavigate } from 'react-router-dom';
 export default function SearchField() {
    const [choice, setChoice] = useState(0)
    const [option, setOption] = useState([])
-   const [optionID, setOptionID] = useState('')
+   // const [optionID, setOptionID] = useState('')
    const [open, setOpen] = useState(false)
    const [maxChoice, setMaxChoice] = useState(0)
    const [text, setText] = useState('')
@@ -134,6 +134,9 @@ export default function SearchField() {
          setOption(res)
          setMaxChoice(res.length)
          setChoice(0)
+
+         // console.log('---',text)
+         res.length == 0 && setOption([{ title: 'No option', _id: '0' }])
       })
    }, [text])
 
@@ -147,15 +150,14 @@ export default function SearchField() {
       }
       if(e.key == 'Enter'){
          e.preventDefault()
-         setText(option[choice]?.title)
+         option[choice]._id != 0 && setText(option[choice]?.title)
          setOpen(false)
-         option[choice]?.title && Navigate('/store-game/product/' + option[choice]._id) 
+         option[choice]?.title && option[choice]._id != 0 && Navigate('/store-game/product/' + option[choice]._id) 
       }
    }
 
    const HANDLESUBMIT = (_id,e) => {
       e.preventDefault()
-      console.log('/store-game/product/' + optionID)
       // optionID != '' && Navigate('/store-game/product/' + optionID) 
    }
 
@@ -175,7 +177,9 @@ export default function SearchField() {
                onKeyDown={HANDLEOPION}
                onChange = {(e) => {
                   setOpen(true)
-                  setText(e.target.value)}}
+                  setText(e.target.value)
+                  option.length == 0 && setOption([{ title: 'No option', _id: '0' }])
+               }}
                sx={{ ml: 1, flex: 1, color: '#000' }}
                placeholder="Search Your Games"
                inputProps={{ 'aria-label': 'search your game' }}
@@ -214,7 +218,7 @@ export default function SearchField() {
                }}
                onClick = {() => {
                   setText(option.title)
-                  setOptionID(option._id)
+                  Navigate('/store-game/product/' + option._id) 
                }}>
                   {option.title}
                </Box>
