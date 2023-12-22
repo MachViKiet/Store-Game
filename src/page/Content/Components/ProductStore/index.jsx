@@ -29,7 +29,6 @@ function ProductStore(progs) {
     setDESC(desc)
     getProduct.then((res)=> {
       setCARDMEDIA(res)
-      console.log('card ', res)
     })
 
   }, [title, desc, getProduct])

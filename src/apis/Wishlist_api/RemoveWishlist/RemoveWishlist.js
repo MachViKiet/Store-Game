@@ -1,6 +1,7 @@
+import { url } from "~/apis/Config";
+
 export const removeWishlist = (userID, productInf, accessToken) => {
-    console.log(userID, productInf, accessToken)
-    return fetch("https://store-game-server.onrender.com/api/user/delete-wishlist/" + userID, {
+    return fetch(url.REST_API + "/api/user/delete-wishlist/" + userID, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

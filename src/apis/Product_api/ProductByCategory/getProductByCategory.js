@@ -1,8 +1,7 @@
-
+import { url } from "~/apis/Config";
 
 export const getProductByCategory = (type) => {
-
-    return fetch("https://store-game-server.onrender.com/api/product/getType-Pro/" + type, {
+    return fetch(`${url.REST_API}/api/product/getType-Pro/` + type, {
       method: "GET"
       }).then((response) => {
       if (!response.ok) {

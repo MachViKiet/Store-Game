@@ -1,5 +1,7 @@
+import { url } from "~/apis/Config";
+
 export const loginAPI = (email, password) => {
-  return fetch("https://store-game-server.onrender.com/api/user/login", {
+  return fetch( url.REST_API + "/api/user/login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

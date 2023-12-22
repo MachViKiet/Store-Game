@@ -1,8 +1,7 @@
-
+import { url } from "~/apis/Config";
 
 export const getPopularProduct = () => {
-
-  return fetch("https://store-game-server.onrender.com/api/product/getTopRated-Pro", {
+  return fetch(`${url.REST_API}/api/product/getTopRated-Pro`, {
     method: "GET"
     }).then((response) => {
     if (!response.ok) {
@@ -10,7 +9,6 @@ export const getPopularProduct = () => {
     }
     return response.json();
   }).then ((response) => {
-    console.log("getPopular: ",response.data)
     return response.data
   });
 };

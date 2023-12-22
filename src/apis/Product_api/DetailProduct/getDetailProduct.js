@@ -1,7 +1,7 @@
-
+import { url } from "~/apis/Config";
 
 export const getDetailProduct = (id_product) => {
-    return fetch("https://store-game-server.onrender.com/api/product/getDetails-Pro/" + id_product, {
+    return fetch(url.REST_API + "/api/product/getDetails-Pro/" + id_product, {
       method: "GET"
       }).then((response) => {
       if (!response.ok) {

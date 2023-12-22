@@ -30,7 +30,6 @@ function SildeStore(progs) {
   const [CARDMEDIA, setCARDMEDIA] = useState([]);
 
   useEffect(() => {
-    console.log('ff', progs)
     getTypegameAPI().then((res) => {
       setTYPEGAME(res);
     });
@@ -180,11 +179,11 @@ function SildeStore(progs) {
 
           {!localStorage.getItem('accessToken') &&
             <>
-              <Box py={1} >
+              <Box pt = {4} pb= {2} >
                 <Typography
-                  variant="h5"
+                  variant="h6"
                   component="h2"
-                  fontWeight={600}
+                  fontWeight={400}
                 >
                   GAMES YOU MIGHT LOVE
                 </Typography>

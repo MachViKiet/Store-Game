@@ -1,8 +1,8 @@
-
+import { url } from "~/apis/Config";
 
 export const getListOfCategory = () => {
 
-    return fetch("https://store-game-server.onrender.com/api/category/getAll-category", {
+    return fetch(url.REST_API + "/api/category/getAll-category", {
       method: "GET"
       }).then((response) => {
       if (!response.ok) {
@@ -10,7 +10,6 @@ export const getListOfCategory = () => {
       }
       return response.json();
     }).then ((response) => {
-      console.log("getPopular: ",response.data)
       return response.data
     });
   

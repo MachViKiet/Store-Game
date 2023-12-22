@@ -7,7 +7,7 @@ import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import KeyboardArrowDownIcon from "@mui/icons-material/KeyboardArrowDown";
 import Card from "~/components/Card";
 
-import { getUserInf as user_api } from "~/apis/User";
+// import { getUserInf as user_api } from "~/apis/User";
 import { getTopRatedProduct } from "~/apis/Product_api/RecommendedProduct/RecommendedProduct";
 
 function WishlistContainer(progs) {
@@ -40,12 +40,13 @@ function WishlistContainer(progs) {
     //     console.error("There was an error:", error);
     //   });
 
+
     getTopRatedProduct(progs.user.id, localStorage.getItem('accessToken')).then((res)=>{
       setCARDMEDIA(res)
     })
 
     // getUserInf(progs.user.id)
-  }, [progs.user.id, progs.user.wishlist]);
+  }, [progs, progs.user.id, progs.user.wishlist]);
 
   return (
     isLogin && (

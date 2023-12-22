@@ -1,5 +1,7 @@
-export const getTopRatedProduct = (UserID, accessToken) => {
-    return fetch("https://store-game-server.onrender.com/api/user/getrecommendations", {
+import { url } from "~/apis/Config";
+
+export const getTopRatedProduct = async (UserID, accessToken) => {
+    return fetch(url.REST_API + "/api/user/getrecommendations", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",

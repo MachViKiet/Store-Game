@@ -1,6 +1,7 @@
+import { url } from "~/apis/Config";
+
 export const removeCart = (userID, productInf, accessToken) => {
-  console.log('---',productInf)
-    return fetch("https://store-game-server.onrender.com/api/user/delete-cart/" + userID, {
+    return fetch(url.REST_API + "/api/user/delete-cart/" + userID, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",

@@ -75,10 +75,12 @@ function CartFiled(progs) {
   };
 
   return (
-    <Container pt="20px">
+    <Container sx = {{
+      py: 4
+    }}>
       <Item>
         <Grid container spacing={2}>
-          <Grid xs={12} md={8}  p={2}>
+          <Grid xs={12} md={8.5}  p={2}>
             <Box
               sx={{
                 display: "flex",
@@ -105,7 +107,7 @@ function CartFiled(progs) {
               })}
             </Box>
           </Grid>
-          <Grid xs={12} md={4} p={2}>
+          <Grid xs={12} md={3.5} p={2}>
             <Divider />
             <Box
               sx={{
@@ -173,7 +175,7 @@ function CartFiled(progs) {
                   height: "45px",
                 }}
               >
-                Buy super fast through Mobile Banking
+                Buy fast through Mobile Banking
               </Button>
 
               <Button

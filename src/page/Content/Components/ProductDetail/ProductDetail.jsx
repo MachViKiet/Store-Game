@@ -18,6 +18,7 @@ import { getDetailProduct } from "~/apis/Product_api/DetailProduct/getDetailProd
 import StarIcon from '@mui/icons-material/Star';
 import { wishlist_api } from "~/apis/Wishlist_api/Wishlist";
 import { cart_api } from "~/apis/Cart_api/Cart";
+import { useLocation } from 'react-router-dom';
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -43,35 +44,37 @@ function getLabelText(value) {
   return `${value} Star${value !== 1 ? 's' : ''}, ${labels[value]}`;
 }
 
+
 function ProductDetail(progs) {
+  const location = useLocation();
+  
   const [curImg, setCurImg] = useState(0);
   const [isFavor, setIsFavor] = useState(false);
   const [seeMoreButton, setSeeMoreButton] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
   const [image, setImage] = useState([]);
-
   const [title, setTitle] = useState('')
   const [release_date, setRelease_date] = useState('')
   const [short_desc, setShort_desc] = useState('')
   const [desc, setDesc] = useState('')
   const [categories, setCategories] = useState('')
   const [rating, setRating] = useState('')
-
   const [price, setPrice] = useState('')
-
   const [banner, setBanner] = useState('')
   const [review, setReview] = useState('')
   const [video, setVideo] = useState('')
-
   const [product, setProduct] = useState({})
 
   const clickHandle = (num) => {
     setCurImg(num);
   };
 
+  const [productId, setProductID] = useState(window.location.pathname.split('/')[3])
 
-  let productId = window.location.pathname.split('/')[3];
-   
+  // let productId = window.location.pathname.split('/')[3];
+  useEffect(()=> {
+    setProductID(location.pathname.split('/')[3])
+  }, [location])
 
   useEffect(() => {
     localStorage.getItem("accessToken") ? setIsLogin(true) : "";

@@ -1,5 +1,7 @@
+import { url } from "~/apis/Config";
+
 export const addWishlist = (userID, productInf, accessToken) => {
-    return fetch("https://store-game-server.onrender.com/api/user/update-wishlist/" + userID, {
+    return fetch(url.REST_API + "/api/user/update-wishlist/" + userID, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",

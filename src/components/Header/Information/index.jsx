@@ -118,7 +118,7 @@ function Information(progs) {
             >
               {isLogin ? (
                 <>
-                  <UserInfor username = {progs.progs.userName} /> {" "}
+                  <UserInfor username = {progs.progs.userName} role = {progs.progs.role} /> {" "}
                 </>
               ) : (
                 <SignInButton />

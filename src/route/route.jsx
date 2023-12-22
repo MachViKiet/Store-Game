@@ -4,6 +4,9 @@ import SlideStore from "~/page/Content/Components/SlideStore";
 import ProductStore from "~/page/Content/Components/ProductStore";
 import ProductDetail from "~/page/Content/Components/ProductDetail/ProductDetail";
 import WishlistContainer from "~/page/Content/Components/WishlistContainer/WishlistContainer";
+import CustomerInf from "~/page/Content/CustomerInf/CustomerInf";
+import SellerInf from "~/page/Content/SellerInf/SellerInf";
+
 // Auth
 import Login from "~/page/Auth/Login/Login";
 import Register from "~/page/Auth/Register/Register";
@@ -202,6 +205,27 @@ const publicPath = [
     layout: DefaultLayout,
   },
 
+  {
+    // Trang chủ
+    path: "/store-game/customer",
+    content:[
+      {
+        component: CustomerInf
+      }
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/seller",
+    content:[
+      {
+        component: SellerInf
+      }
+    ],
+    layout: DefaultLayout,
+  },
 ];
 
 const privatePath = [];

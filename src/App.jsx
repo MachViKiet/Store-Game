@@ -16,6 +16,7 @@ function App() {
   const [wishlist, setWishList] = useState([]);
   const [cart, setCart] = useState([]);
   const [id, setID] = useState("");
+  const [role, setRole] = useState("");
 
   const user = {
     amountInCart: amountInCart,
@@ -29,20 +30,25 @@ function App() {
     wishlist: wishlist,
     cart: cart,
     id: id,
+    role: role
   };
 
   useEffect(() => {
     const getUserInf = (userID) =>
+    {
       user_api(userID)
         .then((res) => {
+          console.log(res)
           if (res.status === "OK") {
             setUserName(res.data.name);
             setAmountInCart(res.data.cart.length);
             setWishList(res.data.wishlist);
             setCart(res.data.cart);
             setID(res.data._id);
-
+            setRole(res.data.role)
             // XỬ lí data
+
+            
           } else {
             localStorage.removeItem("accessToken");
           }
@@ -50,6 +56,7 @@ function App() {
         .catch((error) => {
           console.error("There was an error:", error);
         });
+    }
 
     localStorage.getItem("user_id") &&
       getUserInf(localStorage.getItem("user_id"));

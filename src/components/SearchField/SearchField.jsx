@@ -1,113 +1,233 @@
-import TextField from "@mui/material/TextField";
-import Autocomplete from "@mui/material/Autocomplete";
-import Box from "@mui/material/Box";
-import { useEffect, useState } from "react";
+// import TextField from "@mui/material/TextField";
+// import Autocomplete from "@mui/material/Autocomplete";
+// import Box from "@mui/material/Box";
+// import { useEffect, useState } from "react";
+// import { getProductByText } from "~/apis/Product_api/SearchProduct/getProductByText";
+// import { useNavigate } from "react-router-dom";
+
+// function SearchField() {
+//   const [GAMES, setGAMES] = useState([])
+//   const [text, setText] = useState('')
+//   const [nav, setNav] = useState('')
+
+//   const Navigate = useNavigate()
+
+//   useEffect(() => {
+//     getProductByText(text).then((res) => {
+//       setGAMES(res)
+//     })
+//   }, [text])
+
+//   const handleSubmit = (e) => {
+//     // console.log(GAMES)
+//     // const id = GAMES.filter((game)=> {
+//     //   return game.title = text
+//     // })[0]._id
+//     // if (e.key == 'Enter') {
+//     //   console.log(e.target.value, text)
+//     //   if (e.target.value == text && text != '') {
+//         // const id = GAMES.filter((game) => {
+//         //   return game.title = text
+//         // })[0]?._id
+//         // id && Navigate('/store-game/product/' + id)
+//     //   }
+//     //   setGAMES([])
+//     //   setText(e.target.value)
+//     // }
+
+//     // console.log(e, text)
+//     // setText(e)
+//     console.log(e)
+//     setNav(e.target.innerHTML)
+//   }
+
+//   const handleSubmit2 = (e) => {
+//     console.log(e.target.value,'||', nav)
+//     if(e.key == 'Enter' ){
+//         const id = GAMES.filter((game) => {
+//           return game.title = e.target.value
+//         })[0]?._id
+//         id && Navigate('/store-game/product/' + id)
+//     }
+//   }
+
+//   return (
+//     <>
+//       <Autocomplete
+//         size="small"
+//         id="Search Field"
+//         options={GAMES}
+//         autoHighlight
+//         getOptionLabel={(GAMES) => GAMES?.title}
+//         sx={{
+//           color: '#000 !important'
+//         }}
+//         renderOption={(props, GAMES) => (
+//           <Box
+//             component="li"
+//             sx={{ "& > img": { mr: 2, flexShrink: 0 }, color: "#000", background: '#fff' }}
+//             {...props}
+//           >
+//             {GAMES?.title}
+//           </Box>
+//         )}
+//         onChange={(e) => handleSubmit(e)}
+//         onBlur={(e) => console.log('lk',e)}
+//         renderInput={(params) => {
+//           console.log(params)
+//           return (
+//             <>
+//               <TextField
+//                 sx={{
+//                   "& Fieldset": {
+//                     borderColor: "text.secondary",
+//                   },
+//                   "& .MuiInputBase-root:hover Fieldset": {
+//                     borderColor: "text.secondary",
+//                   },
+//                   "& .MuiInputBase-root": {
+//                     color: 'text.primary'
+//                   }
+//                 }}
+//                 {...params}
+//                 label="Search Game"
+//                 inputProps={{
+//                   ...params.inputProps,
+//                 }}
+//                 value={text}
+//                 onChange={(e) => {
+//                   setText(e.target.value)} }
+//                 onKeyDown={handleSubmit2}
+//               />
+//             </>
+//           )
+//         }}
+//       />
+//     </>
+//   );
+// }
+
+import Paper from '@mui/material/Paper';
+import InputBase from '@mui/material/InputBase';
+import Divider from '@mui/material/Divider';
+import IconButton from '@mui/material/IconButton';
+import MenuIcon from '@mui/icons-material/Menu';
+import SearchIcon from '@mui/icons-material/Search';
+import CloseIcon from '@mui/icons-material/Close';
+import { Box } from '@mui/material';
+import { useState, useEffect } from 'react';
 import { getProductByText } from "~/apis/Product_api/SearchProduct/getProductByText";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom';
 
-function SearchField() {
-  const [GAMES, setGAMES] = useState([])
-  const [text, setText] = useState('')
-  const [nav, setNav] = useState('')
+export default function SearchField() {
+   const [choice, setChoice] = useState(0)
+   const [option, setOption] = useState([])
+   const [optionID, setOptionID] = useState('')
+   const [open, setOpen] = useState(false)
+   const [maxChoice, setMaxChoice] = useState(0)
+   const [text, setText] = useState('')
 
-  const Navigate = useNavigate()
+   const Navigate = useNavigate()
 
-  useEffect(() => {
-    getProductByText(text).then((res) => {
-      setGAMES(res)
-    })
-  }, [text])
+   useEffect(() => {
+      getProductByText(text).then((res) => {
+         setOption(res)
+         setMaxChoice(res.length)
+         setChoice(0)
+      })
+   }, [text])
 
-  const handleSubmit = (e) => {
-    // console.log(GAMES)
-    // const id = GAMES.filter((game)=> {
-    //   return game.title = text
-    // })[0]._id
-    // if (e.key == 'Enter') {
-    //   console.log(e.target.value, text)
-    //   if (e.target.value == text && text != '') {
-        // const id = GAMES.filter((game) => {
-        //   return game.title = text
-        // })[0]?._id
-        // id && Navigate('/store-game/product/' + id)
-    //   }
-    //   setGAMES([])
-    //   setText(e.target.value)
-    // }
 
-    // console.log(e, text)
-    // setText(e)
-    console.log(e)
-    setNav(e.target.innerHTML)
-  }
+   const HANDLEOPION = (e) => {
+      if(e.key == 'ArrowDown'){
+         setChoice(cur => cur + 1 == maxChoice ? 0 :  cur + 1)
+      }
+      if(e.key == 'ArrowUp'){
+         setChoice(cur => cur - 1 == 0 ? maxChoice :  cur - 1)
+      }
+      if(e.key == 'Enter'){
+         e.preventDefault()
+         setText(option[choice]?.title)
+         setOpen(false)
+         option[choice]?.title && Navigate('/store-game/product/' + option[choice]._id) 
+      }
+   }
 
-  const handleSubmit2 = (e) => {
-    console.log(e.target.value,'||', nav)
-    if(e.key == 'Enter' ){
-        const id = GAMES.filter((game) => {
-          return game.title = e.target.value
-        })[0]?._id
-        id && Navigate('/store-game/product/' + id)
-    }
-  }
+   const HANDLESUBMIT = (_id,e) => {
+      e.preventDefault()
+      console.log('/store-game/product/' + optionID)
+      // optionID != '' && Navigate('/store-game/product/' + optionID) 
+   }
 
-  return (
-    <>
-      <Autocomplete
-        size="small"
-        id="Search Field"
-        options={GAMES}
-        autoHighlight
-        getOptionLabel={(GAMES) => GAMES?.title}
-        sx={{
-          color: '#000 !important'
-        }}
-        renderOption={(props, GAMES) => (
-          <Box
-            component="li"
-            sx={{ "& > img": { mr: 2, flexShrink: 0 }, color: "#000", background: '#fff' }}
-            {...props}
-          >
-            {GAMES?.title}
-          </Box>
-        )}
-        onChange={(e) => handleSubmit(e)}
-        onBlur={(e) => console.log('lk',e)}
-        renderInput={(params) => {
-          console.log(params)
-          return (
-            <>
-              <TextField
-                sx={{
-                  "& Fieldset": {
-                    borderColor: "text.secondary",
-                  },
-                  "& .MuiInputBase-root:hover Fieldset": {
-                    borderColor: "text.secondary",
-                  },
-                  "& .MuiInputBase-root": {
-                    color: 'text.primary'
-                  }
-                }}
-                {...params}
-                label="Search Game"
-                inputProps={{
-                  ...params.inputProps,
-                }}
-                value={text}
-                onChange={(e) => {
-                  setText(e.target.value)} }
-                onKeyDown={handleSubmit2}
-              />
-            </>
-          )
-        }}
-      />
-    </>
-  );
+   return (
+      <Box sx = {{
+         position: 'relative'
+      }}>
+         <Paper
+            component="form"
+            sx={{ p: '0px 4px', display: 'flex', alignItems: 'center', width: '100%', bgcolor: '#fff' }}
+         >
+            <IconButton sx={{ p: '10px', color: '#000' }} aria-label="menu" color='#000'>
+               <MenuIcon color='#000' />
+            </IconButton>
+            <InputBase
+               value={text}
+               onKeyDown={HANDLEOPION}
+               onChange = {(e) => {
+                  setOpen(true)
+                  setText(e.target.value)}}
+               sx={{ ml: 1, flex: 1, color: '#000' }}
+               placeholder="Search Your Games"
+               inputProps={{ 'aria-label': 'search your game' }}
+               onSubmit={(e) => HANDLESUBMIT(
+                  option.filter((op) => {
+                     op.title == text
+                  })[0]?._id ? option.filter((op) => {
+                     op.title == text
+                  })[0]._id : '', e
+               )}
+            />
+            <IconButton type="button" sx={{ p: '10px', color: '#000' }} aria-label="search">
+               <SearchIcon onClick = {() => {
+                  option[choice]?.title && Navigate('/store-game/product/' + option[choice]._id) 
+               }} />
+            </IconButton>
+            <Divider sx={{ height: 28, m: 0.5, width: 2, color: '#000', borderColor: '#ccc' }} orientation="vertical" />
+            <IconButton color="primary" sx={{ p: '10px', color: '#000' }} aria-label="directions">
+               <CloseIcon onClick = {() => setText('')} />
+            </IconButton>
+         </Paper>
+
+         <Paper sx = {{
+            width: '100%',
+            mt: 0.5,
+            position: 'absolute',
+            zIndex: 10,
+         }}>
+            {text != '' && open && option.map((option, index) => {
+            return (
+               <Box key = {option._id} sx = {{
+                  p: '6px 12px',
+                  color: '#000',
+                  backgroundColor: choice == index && '#fff' ,
+                  borderRadius: 2,
+               }}
+               onClick = {() => {
+                  setText(option.title)
+                  setOptionID(option._id)
+               }}>
+                  {option.title}
+               </Box>
+            )
+            })}
+         </Paper>
+
+      </Box>
+
+
+
+   );
 }
-
-export default SearchField;
 
 // // const option = [
 // //   { label: "The Shawshank Redemption", year: 1994 },

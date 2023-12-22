@@ -1,3 +1,5 @@
+import { url } from "~/apis/Config";
+
 export const registerAPI = (
   username,
   email,
@@ -6,7 +8,7 @@ export const registerAPI = (
   phone,
   role
 ) => {
-  return fetch("https://store-game-server.onrender.com/api/user/register", {
+  return fetch(url.REST_API + "/api/user/register", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -21,14 +23,6 @@ export const registerAPI = (
     }),
   })
     .then((response) => {
-      console.log({
-        name: username,
-        email: email,
-        password: password,
-        confirmPassword: confirmPassword,
-        phone: phone,
-        role: role,
-      })
       return response.json();
     });
 };

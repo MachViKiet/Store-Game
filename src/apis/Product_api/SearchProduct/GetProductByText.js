@@ -1,6 +1,7 @@
+import { url } from "~/apis/Config";
+
 export const getProductByText = (text) => {
-  console.log('api')
-    return fetch("https://store-game-server.onrender.com/api/product/searchBar", {
+    return fetch(url.REST_API + "/api/product/searchBar", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
