@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import Avatar from '@mui/material/Avatar';
 import ChatIcon from '@mui/icons-material/Chat';
 import Box from '@mui/material/Box';
-import ChatBox from './Chatbox';
+import ChatBox from '~/ChatBot/Chatbox';
 
 export const ChatBubble = () => {
   const [showChatBox, setShowChatBox] = useState(false);
