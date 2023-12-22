@@ -116,7 +116,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import CloseIcon from '@mui/icons-material/Close';
 import { Box } from '@mui/material';
 import { useState, useEffect } from 'react';
-import getProductByText from "~/apis/Product_api/SearchProduct/getProductByText";
+import { getProductByText } from "~/apis/Product_api/SearchProduct/GetProductByText";
 import { useNavigate } from 'react-router-dom';
 
 export default function SearchField() {
