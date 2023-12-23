@@ -142,27 +142,27 @@ export default function SearchField() {
 
 
    const HANDLEOPION = (e) => {
-      if(e.key == 'ArrowDown'){
-         setChoice(cur => cur + 1 == maxChoice ? 0 :  cur + 1)
+      if (e.key == 'ArrowDown') {
+         setChoice(cur => cur + 1 == maxChoice ? 0 : cur + 1)
       }
-      if(e.key == 'ArrowUp'){
-         setChoice(cur => cur - 1 == 0 ? maxChoice :  cur - 1)
+      if (e.key == 'ArrowUp') {
+         setChoice(cur => cur - 1 == 0 ? maxChoice : cur - 1)
       }
-      if(e.key == 'Enter'){
+      if (e.key == 'Enter') {
          e.preventDefault()
          option[choice]._id != 0 && setText(option[choice]?.title)
          setOpen(false)
-         option[choice]?.title && option[choice]._id != 0 && Navigate('/store-game/product/' + option[choice]._id) 
+         option[choice]?.title && option[choice]._id != 0 && Navigate('/store-game/product/' + option[choice]._id)
       }
    }
 
-   const HANDLESUBMIT = (_id,e) => {
+   const HANDLESUBMIT = (_id, e) => {
       e.preventDefault()
       // optionID != '' && Navigate('/store-game/product/' + optionID) 
    }
 
    return (
-      <Box sx = {{
+      <Box sx={{
          position: 'relative'
       }}>
          <Paper
@@ -175,7 +175,7 @@ export default function SearchField() {
             <InputBase
                value={text}
                onKeyDown={HANDLEOPION}
-               onChange = {(e) => {
+               onChange={(e) => {
                   setOpen(true)
                   setText(e.target.value)
                   option.length == 0 && setOption([{ title: 'No option', _id: '0' }])
@@ -192,37 +192,39 @@ export default function SearchField() {
                )}
             />
             <IconButton type="button" sx={{ p: '10px', color: '#000' }} aria-label="search">
-               <SearchIcon onClick = {() => {
-                  option[choice]?.title && Navigate('/store-game/product/' + option[choice]._id) 
+               <SearchIcon onClick={() => {
+                  option[choice]._id != 0 && setText(option[choice]?.title)
+                  setOpen(false)
+                  option[choice]?.title && option[choice]._id != 0 && Navigate('/store-game/product/' + option[choice]._id)
                }} />
             </IconButton>
             <Divider sx={{ height: 28, m: 0.5, width: 2, color: '#000', borderColor: '#ccc' }} orientation="vertical" />
             <IconButton color="primary" sx={{ p: '10px', color: '#000' }} aria-label="directions">
-               <CloseIcon onClick = {() => setText('')} />
+               <CloseIcon onClick={() => setText('')} />
             </IconButton>
          </Paper>
 
-         <Paper sx = {{
+         <Paper sx={{
             width: '100%',
             mt: 0.5,
             position: 'absolute',
             zIndex: 10,
          }}>
             {text != '' && open && option.map((option, index) => {
-            return (
-               <Box key = {option._id} sx = {{
-                  p: '6px 12px',
-                  color: '#000',
-                  backgroundColor: choice == index && '#fff' ,
-                  borderRadius: 2,
-               }}
-               onClick = {() => {
-                  setText(option.title)
-                  Navigate('/store-game/product/' + option._id) 
-               }}>
-                  {option.title}
-               </Box>
-            )
+               return (
+                  <Box key={option._id} sx={{
+                     p: '6px 12px',
+                     color: '#000',
+                     backgroundColor: choice == index && '#fff',
+                     borderRadius: 2,
+                  }}
+                     onClick={() => {
+                        setText(option.title)
+                        Navigate('/store-game/product/' + option._id)
+                     }}>
+                     {option.title}
+                  </Box>
+               )
             })}
          </Paper>
 
