@@ -220,7 +220,7 @@ export default function SearchField() {
                   }}
                      onClick={() => {
                         setText(option.title)
-                        Navigate('/store-game/product/' + option._id)
+                        option[choice]._id != 0 && Navigate('/store-game/product/' + option._id)
                      }}>
                      {option.title}
                   </Box>
