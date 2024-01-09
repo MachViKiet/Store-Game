@@ -20,16 +20,15 @@
     "@mui/icons-material": "^5.14.14",
     "@mui/material": "^5.14.14",
     "@mui/styled-engine-sc": "^6.0.0-alpha.2",
+    "@stripe/react-stripe-js": "^2.4.0",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
+    "mui-image-slider": "^1.0.10",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-
     "react-router-dom": "^6.17.0",
     "react-slideshow-image": "^4.3.0",
-
     "react-toastify": "^8.1.0",
-
     "styled-components": "^6.1.0"
   },
   "devDependencies": {

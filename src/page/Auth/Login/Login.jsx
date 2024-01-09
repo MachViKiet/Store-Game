@@ -1,13 +1,11 @@
-/* eslint-disable no-unused-vars */
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import Avatar from "@mui/material/Avatar";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider } from "@mui/material/styles";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import { useState, forwardRef } from "react";
@@ -15,14 +13,10 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
-
-import bg from "./bg/Login.svg";
-import Logo from "~/assets/Logo.png";
-
-import ModeButton from "~/components/Mode/Button";
 import theme from "~/theme";
 import { useNavigate } from "react-router-dom";
-
+import { useEffect } from "react";
+import { authAPI } from "~/apis/Auth_api";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -33,7 +27,8 @@ const boxstyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "75%",
+  width: "95%",
+  maxWidth: '500px',
   height: "70%",
   bgcolor: "transparent",
   boxShadow: 24,
@@ -46,11 +41,17 @@ function Login() {
   const horizontal = "right"; 
   const navigate = useNavigate();
 
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const [errorAlert, setErrorAlert] = useState("");
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const handleSubmit = async (event) => {
-    setOpen(true);
+    setOpen(false);
     event.preventDefault();
-    // eslint-disable-next-line no-unused-vars
-    const data = new FormData(event.currentTarget);
+
+    setIsSubmit((cur)=>!cur);
   };
 
   const handleClose = (event, reason) => {
@@ -64,6 +65,26 @@ function Login() {
     return <Slide {...props} direction="left" />;
   }
 
+  useEffect(()=>{
+    const loginFunction = (email, password) => authAPI.loginAPI(email, password)
+
+    if ( isSubmit  == true ){
+      loginFunction(email, password).then((res)=>{
+        console.log('res', res)
+        if (isSubmit && res.status === "OK") {
+          console.log(res.access_token)
+          localStorage.setItem('accessToken', res.access_token)
+          localStorage.setItem('user_id', res.user_id)
+          window.location= "/store-game/" ;
+        } else {
+          setErrorAlert(res.message);
+          setOpen(true);
+        }
+        setIsSubmit((cur)=> !cur)
+      })
+    }
+  }, [email, password, isSubmit, navigate])
+
   return (
     <ThemeProvider theme={theme}>
       <Snackbar
@@ -74,20 +95,24 @@ function Login() {
         anchorOrigin={{ vertical, horizontal }}
       >
         <Alert onClose={handleClose} severity="error" sx={{ width: "100%" }}>
-          Failed! Enter correct username and password.
+          {errorAlert}
         </Alert>
       </Snackbar>
+
       <Box
         sx={{
           backgroundColor: (theme) => {
             return theme.palette.mode === "dark" ? "#1A2027" : "#f0f2f5";
           },
-          backgroundSize: "cover",
           height: "100vh",
           color: "#f5f5f5",
+          background: 'url(https://img.freepik.com/premium-photo/abstract-backgound-video-game-esports-scifi-gaming-cyberpunk-vr-virtual-reality-simulation-metaverse-scene-stand-pedestal-stage-3d-illustration-rendering-futuristic-neon-glow-room_42100-3372.jpg)',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
         }}
       >
-        <Box
+        {/* Header */}
+        {/* <Box
           sx={{
             backgroundColor: "black",
             alignItems: "center",
@@ -97,7 +122,9 @@ function Login() {
           }}
         >
           <ModeButton />
-        </Box>
+        </Box> */}
+
+        {/* Content */}
         <Box
           sx={boxstyle}
           alignItems="center"
@@ -107,12 +134,12 @@ function Login() {
           }}
         >
           <Grid container>
-            <Grid item xs={12} sm={12} lg={6}>
+            <Grid item xs={12} sm={12} lg={12}>
               <Box
                 sx={{
                   backgroundSize: "cover",
-                  height: "70vh",
-                  minHeight: "500px",
+                  height: "fit-content",
+                  pb: 7,
                   backgroundColor: (theme) => {
                     return theme.palette.mode === "dark"
                       ? "#3f51b5"
@@ -132,10 +159,10 @@ function Login() {
                         flexDirection: "column",
                       }}
                     >
-                      <Avatar>
-                        <LockOutlinedIcon />
-                      </Avatar>
-                      <Typography component="h1" variant="h4">
+                      {/* <Avatar sx = {{ color: '#fff', bgcolor: '#31314d', height: '60px', width: '60px' }}> */}
+                        <LockOutlinedIcon color="#fff" fontSize="large" />
+                      {/* </Avatar> */}
+                      <Typography component="h1" variant="h4" pt={1}>
                         Sign In
                       </Typography>
                     </Box>
@@ -146,6 +173,8 @@ function Login() {
                       sx={{ mt: 2 }}
                     >
                       <Grid container spacing={1}>
+
+{/* Email */}
                         <Grid
                           item
                           xs={12}
@@ -155,11 +184,14 @@ function Login() {
                             required
                             fullWidth
                             id="email"
-                            label="Email or number phone"
+                            label="Email"
                             name="email"
                             autoComplete="email"
+                            value={email}
+                            onChange={(e) => setEmail(e.target.value)}
                           />
                         </Grid>
+{/* Passwork */}
                         <Grid
                           item
                           xs={12}
@@ -172,18 +204,24 @@ function Login() {
                             label="Password"
                             type="password"
                             id="password"
+                            value={password}
                             autoComplete="new-password"
+                            onChange={(e) => setPassword(e.target.value)}
                           />
                         </Grid>
+
                         <Grid
                           item
                           xs={12}
-                          sx={{ ml: "3em", mr: "3em", textAlign: "center" }}
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
                         >
-                          <Stack direction="row" spacing={2}>
+                          <Stack direction="row" sx = {{
+                            display: 'flex',
+                            width: '100%',
+                            justifyContent: 'space-between'
+                          }}>
                             <FormControlLabel
                               sx={{
-                                width: "60%",
                                 display: { xs: "none", sm: "block" },
                               }}
                               onClick={() => setRemember(!remember)}
@@ -201,16 +239,18 @@ function Login() {
                             </Typography>
                           </Stack>
                         </Grid>
-                        <Grid item xs={12} sx={{ textAlign: "center" }}>
+
+                        <Grid item xs={12} 
+                          sx={{ ml: "1.5em", mr: "1.5em", textAlign: "center" }}
+                          >
                           <Button
                             type="submit"
                             variant="contained"
                             fullWidth="true"
                             size="medium"
                             sx={{
-                              mt: "10px",
-                              mr: "20px",
-                              borderRadius: 28,
+                              width: '1',
+                              borderRadius: '10px',
                               color: "#ffffff",
                               minWidth: "170px",
                               backgroundColor: "#FF9A01",
@@ -222,6 +262,7 @@ function Login() {
                             Sign in
                           </Button>
                         </Grid>
+
                         <Grid
                           item
                           xs={12}
@@ -245,13 +286,16 @@ function Login() {
                             </Typography>
                           </Stack>
                         </Grid>
+
                       </Grid>
                     </Box>
                   </Container>
                 </ThemeProvider>
+
+
               </Box>
             </Grid>
-            <Grid item lg={6}>
+            {/* <Grid item lg={6}>
               <Box
                 style={{
                   backgroundImage: `url(${bg})`,
@@ -271,7 +315,7 @@ function Login() {
                   height: "30%",
                 }}
               ></Box>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </Box>

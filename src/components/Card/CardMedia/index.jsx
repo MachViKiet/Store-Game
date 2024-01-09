@@ -1,8 +1,8 @@
 import { Box } from "@mui/material";
 // import { Typography } from "@mui/material";
-import StoreDialog from "../../Modal/Store/StoreDialog";
-import { Link } from "react-router-dom";
-
+// import StoreDialog from "../../Modal/Store/StoreDialog";
+import RemoveRedEyeIcon from '@mui/icons-material/RemoveRedEye';
+import { useNavigate } from "react-router-dom";
 
 function CardMedia(progs) {
   const URL_IMAGE = progs.image;
@@ -16,6 +16,14 @@ function CardMedia(progs) {
     },
   }
 
+  const navigate = useNavigate();
+
+  const ONCLICKHANDLE = () => {
+    window.scrollTo(0, 0);
+    navigate('/store-game/product/' +  KEY_PRODUCT);
+  };
+
+
   return (
     <>
     {/* {console.log(progs)} */}
@@ -27,7 +35,9 @@ function CardMedia(progs) {
           backgroundImage: `url(${URL_IMAGE})`,
           backgroundSize: "cover",
           backgroundPosition: "center",
-          position: "relative",          
+          position: "relative", 
+          backgroundRepeat: 'no-repeat',
+          border: '1.5px solid #ffffff47'         
         },...disableMore}}
       >
         <Box
@@ -40,7 +50,8 @@ function CardMedia(progs) {
             top: 0
           }}
         >
-          <Link to = {'/store-game/product/' +  KEY_PRODUCT}><StoreDialog/></Link>
+            {/* <StoreDialog/> */}
+            <RemoveRedEyeIcon onClick = {()=>ONCLICKHANDLE()} sx = {{color:"#fff"}}/>
         </Box>
       </Box>
     </>

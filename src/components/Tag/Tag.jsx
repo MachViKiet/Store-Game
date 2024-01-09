@@ -8,7 +8,8 @@ function Tag(progs) {
   const navigate = useNavigate();
 
   const ONCLICKHANDLE = (value) => {
-    navigate("/store-game/product/" + value);
+    window.scrollTo(0, 0);
+    navigate("/store-game/" + value);
   };
 
   return (

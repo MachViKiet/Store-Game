@@ -12,12 +12,11 @@ import Snackbar from "@mui/material/Snackbar";
 import Stack from "@mui/material/Stack";
 import MuiAlert from "@mui/material/Alert";
 import Slide from "@mui/material/Slide";
-import bg from "../Login/bg/Login.svg";
-import Logo from "~/assets/Logo.png";
-import ModeButton from "~/components/Mode/Button";
 import AccountCircleOutlinedIcon from "@mui/icons-material/AccountCircleOutlined";
 import theme from "~/theme";
 import { useNavigate } from "react-router-dom";
+import MenuItem from '@mui/material/MenuItem';
+import { authAPI } from "~/apis/Auth_api";
 
 const Alert = forwardRef(function Alert(props, ref) {
   return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -28,8 +27,9 @@ const boxstyle = {
   top: "50%",
   left: "50%",
   transform: "translate(-50%, -50%)",
-  width: "75%",
-  height: "70%",
+  width: "95%",
+  maxWidth: "600px",
+  height: "80%",
   bgcolor: "transparent",
   boxShadow: 24,
 };
@@ -44,11 +44,14 @@ function Register() {
   const vertical = "top";
   const horizontal = "right";
   const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [role, setRole] = useState("Customer");
+
   const [errorAlert, setErrorAlert] = useState("");
   const [emailError, setEmailError] = useState(false);
   const [phoneError, setPhoneError] = useState(false);
@@ -56,18 +59,21 @@ function Register() {
   const [passwordError, setPasswordError] = useState(false);
   const [confirmPasswordError, setConfirmPasswordError] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [redirect, setRedirect] = useState(false);
+  const [isSubmit, setIsSubmit] = useState(false);
+
   const isValidPhone = (phone) => {
     // Thực hiện kiểm tra số điện thoại hợp lệ
     return true; // Thay true bằng kết quả kiểm tra số điện thoại của bạn
   };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const isValidEmail = email && /\S+@\S+\.\S+/.test(email);
     const isValidPhoneValue = phone && isValidPhone(phone);
     const isValidUsername = username && username.trim() !== "";
     const isValidPassword = password && password.trim() !== "";
-    const isValidConfirmPassword = confirmPassword === password;
+    const isValidConfirmPassword =
+      confirmPassword === password && password !== "";
 
     // Set lỗi cho từng khung
     setEmailError(!isValidEmail);
@@ -75,6 +81,7 @@ function Register() {
     setUsernameError(!isValidUsername);
     setPasswordError(!isValidPassword);
     setConfirmPasswordError(!isValidConfirmPassword);
+
     // Nếu có lỗi, hiển thị thông báo lỗi
     if (!email) {
       setErrorAlert("Email is required");
@@ -97,14 +104,8 @@ function Register() {
     } else if (!isValidConfirmPassword) {
       setErrorAlert("Passwords do not match");
     } else {
-      setSuccess(true);
-      setOpen(true);
-      setTimeout(() => {
-        setRedirect(true);
-      }, 3000);
+      setIsSubmit(true);
     }
-
-    setOpen(true);
   };
 
   const handleClose = (event, reason) => {
@@ -113,17 +114,91 @@ function Register() {
     }
     setOpen(false);
   };
+
   useEffect(() => {
-    if (redirect) {
-      navigate("/store-game"); 
+    const Register = () => {
+      fetch("https://store-game-server.onrender.com/api/user/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: username,
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+          phone: phone,
+          role: role,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+
+          setSuccess(true);
+          setOpen(true);
+
+          return response.json();
+        })
+        .then((res) => {
+          console.log("Server response:", res);
+          if (isSubmit && res.status === "OK" && res.message === "SUCCESS") {
+            navigate("/store-game");
+          } else {
+            setErrorAlert(res.message);
+          }
+          // Xử lý phản hồi từ server tại đây
+        })
+        .catch((error) => {
+          console.error("There was an error:", error);
+          setErrorAlert("Any problems happened");
+          setOpen(true);
+          // Xử lý lỗi tại đây
+        });
+
+      setIsSubmit((cur) => !cur);
+    };
+
+    const register = () => authAPI.registerAPI(
+      username,
+      email,
+      password,
+      confirmPassword,
+      phone,
+      role,
+    )
+
+    if (isSubmit == true) {
+      register().then((res)=>{
+        console.log(res)
+        if (res.status === "OK" && res.message === "SUCCESS") {
+          setSuccess(true)
+          setOpen(true);
+          setTimeout(()=>{
+            navigate("/store-game/login");
+          }, 1000)
+        } else {
+          setErrorAlert(res.message);
+          setOpen(true);
+        }
+        // Xử lý phản hồi từ server tại đây
+      }).catch((error) => {
+        setErrorAlert("Any problems happened");
+        setOpen(true);
+        // Xử lý lỗi tại đây
+      });
+      setIsSubmit(false)
     }
-  }, [redirect, navigate]);
+  }, [email, phone, username, password, confirmPassword, isSubmit, role, navigate]);
+
   function TransitionLeft(props) {
     return <Slide {...props} direction="left" />;
   }
 
   return (
     <ThemeProvider theme={theme}>
+      {/* <h1>{isSubmit ? "true" : "false"}</h1> */}
       <Snackbar
         open={open}
         autoHideDuration={3000}
@@ -141,17 +216,21 @@ function Register() {
           </Alert>
         )}
       </Snackbar>
+
       <Box
         sx={{
           backgroundColor: (theme) => {
             return theme.palette.mode === "dark" ? "#1A2027" : "#f0f2f5";
           },
-          backgroundSize: "cover",
           height: "100vh",
           color: "#f5f5f5",
+          background: 'url(https://t3.ftcdn.net/jpg/03/95/37/18/360_F_395371888_kmvHp9FVzO4NI0pbYdLyZSW50aUqwgxX.jpg)',
+          backgroundPosition: 'center',
+          backgroundSize: 'cover'
         }}
       >
-        <Box
+        {/* Header */}
+        {/* <Box
           sx={{
             backgroundColor: "black",
             alignItems: "center",
@@ -161,7 +240,8 @@ function Register() {
           }}
         >
           <ModeButton />
-        </Box>
+        </Box> */}
+
         <Box
           sx={boxstyle}
           alignItems="center"
@@ -171,12 +251,13 @@ function Register() {
           }}
         >
           <Grid container>
-            <Grid item xs={12} sm={12} lg={6}>
+            <Grid item xs={12} sm={12} lg={12}>
               <Box
                 sx={{
                   backgroundSize: "cover",
-                  height: "70vh",
-                  minHeight: "500px",
+                  height: "fit-content",
+                  pb: 7,
+                  pt: 4,
                   backgroundColor: (theme) => {
                     return theme.palette.mode === "dark"
                       ? "#3f51b5"
@@ -187,7 +268,7 @@ function Register() {
               >
                 <ThemeProvider theme={theme}>
                   <Container>
-                    <Box height={10} />
+                    {/* Header */}
                     <Box
                       sx={{
                         display: "flex",
@@ -196,10 +277,13 @@ function Register() {
                         flexDirection: "column",
                       }}
                     >
-                      <Avatar>
-                        <AccountCircleOutlinedIcon />
-                      </Avatar>
-                      <Typography component="h1" variant="h6">
+                      {/* <Avatar sx = {{ color: '#fff', bgcolor: '#31314d', height: '60px', width: '60px' }}> */}
+                      <AccountCircleOutlinedIcon
+                        color="#fff"
+                        fontSize="large"
+                      />
+                      {/* </Avatar> */}
+                      <Typography component="h1" variant="h5" pt={1}>
                         Sign Up
                       </Typography>
                     </Box>
@@ -300,16 +384,45 @@ function Register() {
                             onChange={(e) => setConfirmPassword(e.target.value)}
                           />
                         </Grid>
-                        <Grid item xs={12} sx={{ textAlign: "center" }}>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{ ml: "1.5em", mr: "1.5em"}}
+                        >
+                          <TextField
+                            id="standard-select-currency"
+                            select
+                            value={role}
+                            variant="outlined"
+                            sx = {{
+                              width:'100%'
+                            }}
+                            onChange={(e)=> setRole((cur)=> cur = e.target.value)}
+                          >
+                            {currencies.map((option) => (
+                              <MenuItem sx = {{bgcolor: '#fff', color: '#000'}} key={option.value} value={option.value}>
+                                {option.value}
+                              </MenuItem>
+                            ))}
+                          </TextField>
+                        </Grid>
+                        <Grid
+                          item
+                          xs={12}
+                          sx={{
+                            my: 1,
+                            ml: "1.5em",
+                            mr: "1.5em",
+                            textAlign: "center",
+                          }}
+                        >
                           <Button
                             type="submit"
                             variant="contained"
                             fullWidth="true"
                             size="medium"
                             sx={{
-                              mt: "10px",
-                              mr: "20px",
-                              borderRadius: 28,
+                              borderRadius: "10px",
                               color: "#ffffff",
                               minWidth: "170px",
                               backgroundColor: "#FF9A01",
@@ -361,7 +474,9 @@ function Register() {
                 </ThemeProvider>
               </Box>
             </Grid>
-            <Grid item lg={6}>
+
+            {/* Background-image */}
+            {/* <Grid item lg={6}>
               <Box
                 style={{
                   backgroundImage: `url(${bg})`,
@@ -381,7 +496,7 @@ function Register() {
                   height: "30%",
                 }}
               ></Box>
-            </Grid>
+            </Grid> */}
           </Grid>
         </Box>
       </Box>
@@ -390,3 +505,12 @@ function Register() {
 }
 
 export default Register;
+
+const currencies = [
+  {
+    value: "Seller",
+  },
+  {
+    value: "Customer",
+  },
+];

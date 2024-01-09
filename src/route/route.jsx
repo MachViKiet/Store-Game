@@ -2,6 +2,10 @@
 import TagList from "~/page/Content/Components/TagList/TagList";
 import SlideStore from "~/page/Content/Components/SlideStore";
 import ProductStore from "~/page/Content/Components/ProductStore";
+import ProductDetail from "~/page/Content/Components/ProductDetail/ProductDetail";
+import WishlistContainer from "~/page/Content/Components/WishlistContainer/WishlistContainer";
+import CustomerInf from "~/page/Content/CustomerInf/CustomerInf";
+import SellerInf from "~/page/Content/SellerInf/SellerInf";
 
 // Auth
 import Login from "~/page/Auth/Login/Login";
@@ -14,35 +18,45 @@ import NoneHeaderAndFooter from "~/layouts/NoneHeaderAndFooter/NoneHeaderAndFoot
 // Page 
 import News from "~/page/Content/News/News";
 import Contact from "~/page/Content/Contact/Contact"
+import PaymentForm from "~/page/Content/PaymentField/PaymentField";
 
 // Apis
-import {sliderContent} from '~/apis/Home/Slider.js'
-import { OutStandingProduct } from "~/apis/Home/Products/OutStandingProduct";
-import { ActionProduct } from "~/apis/Home/Products/ActionProduct";
-import {Simulating} from "~/apis/Home/Products/Simulating"
+import CartFiled from "~/page/Content/CartFiled/CartFiled";
+import { SliderAPI } from "~/apis/Slider.js";
+import { getProductByCategory } from "../apis/Product_api/ProductByCategory/getProductByCategory";
+
 const publicPath = [
   {
     // Trang chủ
     path: "/store-game/",
     content: [
-      { component: SlideStore, progs: sliderContent },
-      { component: ProductStore, progs: OutStandingProduct },
+      { component: SlideStore, progs: SliderAPI },
+      // { component: ProductStore, progs: { getProduct : getPopularProduct() }},
+      { component: WishlistContainer } ,
       { component: TagList, progs: "" },
-      { component: ProductStore, progs: ActionProduct },
-      { component: ProductStore, progs: Simulating },
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} ,
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Adventure') , title: 'Adventure'}} ,
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Horror') , title: 'Horror'}} ,
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Sports & Racing') , title: 'Sports & Racing'}} ,
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Survival'), title: 'Survival'  }},
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Casual'), title: 'Casual'  }},
     ],
     layout: DefaultLayout,
   },
 
   {
-    // Trang Home
+    // Trang chủ
     path: "/store-game/Home",
     content: [
-      { component: SlideStore, progs: sliderContent },
-      { component: ProductStore, progs: OutStandingProduct },
+      { component: SlideStore, progs: SliderAPI },
+      { component: WishlistContainer } ,
       { component: TagList, progs: "" },
-      { component: ProductStore, progs: ActionProduct },
-      { component: ProductStore, progs: Simulating },
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} ,
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Adventure') , title: 'Adventure'}} ,
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Horror') , title: 'Horror'}} ,
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Sports & Racing') , title: 'Sports & Racing'}} ,
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Survival'), title: 'Survival'  }},
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Casual'), title: 'Casual'  }},
     ],
     layout: DefaultLayout,
   },
@@ -51,92 +65,90 @@ const publicPath = [
     // Trang chủ
     path: "/store-game/product/:id",
     content: [
-      { component: SlideStore, progs: sliderContent },
-      { component: ProductStore, progs: OutStandingProduct },
-      { component: TagList, progs: "" },
-      { component: ProductStore, progs: ActionProduct },
-      { component: ProductStore, progs: Simulating },
+      { component: ProductDetail},
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Action",
+    path: "/store-game/Action",
     content: [
-      { component: ProductStore, progs: ActionProduct },
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Action') , title: 'Action'}} 
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Adventure",
+    path: "/store-game/Adventure",
     content: [
-      { component: ProductStore },
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Adventure') , title: 'Adventure'}} 
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/RolePlaying",
+    path: "/store-game/Role_Playing",
     content: [
-      { component: ProductStore },
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Role Playing') , title: 'RolePlaying'}} 
+
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Strategy",
+    path: "/store-game/Strategy",
     content: [
-      { component: ProductStore},
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Strategy') , title: 'Strategy'}} 
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Sport&Racing",
+    path: "/store-game/Sport&Racing",
     content: [
-      { component: ProductStore},
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Sport & Racing') , title: 'Sport&Racing'}} 
+
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Horror",
+    path: "/store-game/Horror",
     content: [
-      { component: ProductStore},
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Horror') , title: 'Horror'}} 
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Casual",
+    path: "/store-game/Casual",
     content: [
-      { component: ProductStore},
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Casual') , title: 'Casual'}} 
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Survival",
+    path: "/store-game/Survival",
     content: [
-      { component: ProductStore},
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Survival') , title: 'Survival'}} 
     ],
     layout: DefaultLayout,
   },
 
   {
     // Trang chủ
-    path: "/store-game/product/Simulation",
+    path: "/store-game/Simulation",
     content: [
-      { component: ProductStore, progs: Simulating },
+      { component: ProductStore, progs: { getProduct : getProductByCategory('Simulation') , title: 'Simulation'}} 
     ],
     layout: DefaultLayout,
   },
@@ -165,6 +177,54 @@ const publicPath = [
     path: "/store-game/register",
     content: [Register],
     layout: NoneHeaderAndFooter,
+  },
+
+  {
+    // Cart
+    path: "/store-game/cart",
+    content: [
+      { component: CartFiled },
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Cart
+    path: "/store-game/payment",
+    content: [
+      { component: PaymentForm },
+    ],
+    layout: DefaultLayout,
+  },
+  {
+    // Test page
+    path: "/store-game/payment",
+    content: [
+      { component: PaymentForm },
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/customer",
+    content:[
+      {
+        component: CustomerInf
+      }
+    ],
+    layout: DefaultLayout,
+  },
+
+  {
+    // Trang chủ
+    path: "/store-game/seller",
+    content:[
+      {
+        component: SellerInf
+      }
+    ],
+    layout: DefaultLayout,
   },
 ];
 

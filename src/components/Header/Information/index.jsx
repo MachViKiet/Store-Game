@@ -9,8 +9,20 @@ import CustomLogo from "../../Logo/Logo";
 import SignInButton from "../../Author/SignIn/SignInButton";
 import Cart from "../../Cart/Cart";
 import ModeButton from "~/components/Mode/Button";
+import { useEffect, useState } from "react";
+import UserInfor from "../../Author/UserInfor.jsx/UserInfor";
 
-function Information() {
+function Information(progs) {
+  const [isLogin, setIsLogin] = useState(false);
+  //const [amountInCart] = useState(progs.progs.amountInCart)
+
+
+  useEffect(() => {
+
+    localStorage.getItem("accessToken") ? setIsLogin(true)  : "";
+
+  }, []);
+
   return (
     <>
       <Box
@@ -69,7 +81,7 @@ function Information() {
                 },
                 ml: "10px",
                 mr: "10px",
-                color: 'text.secondary'
+                color: "text.secondary",
               }}
             >
               <SearchField />
@@ -91,6 +103,7 @@ function Information() {
             </Box>
 
             {/* Sign In Button */}
+
             <Box
               sx={{
                 alignItems: "center",
@@ -100,10 +113,16 @@ function Information() {
                   xs: "none",
                   md: "flex",
                 },
-                color: 'text.secondary'
+                color: "text.secondary",
               }}
             >
-              <SignInButton />
+              {isLogin ? (
+                <>
+                  <UserInfor username = {progs.progs.userName} role = {progs.progs.role} /> {" "}
+                </>
+              ) : (
+                <SignInButton />
+              )}
             </Box>
 
             {/* Cart */}
@@ -115,7 +134,7 @@ function Information() {
                 },
               }}
             >
-              <Cart value="0" />
+              <Cart value={progs.progs.amountInCart} />
             </Box>
           </Box>
         </Container>
