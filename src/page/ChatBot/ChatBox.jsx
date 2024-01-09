@@ -11,23 +11,23 @@ const ChatBox = () => {
   const [autoReplies] = useState([
     {
       id: 1,
-      question: "Câu hỏi số 1",
-      answer: "Câu trả lời cho câu hỏi số 1 Câu trả lời cho câu hỏi số 1  ---------- - - - - - ",
+      question: "Finding your game",
+      answer: "You can find your favorite games through many ways:\n1. Find by categories\n2. Use the search bar on top\n3. View the selection of games personally curated for you",
     },
     {
       id: 2,
-      question: "Câu hỏi số 2",
-      answer: "Câu trả lời cho câu hỏi số 2",
+      question: "Contact support",
+      answer: "To contact us, you can file a form at our Contact page.\nOr you can send us an email at thequad@gmail.com",
     },
     {
       id: 3,
-      question: "Câu hỏi số 3",
-      answer: "Câu trả lời cho câu hỏi số 3",
+      question: "Perks of having an account!",
+      answer: "Register a customer account with us to receive personalized recommendations, cart checkout, wishlist your favorite games,...",
     },
     {
       id: 4,
-      question: "Câu hỏi số 4",
-      answer: "Câu trả lời cho câu hỏi số 4",
+      question: "Developer information",
+      answer: "This website was developed by TheQuad team consisting of 5 members.\n- Mạch Vĩ Kiệt\n- Nguyễn Duy Đăng Khoa\n- Trần Thái Toàn\n- Nguyễn Lê Thanh Nghĩa\n- Trần Minh Đạt",
     },
     // Thêm các câu hỏi và câu trả lời khác tại đây
   ]);
