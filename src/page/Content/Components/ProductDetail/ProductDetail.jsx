@@ -94,6 +94,8 @@ function ProductDetail(progs) {
       setVideo(res.vid_urls[0])
       setProduct(res)
     })
+
+    console.log(progs.user)
   }, [productId]);
 
   const resizeImage = (image) =>{
@@ -131,6 +133,8 @@ function ProductDetail(progs) {
     })
   }
 
+  const [colorButton, setColorButton] = useState('#')
+
 
 
   const prehandle = () => {
@@ -150,9 +154,10 @@ function ProductDetail(progs) {
 
     isLogin && addToCart().then((res)=>{
       console.log('+',res)
+      alert(res.message)
       if (res.status == 'OK'){
-        console.log(res.status)
         progs.user.updateCart()
+        setColorButton('#ccc')
       }
       else{
         // Hiện thông báo đã tồn tại trong giỏ hàng
@@ -495,7 +500,7 @@ function ProductDetail(progs) {
                 }}>
                   <Button onClick= {favorHandle}>
                     { isFavor ? <FavoriteIcon sx = {{color:"#ff6262"}} fontSize= 'large' /> : <FavoriteBorderIcon fontSize= 'large' /> }  </Button>
-                  <Button onClick={HANDLEBUYPRODUCT} startIcon={<LocalGroceryStoreIcon />} variant="outlined" sx = {{width: '45%', height: '50px',  mr : 2}}>BUY PRODUCT</Button>
+                  <Button onClick={HANDLEBUYPRODUCT}  bgcolor = {colorButton} startIcon={<LocalGroceryStoreIcon />} variant="outlined" sx = {{width: '45%', height: '50px',  mr : 2}}>BUY PRODUCT</Button>
                 </Box>
               </Item>
             </Grid>

@@ -2,7 +2,6 @@ import Box from "@mui/material/Box";
 import { styled } from "@mui/material/styles";
 import Paper from "@mui/material/Paper";
 import Grid from "@mui/material/Unstable_Grid2";
-
 import PaymentCard from "../Components/PaymentCard/PaymentCard";
 import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
@@ -70,6 +69,22 @@ function CartFiled(progs) {
         });
         setCartInf(newCart);
         progs.user.removeCart();
+      }
+    });
+  };
+
+  const HANDLEPAY = () => {
+    const removeAllCart = () =>
+      cart_api.removeAllCart(
+        progs.user.id,
+        localStorage.getItem("accessToken")
+      );
+      removeAllCart().then((res) => {
+      if (res?.status && res.status == "OK") {
+        alert(res.message)
+        const newCart = []
+        setCartInf(newCart);
+        progs.user.removeAllCart();
       }
     });
   };
@@ -171,18 +186,12 @@ function CartFiled(progs) {
                   variant="contained"
                   sx={{
                     color: "#fff",
-                    bgcolor: "#2579f2",
+                    bgcolor: "#007b0e",
                     height: "45px",
                   }}
+                  onClick={HANDLEPAY}
                 >
-                  <a style = {{
-                    color: '#fff',
-                    fontWeight: '400',
-                    textDecoration: 'none'
-                  }}
-                  href="https://sandbox.vnpayment.vn/paymentv2/Transaction/PaymentMethod.html?token=991be8591ad0416b8c7e7ae8665c832a">
-                  Buy fast through Mobile Banking
-              </a>
+                  Transaction completed
                 </Button>
               <Button
                 variant="contained"

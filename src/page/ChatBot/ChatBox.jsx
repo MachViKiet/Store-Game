@@ -24,6 +24,11 @@ const ChatBox = () => {
       question: "Câu hỏi số 3",
       answer: "Câu trả lời cho câu hỏi số 3",
     },
+    {
+      id: 4,
+      question: "Câu hỏi số 4",
+      answer: "Câu trả lời cho câu hỏi số 4",
+    },
     // Thêm các câu hỏi và câu trả lời khác tại đây
   ]);
 

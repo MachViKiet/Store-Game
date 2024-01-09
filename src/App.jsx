@@ -26,6 +26,12 @@ function App() {
     removeCart: () => {
       setAmountInCart((cur) => cur - 1);
     },
+    removeAllCart: () => {
+      setAmountInCart(0);
+    },
+    removeAllCartList: () => {
+      setCart([]);
+    },
     userName: userName,
     wishlist: wishlist,
     cart: cart,
@@ -38,7 +44,6 @@ function App() {
     {
       user_api(userID)
         .then((res) => {
-          console.log(res)
           if (res.status === "OK") {
             setUserName(res.data.name);
             setAmountInCart(res.data.cart.length);
